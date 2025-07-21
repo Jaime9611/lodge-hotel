@@ -1,0 +1,12 @@
+application:
+  version: V1.0
+  title: Lodge Service
+
+server:
+  port: 8090
+
+spring:
+  application:
+    name: lodge_hotel_restapi
+  profiles:
+    active: ${PROFILE_ACTIVE}

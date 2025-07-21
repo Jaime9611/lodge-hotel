@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    username: root
+    password: backend
+    url: jdbc:mysql://${DB_SERVER:localhost}:3306/${DB_NAME:lodge}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+  sql:
+    init:
+      mode: always
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+
+logging:
+  level:
+    local.springframework: debug
+
+ui:
+  frontend_url: "http://localhost:5173"
