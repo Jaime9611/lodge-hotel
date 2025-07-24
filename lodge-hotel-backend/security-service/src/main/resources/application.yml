@@ -1,8 +1,17 @@
 spring:
   application:
     name: security-service
-server:
-  port: 8080
+  datasource:
+    url: jdbc:h2:mem:auth-db
+    driver-class-name: org.h2.Driver
+    username: root
+    password: auth
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
 eureka:
   client:
     register-with-eureka: true
@@ -11,6 +20,9 @@ eureka:
       default-zone: http://${EUREKA_HOST:localhost}:8761/eureka
     instance:
       hostname: Authorization-Server
+
+server:
+  port: 8091
 
 keyStore:
   path: keystore.jks
