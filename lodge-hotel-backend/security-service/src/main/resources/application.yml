@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: security-service
+server:
+  port: 8080
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://${EUREKA_HOST:localhost}:8761/eureka
+    instance:
+      hostname: Authorization-Server
