@@ -11,3 +11,7 @@ eureka:
       default-zone: http://${EUREKA_HOST:localhost}:8761/eureka
     instance:
       hostname: Authorization-Server
+      
+keyStore:
+  path: keystore.jks
+  password: password
