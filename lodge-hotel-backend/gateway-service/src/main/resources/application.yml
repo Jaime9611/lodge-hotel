@@ -7,7 +7,7 @@ spring:
         - id: security-service
           uri: lb://security-service
           predicates:
-              - Path=/auth
+              - Path=/auth/**
 #        - id: lodge_hotel_restapi
 #          uri: http://localhost:8090
 #          predicates:
@@ -34,6 +34,6 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      default-zone: http://${EUREKA_HOST:localhost}:8761/eureka
+      default-zone: http://eureka-server:8761/eureka
     instance:
       hostname: Gateway-Server
