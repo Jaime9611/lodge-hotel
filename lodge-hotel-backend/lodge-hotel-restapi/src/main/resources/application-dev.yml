@@ -13,15 +13,23 @@ spring:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${AUTH_SERVICE_URL:http://localhost:9000}
 
 logging:
   level:
     local.springframework: debug
 
-ui:
-  frontend_url: "http://localhost:5173"
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://eureka-server:8761/eureka
+    instance:
+      hostname: Lodge-API-Service
+
+keyStore:
+  path: keystore.jks
+  password: password
+
+#ui:
+#  frontend_url: "http://localhost:5173"
