@@ -30,6 +30,6 @@ eureka:
 keyStore:
   path: keystore.jks
   password: password
-
+  alias: auth-server
 #ui:
 #  frontend_url: "http://localhost:5173"
