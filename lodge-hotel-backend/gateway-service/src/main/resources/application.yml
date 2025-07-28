@@ -8,10 +8,12 @@ spring:
           uri: lb://security-service
           predicates:
               - Path=/auth/**
-#        - id: lodge_hotel_restapi
-#          uri: http://localhost:8090
-#          predicates:
-#            - Path=/api/v1/**
+        - id: lodge-hotel-restapi
+          uri: lb://lodge-hotel-restapi
+          predicates:
+            - Path=/api/v1/**
+          filters:
+            - AuthenticationFilter
       globalcors:
         cors-configurations:
           '[/**]':

@@ -3,3 +3,13 @@ spring:
     name: lodge_hotel_restapi
   profiles:
     active: test
+  datasource:
+    initialization-mode: never
+  sql:
+    init:
+      mode: never
+
+keyStore:
+  path: keystore.jks
+  password: password
+  alias: auth-server

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -52,8 +51,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Autowired
     private ObjectMapper objectMapper;
 
-    public AuthenticationFilter(List<String> excludedUrls) {
-        this.excludedUrls = excludedUrls;
+    public AuthenticationFilter() {
+        super(Config.class);
     }
 
     public static class Config {
@@ -70,7 +69,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     private PublicKey getPublicKey() throws KeyStoreException {
         KeyStore keyStore = KeyStore.getInstance("JKS");
-        try (InputStream inputStream = new FileInputStream(keyStorePath)) {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(keyStorePath)) {
             keyStore.load(inputStream, keyStorePassword.toCharArray());
         } catch (NoSuchAlgorithmException | CertificateException | IOException e) {
             throw new RuntimeException(e);
