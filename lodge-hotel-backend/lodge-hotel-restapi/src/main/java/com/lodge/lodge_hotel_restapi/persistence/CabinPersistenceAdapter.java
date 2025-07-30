@@ -38,8 +38,8 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
     }
 
     @Override
-    public void save(Cabin cabin) {
-
+    public Cabin save(Cabin cabin) {
+        return Cabin.builder().build();
     }
 
     @Override
