@@ -31,7 +31,10 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
 
   @Override
   public List<Cabin> getAll() {
-    return List.of();
+
+    List<CabinEntity> foundCabins = cabinRepository.findAll();
+
+    return foundCabins.stream().map(cabinMapper::cabinEntityToCabin).toList();
   }
 
   @Override
@@ -41,11 +44,22 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
 
   @Override
   public boolean delete(Long id) {
+    if (isCabinPresent(id)) {
+      cabinRepository.deleteById(id);
+      return true;
+    }
 
+    return false;
   }
 
   @Override
   public boolean update(Cabin cabin) {
+    return false;
+  }
 
+  private boolean isCabinPresent(Long id) {
+    Optional<CabinEntity> foundCabin = cabinRepository.findById(id);
+
+    return foundCabin.isPresent();
   }
 }
