@@ -43,23 +43,12 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
   }
 
   @Override
-  public boolean delete(Long id) {
-    if (isCabinPresent(id)) {
-      cabinRepository.deleteById(id);
-      return true;
-    }
-
-    return false;
+  public void delete(Long id) {
+    cabinRepository.deleteById(id);
   }
 
   @Override
-  public boolean update(Cabin cabin) {
-    return false;
-  }
-
-  private boolean isCabinPresent(Long id) {
-    Optional<CabinEntity> foundCabin = cabinRepository.findById(id);
-
-    return foundCabin.isPresent();
+  public void update(Cabin cabin) {
+    cabinRepository.save(cabinMapper.cabinToCabinEntity(cabin));
   }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -120,12 +121,30 @@ class CabinPersistenceAdapterTest {
   @Test
   void testDeleteCabin() {
     // Arrange
-    given(cabinRepository.findById(TEST_ID)).willReturn(
-        Optional.ofNullable(CabinEntity.builder().name(TEST_NAME).build()));
+    ArgumentCaptor<Long> idArgumentCaptor = ArgumentCaptor.forClass(Long.class);
+
     // Act
     persistenceAdapter.delete(TEST_ID);
 
     // Assert
-    verify(cabinRepository).deleteById(TEST_ID);
+    verify(cabinRepository).deleteById(idArgumentCaptor.capture());
+
+    assertThat(idArgumentCaptor.getValue()).isEqualTo(TEST_ID);
+  }
+
+  @Test
+  void testUpdateCabin() {
+    // Arrange
+    Cabin testCabin = Cabin.builder().name("Test-cabin")
+        .price(BigDecimal.valueOf(100)).build();
+    ArgumentCaptor<CabinEntity> cabinArgumentCaptor = ArgumentCaptor.forClass(CabinEntity.class);
+
+    // Act
+    persistenceAdapter.update(testCabin);
+
+    // Assert
+    verify(cabinRepository).save(cabinArgumentCaptor.capture());
+
+    assertThat(cabinArgumentCaptor.getValue().getId()).isEqualTo(testCabin.getId());
   }
 }
