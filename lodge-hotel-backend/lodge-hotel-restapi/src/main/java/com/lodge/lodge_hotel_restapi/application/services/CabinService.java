@@ -5,5 +5,5 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 public interface CabinService {
    Cabin get(Long id);
 
-    void save(Cabin cabin);
+    Long save(Cabin cabin);
 }

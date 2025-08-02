@@ -15,7 +15,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -25,9 +24,7 @@ class CabinPersistenceAdapterTest {
   @Mock
   CabinRepository cabinRepository;
 
-  @InjectMocks
   CabinPersistenceAdapter persistenceAdapter;
-
 
   private static final Long TEST_ID = 1L;
   private static final String TEST_NAME = "Test-Cabin";
