@@ -7,22 +7,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CabinMapperImpl implements CabinMapper {
-    @Override
-    public CabinEntity cabinToCabinEntity(Cabin cabin) {
-        return null;
+
+  @Override
+  public CabinEntity cabinToCabinEntity(Cabin cabin) {
+    if (cabin == null) {
+      return null;
     }
 
-    @Override
-    public Cabin cabinEntityToCabin(CabinEntity entity) {
-        if (entity == null) {
-            return null;
-        }
+    CabinEntity.CabinEntityBuilder entity = CabinEntity.builder();
+    entity.id(cabin.getId());
+    entity.name(cabin.getName());
+    entity.price(cabin.getPrice());
 
-        Cabin.CabinBuilder cabin = Cabin.builder();
-        cabin.id(entity.getId());
-        cabin.name(entity.getName());
-        cabin.price(entity.getPrice());
+    return entity.build();
+  }
 
-        return cabin.build();
+  @Override
+  public Cabin cabinEntityToCabin(CabinEntity entity) {
+    if (entity == null) {
+      return null;
     }
+
+    Cabin.CabinBuilder cabin = Cabin.builder();
+    cabin.id(entity.getId());
+    cabin.name(entity.getName());
+    cabin.price(entity.getPrice());
+
+    return cabin.build();
+  }
 }

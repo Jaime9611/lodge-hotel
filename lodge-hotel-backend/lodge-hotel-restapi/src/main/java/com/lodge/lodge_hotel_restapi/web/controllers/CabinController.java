@@ -1,4 +1,4 @@
-package com.lodge.lodge_hotel_restapi.web;
+package com.lodge.lodge_hotel_restapi.web.controllers;
 
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;

@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -23,70 +21,68 @@ import static org.mockito.BDDMockito.given;
 
 class CabinPersistenceAdapterTest {
 
-    @Mock
-    CabinRepository cabinRepository;
+  @Mock
+  CabinRepository cabinRepository;
 
-    @InjectMocks
-    CabinPersistenceAdapter persistenceAdapter;
+  @InjectMocks
+  CabinPersistenceAdapter persistenceAdapter;
 
-    @Mock
-    CabinMapper cabinMapper;
+  @Mock
+  CabinMapper cabinMapper;
 
-    private static final Long TEST_ID = 1L;
-    private static final String TEST_NAME = "Test-Cabin";
-    private static final BigDecimal TEST_PRICE = BigDecimal.valueOf(100);
+  private static final Long TEST_ID = 1L;
+  private static final String TEST_NAME = "Test-Cabin";
+  private static final BigDecimal TEST_PRICE = BigDecimal.valueOf(100);
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-//        persistenceAdapter = new CabinPersistenceAdapter(cabinRepository, cabinMapper);
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
+  
+  @Test
+  void testGetById() {
+    Cabin testCabin = Cabin.builder().id(TEST_ID).name(TEST_NAME)
+        .price(TEST_PRICE).build();
 
-    @Test
-    void testGetById() {
-        Cabin testCabin = Cabin.builder().id(TEST_ID).name(TEST_NAME)
-                .price(TEST_PRICE).build();
+    CabinEntity testEntity = CabinEntity.builder().name(TEST_NAME)
+        .price(TEST_PRICE).build();
 
-        CabinEntity testEntity = CabinEntity.builder().name(TEST_NAME)
-                .price(TEST_PRICE).build();
+    given(cabinRepository.findById(TEST_ID)).willReturn(Optional.of(testEntity));
+    given(cabinMapper.cabinEntityToCabin(any(CabinEntity.class))).willReturn(testCabin);
 
-        given(cabinRepository.findById(TEST_ID)).willReturn(Optional.of(testEntity));
-        given(cabinMapper.cabinEntityToCabin(any(CabinEntity.class))).willReturn(testCabin);
+    Cabin foundCabin = persistenceAdapter.get(TEST_ID).get();
 
-        Cabin foundCabin = persistenceAdapter.get(TEST_ID);
+    assertThat(foundCabin.getName()).isEqualTo(TEST_NAME);
+  }
 
-        assertThat(foundCabin.getName()).isEqualTo(TEST_NAME);
-    }
+  @Test
+  void testGetByIdNotFound() {
+    Cabin testCabin = Cabin.builder().id(TEST_ID).name(TEST_NAME)
+        .price(TEST_PRICE).build();
 
-    @Test
-    void testGetByIdNotFound() {
-        Cabin testCabin = Cabin.builder().id(TEST_ID).name(TEST_NAME)
-                .price(TEST_PRICE).build();
+    given(cabinRepository.findById(TEST_ID)).willReturn(Optional.empty());
+    given(cabinMapper.cabinEntityToCabin(any(CabinEntity.class))).willReturn(testCabin);
 
-        given(cabinRepository.findById(TEST_ID)).willReturn(Optional.empty());
-        given(cabinMapper.cabinEntityToCabin(any(CabinEntity.class))).willReturn(testCabin);
+    Optional<Cabin> foundCabin = persistenceAdapter.get(TEST_ID);
 
-        Cabin foundCabin = persistenceAdapter.get(TEST_ID);
+    assertThat(foundCabin.isEmpty()).isTrue();
+  }
 
-        assertThat(foundCabin.getName()).isNull();
-        // TODO: CHANGE THIS A BETTER LOGIC
-    }
+  @Test
+  void testSaveCabin() {
+    // Setup - Arrange
+    Cabin testCabin = Cabin.builder().name("Test-cabin")
+        .price(BigDecimal.valueOf(100)).build();
 
-    @Test
-    void testSaveCabin() {
-        // Setup - Arrange
-        Cabin testCabin = Cabin.builder().name("Test-cabin")
-                .price(BigDecimal.valueOf(100)).build();
+    given(cabinRepository.save(any(CabinEntity.class))).willReturn(CabinEntity.builder().build());
 
-        given(cabinRepository.save(any(CabinEntity.class))).willReturn(CabinEntity.builder().build());
+    Cabin savedCabin = persistenceAdapter.save(testCabin);
 
-        Cabin savedCabin = persistenceAdapter.save(testCabin);
+    // Assert
+    assertThat(savedCabin.getName()).isNull();
+    assertThat(savedCabin.getPrice()).isNull();
 
-        // Assert
-        assertThat(savedCabin.getName()).isNull();
-        assertThat(savedCabin.getPrice()).isNull();
-
-        //TODO: change this impl
-    }
+    //TODO: change this impl
+  }
 
 }

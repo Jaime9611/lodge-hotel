@@ -51,4 +51,21 @@ class CabinMapperImplTest {
     void testNullDomainReturnsNull() {
         assertThat(cabinMapper.cabinToCabinEntity(null)).isNull();
     }
+
+    @Test
+    void testDomainToEntity() {
+        // Arrange
+        Cabin domain = Cabin.builder()
+                .id(TEST_ID)
+                .name(TEST_NAME)
+                .price(TEST_PRICE)
+                .build();
+
+        // Act
+        CabinEntity entityResult = cabinMapper.cabinToCabinEntity(domain);
+
+        // Assert
+        assertThat(entityResult.getId()).isEqualTo(TEST_ID);
+        assertThat(entityResult.getName()).isEqualTo(TEST_NAME);
+    }
 }

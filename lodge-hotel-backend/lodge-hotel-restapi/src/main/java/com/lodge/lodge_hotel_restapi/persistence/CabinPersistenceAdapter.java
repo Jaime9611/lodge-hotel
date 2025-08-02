@@ -16,39 +16,36 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, UpdateCabinPort, DeleteCabinPort {
+public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, UpdateCabinPort,
+    DeleteCabinPort {
 
-    private final CabinRepository cabinRepository;
-    private final CabinMapper cabinMapper;
+  private final CabinRepository cabinRepository;
+  private final CabinMapper cabinMapper;
 
-    @Override
-    public Cabin get(Long id) {
-        Optional<CabinEntity> foundCabinEntity = cabinRepository.findById(id);
+  @Override
+  public Optional<Cabin> get(Long id) {
+    Optional<CabinEntity> foundCabinEntity = cabinRepository.findById(id);
 
-        if(foundCabinEntity.isPresent()) {
-            return cabinMapper.cabinEntityToCabin(foundCabinEntity.get());
-        }
+    return foundCabinEntity.map(cabinMapper::cabinEntityToCabin);
+  }
 
-        return Cabin.builder().build();
-    }
+  @Override
+  public List<Cabin> getAll() {
+    return List.of();
+  }
 
-    @Override
-    public List<Cabin> getAll() {
-        return List.of();
-    }
+  @Override
+  public Cabin save(Cabin cabin) {
+    return Cabin.builder().build();
+  }
 
-    @Override
-    public Cabin save(Cabin cabin) {
-        return Cabin.builder().build();
-    }
+  @Override
+  public boolean delete(Long id) {
 
-    @Override
-    public void delete(Long id) {
+  }
 
-    }
+  @Override
+  public boolean update(Cabin cabin) {
 
-    @Override
-    public void update(Cabin cabin) {
-
-    }
+  }
 }
