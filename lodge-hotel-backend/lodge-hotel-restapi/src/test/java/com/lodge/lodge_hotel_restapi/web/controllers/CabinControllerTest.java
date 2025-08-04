@@ -60,7 +60,7 @@ class CabinControllerTest {
     given(cabinService.get(1L)).willReturn(testCabin);
 
     mockMvc.perform(get("/api/v1/cabin/{id}", 1L)
-        .accept(MediaType.APPLICATION_JSON))
+            .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
 }

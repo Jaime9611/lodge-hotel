@@ -2,6 +2,7 @@ package com.lodge.lodge_hotel_restapi.web.controllers;
 
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
+import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/cabin")
+@RequestMapping(Endpoints.CABIN)
 public class CabinController {
 
-    private final CabinService cabinService;
+  private final CabinService cabinService;
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Cabin> getCabin(@PathVariable Long id) {
-        return ResponseEntity.ok(cabinService.get(id));
-    }
+  @GetMapping(Endpoints.CABIN_ID)
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public ResponseEntity<Cabin> getCabin(@PathVariable Long cabinId) {
+    return ResponseEntity.ok(cabinService.get(cabinId));
+  }
 }
