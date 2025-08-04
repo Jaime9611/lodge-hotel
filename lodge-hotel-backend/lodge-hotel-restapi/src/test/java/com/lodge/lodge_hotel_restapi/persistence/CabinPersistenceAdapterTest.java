@@ -6,10 +6,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
+import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.CabinMapperImpl;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.CabinRepository;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +26,6 @@ class CabinPersistenceAdapterTest {
 
   CabinPersistenceAdapter persistenceAdapter;
 
-  private static final Long TEST_ID = 1L;
-  private static final String TEST_NAME = "Test-Cabin";
-  private static final BigDecimal TEST_PRICE = BigDecimal.valueOf(100);
-
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
@@ -39,19 +35,7 @@ class CabinPersistenceAdapterTest {
   @Test
   void testGetCabinList() {
     // Arrange
-    CabinEntity cabin1 = CabinEntity.builder()
-        .id(2L)
-        .name("Cabin 1")
-        .price(BigDecimal.valueOf(300))
-        .build();
-
-    CabinEntity cabin2 = CabinEntity.builder()
-        .id(3L)
-        .name("Cabin 2")
-        .price(BigDecimal.valueOf(400))
-        .build();
-
-    List<CabinEntity> testCabins = List.of(cabin1, cabin2);
+    List<CabinEntity> testCabins = CabinFactory.createCabinEntityList(2);
 
     given(cabinRepository.findAll()).willReturn(testCabins);
 
@@ -60,40 +44,37 @@ class CabinPersistenceAdapterTest {
 
     // Assert
     assertThat(foundCabins.size()).isEqualTo(2);
-    assertThat(foundCabins.get(0).getId()).isEqualTo(cabin1.getId());
-    assertThat(foundCabins.get(0).getName()).isEqualTo(cabin1.getName());
-    assertThat(foundCabins.get(0).getPrice().toString()).isEqualTo(cabin1.getPrice().toString());
-    assertThat(foundCabins.get(1).getId()).isEqualTo(cabin2.getId());
-    assertThat(foundCabins.get(1).getName()).isEqualTo(cabin2.getName());
-    assertThat(foundCabins.get(1).getPrice().toString()).isEqualTo(cabin2.getPrice().toString());
+    assertThat(foundCabins.get(0).getId()).isEqualTo(testCabins.get(0).getId());
+    assertThat(foundCabins.get(0).getName()).isEqualTo(testCabins.get(0).getName());
+    assertThat(foundCabins.get(0).getPrice().toString()).isEqualTo(testCabins.get(0).getPrice().toString());
+    assertThat(foundCabins.get(1).getId()).isEqualTo(testCabins.get(1).getId());
+    assertThat(foundCabins.get(1).getName()).isEqualTo(testCabins.get(1).getName());
+    assertThat(foundCabins.get(1).getPrice().toString()).isEqualTo(testCabins.get(1).getPrice().toString());
   }
 
   @Test
   void testGetById() {
-    Cabin testCabin = Cabin.builder().id(TEST_ID).name(TEST_NAME)
-        .price(TEST_PRICE).build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
 
-    CabinEntity testEntity = CabinEntity.builder().name(TEST_NAME)
-        .price(TEST_PRICE).build();
+    CabinEntity testEntity = CabinFactory.createSingleCabinEntity();
 
-    given(cabinRepository.findById(TEST_ID)).willReturn(Optional.of(testEntity));
+    given(cabinRepository.findById(CabinFactory.TEST_ID)).willReturn(Optional.of(testEntity));
 
-    Optional<Cabin> foundCabin = persistenceAdapter.get(TEST_ID);
+    Optional<Cabin> foundCabin = persistenceAdapter.get(CabinFactory.TEST_ID);
 
     assertThat(foundCabin.isPresent()).isTrue();
-    assertThat(foundCabin.get().getName()).isEqualTo(TEST_NAME);
+    assertThat(foundCabin.get().getName()).isEqualTo(testEntity.getName());
   }
 
   @Test
   void testGetByIdNotFound() {
     // Arrange
-    Cabin testCabin = Cabin.builder().id(TEST_ID).name(TEST_NAME)
-        .price(TEST_PRICE).build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
 
-    given(cabinRepository.findById(TEST_ID)).willReturn(Optional.empty());
+    given(cabinRepository.findById(CabinFactory.TEST_ID)).willReturn(Optional.empty());
 
     // Act
-    Optional<Cabin> foundCabin = persistenceAdapter.get(TEST_ID);
+    Optional<Cabin> foundCabin = persistenceAdapter.get(CabinFactory.TEST_ID);
 
     // Assert
     assertThat(foundCabin.isEmpty()).isTrue();
@@ -102,8 +83,7 @@ class CabinPersistenceAdapterTest {
   @Test
   void testSaveCabin() {
     //  Arrange
-    Cabin testCabin = Cabin.builder().name("Test-cabin")
-        .price(BigDecimal.valueOf(100)).build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
 
     given(cabinRepository.save(any(CabinEntity.class))).willReturn(CabinEntity.builder().build());
 
@@ -121,19 +101,18 @@ class CabinPersistenceAdapterTest {
     ArgumentCaptor<Long> idArgumentCaptor = ArgumentCaptor.forClass(Long.class);
 
     // Act
-    persistenceAdapter.delete(TEST_ID);
+    persistenceAdapter.delete(CabinFactory.TEST_ID);
 
     // Assert
     verify(cabinRepository).deleteById(idArgumentCaptor.capture());
 
-    assertThat(idArgumentCaptor.getValue()).isEqualTo(TEST_ID);
+    assertThat(idArgumentCaptor.getValue()).isEqualTo(CabinFactory.TEST_ID);
   }
 
   @Test
   void testUpdateCabin() {
     // Arrange
-    Cabin testCabin = Cabin.builder().name("Test-cabin")
-        .price(BigDecimal.valueOf(100)).build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
     ArgumentCaptor<CabinEntity> cabinArgumentCaptor = ArgumentCaptor.forClass(CabinEntity.class);
 
     // Act

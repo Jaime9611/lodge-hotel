@@ -1,21 +1,15 @@
 package com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
+import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.CabinMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.math.BigDecimal;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CabinMapperImplTest {
-
-    private final String TEST_NAME = "Test Cabin";
-    private final BigDecimal TEST_PRICE = BigDecimal.valueOf(200);
-    private final Long TEST_ID = 1L;
 
     CabinMapper cabinMapper;
 
@@ -32,19 +26,15 @@ class CabinMapperImplTest {
     @Test
     void testEntityToDomain() {
         // Arrange
-        CabinEntity entity = CabinEntity.builder()
-                .id(TEST_ID)
-                .name(TEST_NAME)
-                .price(TEST_PRICE)
-                .build();
+        CabinEntity entity = CabinFactory.createSingleCabinEntity();
 
         // Act
         Cabin domainResult = cabinMapper.cabinEntityToCabin(entity);
 
         // Assert
-        assertThat(domainResult.getId()).isEqualTo(TEST_ID);
-        assertThat(domainResult.getName()).isEqualTo(TEST_NAME);
-        assertThat(domainResult.getPrice()).isEqualTo(TEST_PRICE);
+        assertThat(domainResult.getId()).isEqualTo(entity.getId());
+        assertThat(domainResult.getName()).isEqualTo(entity.getName());
+        assertThat(domainResult.getPrice()).isEqualTo(entity.getPrice());
     }
 
     @Test
@@ -55,17 +45,13 @@ class CabinMapperImplTest {
     @Test
     void testDomainToEntity() {
         // Arrange
-        Cabin domain = Cabin.builder()
-                .id(TEST_ID)
-                .name(TEST_NAME)
-                .price(TEST_PRICE)
-                .build();
+        Cabin domain = CabinFactory.createSingleCabin();
 
         // Act
         CabinEntity entityResult = cabinMapper.cabinToCabinEntity(domain);
 
         // Assert
-        assertThat(entityResult.getId()).isEqualTo(TEST_ID);
-        assertThat(entityResult.getName()).isEqualTo(TEST_NAME);
+        assertThat(entityResult.getId()).isEqualTo(domain.getId());
+        assertThat(entityResult.getName()).isEqualTo(domain.getName());
     }
 }

@@ -12,7 +12,7 @@ import com.lodge.lodge_hotel_restapi.application.services.impls.CabinServiceImpl
 import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;
 import com.lodge.lodge_hotel_restapi.config.SecurityConfig;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
-import java.math.BigDecimal;
+import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -54,12 +54,11 @@ class CabinControllerTest {
   @Test
   @WithMockUser(username = "testUser", authorities = {"ROLE_ADMIN"})
   void testGetCabinById() throws Exception {
-    Cabin testCabin = Cabin.builder().id(1L).name("Test_Cabin").price(BigDecimal.valueOf(350))
-        .build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
 
-    given(cabinService.get(1L)).willReturn(testCabin);
+    given(cabinService.get(testCabin.getId())).willReturn(testCabin);
 
-    mockMvc.perform(get("/api/v1/cabin/{id}", 1L)
+    mockMvc.perform(get("/api/v1/cabin/{id}", testCabin.getId())
             .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }

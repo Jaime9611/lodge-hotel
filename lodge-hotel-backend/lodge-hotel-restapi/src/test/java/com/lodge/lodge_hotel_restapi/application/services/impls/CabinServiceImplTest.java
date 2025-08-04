@@ -8,7 +8,7 @@ import com.lodge.lodge_hotel_restapi.application.ports.CreateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
-import java.math.BigDecimal;
+import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,10 +30,6 @@ class CabinServiceImplTest {
 
   CabinService service;
 
-  private static final Long TEST_ID = 1L;
-  private static final String TEST_NAME = "Test-Cabin";
-  private static final BigDecimal TEST_PRICE = BigDecimal.valueOf(100);
-
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
@@ -43,36 +39,29 @@ class CabinServiceImplTest {
   @Test
   void testGetCabin() {
     // Arrange
-    Cabin testCabin = Cabin.builder()
-        .id(TEST_ID)
-        .name(TEST_NAME)
-        .price(TEST_PRICE)
-        .build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
 
-    given(readPort.get(TEST_ID)).willReturn(Optional.ofNullable(testCabin));
+    given(readPort.get(testCabin.getId())).willReturn(Optional.of(testCabin));
 
     // Act
-    Cabin foundCabin = service.get(TEST_ID);
+    Cabin foundCabin = service.get(testCabin.getId());
 
     // Assert
-    assertThat(foundCabin.getId()).isEqualTo(TEST_ID);
-    assertThat(foundCabin.getName()).isEqualTo(TEST_NAME);
+    assertThat(foundCabin.getId()).isEqualTo(testCabin.getId());
+    assertThat(foundCabin.getName()).isEqualTo(testCabin.getName());
   }
 
   @Test
   void testSaveCabin() {
     // Arrange
-    Cabin testCabin = Cabin.builder()
-        .name(TEST_NAME)
-        .price(TEST_PRICE)
-        .build();
+    Cabin testCabin = CabinFactory.createSingleCabin();
 
-    given(createPort.save(any(Cabin.class))).willReturn(Cabin.builder().id(TEST_ID).build());
+    given(createPort.save(any(Cabin.class))).willReturn(Cabin.builder().id(testCabin.getId()).build());
 
     // Act
     Long savedCabinId = service.save(testCabin);
 
     // Assert
-    assertThat(savedCabinId).isEqualTo(TEST_ID);
+    assertThat(savedCabinId).isEqualTo(testCabin.getId());
   }
 }
