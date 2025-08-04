@@ -141,9 +141,9 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<configuration>
-<!--					<excludes>-->
-<!--						<exclude>**/config/*</exclude>-->
-<!--					</excludes>-->
+					<excludes>
+						<exclude>**/config/Jwt*</exclude>
+					</excludes>
 					<dataFile>${project.build.directory}/jacoco.exec</dataFile>
 					<outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
 				</configuration>

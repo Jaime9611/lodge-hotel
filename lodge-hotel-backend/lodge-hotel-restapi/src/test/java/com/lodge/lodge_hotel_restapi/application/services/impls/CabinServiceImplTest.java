@@ -13,9 +13,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 class CabinServiceImplTest {
 
@@ -25,7 +25,7 @@ class CabinServiceImplTest {
   @Mock
   CreateCabinPort createPort;
 
-  @Autowired
+  @Captor
   ArgumentCaptor<Long> idArgumentCaptor;
 
   CabinService service;

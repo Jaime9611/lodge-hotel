@@ -17,13 +17,8 @@ public class CabinController {
 
     private final CabinService cabinService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> getCabins() {
-        return ResponseEntity.ok("{\"message\": \"Method Worked!\"}");
-    }
-
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Cabin> getCabin(@PathVariable Long id) {
         return ResponseEntity.ok(cabinService.get(id));
     }
