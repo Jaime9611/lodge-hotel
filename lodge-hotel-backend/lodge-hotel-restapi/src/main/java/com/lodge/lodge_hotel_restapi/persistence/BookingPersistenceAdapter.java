@@ -40,7 +40,9 @@ public class BookingPersistenceAdapter implements CreateBookingPort, ReadBooking
 
   @Override
   public List<Booking> getAll() {
-    return List.of();
+    List<BookingEntity> foundCabins = bookingRepository.findAll();
+
+    return foundCabins.stream().map(bookingMapper::bookingEntityToBooking).toList();
   }
 
   @Override
