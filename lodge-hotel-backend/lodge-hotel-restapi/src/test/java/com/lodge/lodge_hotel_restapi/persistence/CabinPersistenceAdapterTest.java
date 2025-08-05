@@ -3,6 +3,7 @@ package com.lodge.lodge_hotel_restapi.persistence;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
@@ -90,14 +91,20 @@ class CabinPersistenceAdapterTest {
     //  Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
 
-    given(cabinRepository.save(any(CabinEntity.class))).willReturn(CabinEntity.builder().build());
+    given(cabinRepository.save(any(CabinEntity.class))).willReturn(
+        CabinEntity.builder().id(testCabin.getId())
+            .name(testCabin.getName())
+            .price(testCabin.getPrice()).build());
 
     // Act
+    testCabin.setId(null);
     Cabin savedCabin = persistenceAdapter.save(testCabin);
 
     // Assert
-    assertThat(savedCabin.getName()).isNull();
-    assertThat(savedCabin.getPrice()).isNull();
+    verify(cabinRepository, times(1)).save(any(CabinEntity.class));
+    assertThat(savedCabin.getId()).isNotNull();
+    assertThat(savedCabin.getName()).isEqualTo(testCabin.getName());
+    assertThat(savedCabin.getPrice()).isEqualTo(testCabin.getPrice());
   }
 
   @Test
@@ -127,5 +134,7 @@ class CabinPersistenceAdapterTest {
     verify(cabinRepository).save(cabinArgumentCaptor.capture());
 
     assertThat(cabinArgumentCaptor.getValue().getId()).isEqualTo(testCabin.getId());
+    assertThat(cabinArgumentCaptor.getValue().getName()).isEqualTo(testCabin.getName());
+    assertThat(cabinArgumentCaptor.getValue().getPrice()).isEqualTo(testCabin.getPrice());
   }
 }

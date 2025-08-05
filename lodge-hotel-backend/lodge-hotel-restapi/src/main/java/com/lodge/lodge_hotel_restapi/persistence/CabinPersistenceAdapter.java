@@ -39,7 +39,9 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
 
   @Override
   public Cabin save(Cabin cabin) {
-    return Cabin.builder().build();
+    CabinEntity newCabin = cabinMapper.cabinToCabinEntity(cabin);
+
+    return cabinMapper.cabinEntityToCabin(cabinRepository.save(newCabin));
   }
 
   @Override

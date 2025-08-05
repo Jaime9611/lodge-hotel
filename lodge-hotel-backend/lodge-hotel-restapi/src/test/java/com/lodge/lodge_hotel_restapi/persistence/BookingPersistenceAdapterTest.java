@@ -1,7 +1,10 @@
 package com.lodge.lodge_hotel_restapi.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
@@ -12,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -26,6 +30,56 @@ class BookingPersistenceAdapterTest {
   void setUp() {
     MockitoAnnotations.openMocks(this);
     persistenceAdapter = new BookingPersistenceAdapter(bookingRepository, new BookingMapperImpl());
+  }
+
+  @Test
+  void testUpdateBooking() {
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+    ArgumentCaptor<BookingEntity> bookingArgumentCaptor = ArgumentCaptor.forClass(
+        BookingEntity.class);
+
+    // Act
+    persistenceAdapter.update(testBooking);
+
+    // Assert
+    verify(bookingRepository).save(bookingArgumentCaptor.capture());
+
+    assertThat(bookingArgumentCaptor.getValue().getId()).isEqualTo(testBooking.getId());
+    assertThat(bookingArgumentCaptor.getValue().getName()).isEqualTo(testBooking.getName());
+  }
+
+  @Test
+  void testDeleteBooking() {
+    // Arrange
+    ArgumentCaptor<Long> idArgumentCaptor = ArgumentCaptor.forClass(Long.class);
+
+    // Act
+    persistenceAdapter.delete(BookingFactory.TEST_ID);
+
+    // Assert
+    verify(bookingRepository).deleteById(idArgumentCaptor.capture());
+
+    assertThat(idArgumentCaptor.getValue()).isEqualTo(BookingFactory.TEST_ID);
+  }
+
+  @Test
+  void testSaveBooking() {
+    //  Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+
+    given(bookingRepository.save(any(BookingEntity.class))).willReturn(BookingEntity.builder()
+        .id(testBooking.getId())
+        .name(testBooking.getName()).build());
+
+    // Act
+    testBooking.setId(null);
+    Booking savedBooking = persistenceAdapter.save(testBooking);
+
+    // Assert
+    verify(bookingRepository, times(1)).save(any(BookingEntity.class));
+    assertThat(savedBooking.getId()).isNotNull();
+    assertThat(savedBooking.getName()).isEqualTo(testBooking.getName());
   }
 
   @Test

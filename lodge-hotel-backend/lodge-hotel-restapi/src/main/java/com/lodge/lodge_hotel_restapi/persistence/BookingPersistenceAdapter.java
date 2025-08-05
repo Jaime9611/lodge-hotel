@@ -23,12 +23,14 @@ public class BookingPersistenceAdapter implements CreateBookingPort, ReadBooking
 
   @Override
   public Booking save(Booking booking) {
-    return null;
+    BookingEntity newBooking = bookingMapper.bookingToBookingEntity(booking);
+
+    return bookingMapper.bookingEntityToBooking(bookingRepository.save(newBooking));
   }
 
   @Override
   public void delete(Long id) {
-
+    bookingRepository.deleteById(id);
   }
 
   @Override
@@ -47,6 +49,6 @@ public class BookingPersistenceAdapter implements CreateBookingPort, ReadBooking
 
   @Override
   public void update(Booking booking) {
-
+    bookingRepository.save(bookingMapper.bookingToBookingEntity(booking));
   }
 }
