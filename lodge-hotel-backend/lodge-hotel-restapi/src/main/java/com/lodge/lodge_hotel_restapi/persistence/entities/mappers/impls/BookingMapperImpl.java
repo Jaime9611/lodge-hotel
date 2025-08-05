@@ -3,7 +3,9 @@ package com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.BookingMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookingMapperImpl implements BookingMapper {
 
   @Override
