@@ -54,14 +54,17 @@ class CabinPersistenceAdapterTest {
 
   @Test
   void testGetById() {
+    // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
 
     CabinEntity testEntity = CabinFactory.createSingleCabinEntity();
 
     given(cabinRepository.findById(CabinFactory.TEST_ID)).willReturn(Optional.of(testEntity));
 
+    // Act
     Optional<Cabin> foundCabin = persistenceAdapter.get(CabinFactory.TEST_ID);
 
+    // Assert
     assertThat(foundCabin.isPresent()).isTrue();
     assertThat(foundCabin.get().getName()).isEqualTo(testEntity.getName());
   }

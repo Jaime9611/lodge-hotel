@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReadCabinPort {
-    Optional<Cabin> get(Long id);
 
-    List<Cabin> getAll();
+  Optional<Cabin> get(Long id);
+
+  List<Cabin> getAll();
 }
