@@ -1,11 +1,18 @@
 package com.lodge.lodge_hotel_restapi.persistence.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -13,8 +20,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cabin")
-public class CabinEntity {
+@Table(name = "booking")
+public class BookingEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +31,4 @@ public class CabinEntity {
   @NotBlank
   @Column(length = 50, columnDefinition = "VARCHAR(50)")
   private String name;
-
-  @NotNull
-  private BigDecimal price;
 }

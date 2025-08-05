@@ -11,47 +11,47 @@ import org.junit.jupiter.api.Test;
 
 class CabinMapperImplTest {
 
-    CabinMapper cabinMapper;
+  CabinMapper cabinMapper;
 
-    @BeforeEach
-    void setUp() {
-        cabinMapper = new CabinMapperImpl();
-    }
+  @BeforeEach
+  void setUp() {
+    cabinMapper = new CabinMapperImpl();
+  }
 
-    @Test
-    void testNullEntityReturnsNull() {
-        assertThat(cabinMapper.cabinEntityToCabin(null)).isNull();
-    }
+  @Test
+  void testNullEntityReturnsNull() {
+    assertThat(cabinMapper.cabinEntityToCabin(null)).isNull();
+  }
 
-    @Test
-    void testEntityToDomain() {
-        // Arrange
-        CabinEntity entity = CabinFactory.createSingleCabinEntity();
+  @Test
+  void testEntityToDomain() {
+    // Arrange
+    CabinEntity entity = CabinFactory.createSingleCabinEntity();
 
-        // Act
-        Cabin domainResult = cabinMapper.cabinEntityToCabin(entity);
+    // Act
+    Cabin domainResult = cabinMapper.cabinEntityToCabin(entity);
 
-        // Assert
-        assertThat(domainResult.getId()).isEqualTo(entity.getId());
-        assertThat(domainResult.getName()).isEqualTo(entity.getName());
-        assertThat(domainResult.getPrice()).isEqualTo(entity.getPrice());
-    }
+    // Assert
+    assertThat(domainResult.getId()).isEqualTo(entity.getId());
+    assertThat(domainResult.getName()).isEqualTo(entity.getName());
+    assertThat(domainResult.getPrice()).isEqualTo(entity.getPrice());
+  }
 
-    @Test
-    void testNullDomainReturnsNull() {
-        assertThat(cabinMapper.cabinToCabinEntity(null)).isNull();
-    }
+  @Test
+  void testNullDomainReturnsNull() {
+    assertThat(cabinMapper.cabinToCabinEntity(null)).isNull();
+  }
 
-    @Test
-    void testDomainToEntity() {
-        // Arrange
-        Cabin domain = CabinFactory.createSingleCabin();
+  @Test
+  void testDomainToEntity() {
+    // Arrange
+    Cabin domain = CabinFactory.createSingleCabin();
 
-        // Act
-        CabinEntity entityResult = cabinMapper.cabinToCabinEntity(domain);
+    // Act
+    CabinEntity entityResult = cabinMapper.cabinToCabinEntity(domain);
 
-        // Assert
-        assertThat(entityResult.getId()).isEqualTo(domain.getId());
-        assertThat(entityResult.getName()).isEqualTo(domain.getName());
-    }
+    // Assert
+    assertThat(entityResult.getId()).isEqualTo(domain.getId());
+    assertThat(entityResult.getName()).isEqualTo(domain.getName());
+  }
 }

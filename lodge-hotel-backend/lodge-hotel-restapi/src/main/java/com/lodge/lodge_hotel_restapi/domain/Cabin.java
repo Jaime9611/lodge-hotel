@@ -5,10 +5,12 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Builder
+
 @Data
+@Builder
 public class Cabin {
-    private Long id;
-    private String name;
-    private BigDecimal price;
+
+  private Long id;
+  private String name;
+  private BigDecimal price;
 }
