@@ -46,10 +46,12 @@ class CabinPersistenceAdapterTest {
     assertThat(foundCabins.size()).isEqualTo(2);
     assertThat(foundCabins.get(0).getId()).isEqualTo(testCabins.get(0).getId());
     assertThat(foundCabins.get(0).getName()).isEqualTo(testCabins.get(0).getName());
-    assertThat(foundCabins.get(0).getPrice().toString()).isEqualTo(testCabins.get(0).getPrice().toString());
+    assertThat(foundCabins.get(0).getPrice().toString()).isEqualTo(
+        testCabins.get(0).getPrice().toString());
     assertThat(foundCabins.get(1).getId()).isEqualTo(testCabins.get(1).getId());
     assertThat(foundCabins.get(1).getName()).isEqualTo(testCabins.get(1).getName());
-    assertThat(foundCabins.get(1).getPrice().toString()).isEqualTo(testCabins.get(1).getPrice().toString());
+    assertThat(foundCabins.get(1).getPrice().toString()).isEqualTo(
+        testCabins.get(1).getPrice().toString());
   }
 
   @Test
