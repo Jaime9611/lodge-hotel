@@ -36,6 +36,10 @@ public class CabinFactory {
     return createSingleCabinEntity(TEST_ID);
   }
 
+  public static List<Cabin> createCabinList(int quantity) {
+    return IntStream.range(0, quantity).mapToObj(i -> createSingleCabin((long) i)).toList();
+  }
+
   public static List<CabinEntity> createCabinEntityList(int quantity) {
     return IntStream.range(0, quantity).mapToObj(i -> createSingleCabinEntity((long) i)).toList();
   }

@@ -117,7 +117,6 @@ class CabinPersistenceAdapterTest {
 
     // Assert
     verify(cabinRepository).deleteById(idArgumentCaptor.capture());
-
     assertThat(idArgumentCaptor.getValue()).isEqualTo(CabinFactory.TEST_ID);
   }
 

@@ -6,7 +6,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lodge.lodge_hotel_restapi.application.ports.CreateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.DeleteCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.application.services.impls.CabinServiceImpl;
 import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;
@@ -41,6 +43,12 @@ class CabinControllerTest {
   @Mock
   CreateCabinPort createPort;
 
+  @Mock
+  DeleteCabinPort deletePort;
+
+  @Mock
+  UpdateCabinPort updatePort;
+
   @MockitoBean
   CabinService cabinService;
 
@@ -48,7 +56,7 @@ class CabinControllerTest {
 
   @BeforeEach
   void setUp() {
-    cabinServiceImpl = new CabinServiceImpl(readPort, createPort);
+    cabinServiceImpl = new CabinServiceImpl(readPort, createPort, deletePort, updatePort);
   }
 
   @Test

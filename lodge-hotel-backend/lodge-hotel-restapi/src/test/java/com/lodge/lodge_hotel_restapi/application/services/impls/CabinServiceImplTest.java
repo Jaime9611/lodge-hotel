@@ -2,13 +2,19 @@ package com.lodge.lodge_hotel_restapi.application.services.impls;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.lodge.lodge_hotel_restapi.application.ports.CreateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.DeleteCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,15 +31,72 @@ class CabinServiceImplTest {
   @Mock
   CreateCabinPort createPort;
 
+  @Mock
+  DeleteCabinPort deletePort;
+
+  @Mock
+  UpdateCabinPort updatePort;
+
   @Captor
   ArgumentCaptor<Long> idArgumentCaptor;
+
+  @Captor
+  ArgumentCaptor<Cabin> cabinArgumentCaptor;
 
   CabinService service;
 
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    service = new CabinServiceImpl(readPort, createPort);
+    service = new CabinServiceImpl(readPort, createPort, deletePort, updatePort);
+  }
+
+  @Test
+  void testUpdateCabin() {
+    // Arrange
+    Cabin testCabin = CabinFactory.createSingleCabin();
+    given(readPort.get(testCabin.getId())).willReturn(Optional.ofNullable(Cabin.builder().id(
+        testCabin.getId()).build()));
+
+    // Act
+    service.update(testCabin.getId(), testCabin);
+
+    // Assert
+    verify(readPort, times(1)).get(testCabin.getId());
+    verify(updatePort).update(cabinArgumentCaptor.capture());
+    assertThat(cabinArgumentCaptor.getValue().getId()).isEqualTo(testCabin.getId());
+    assertThat(cabinArgumentCaptor.getValue().getName()).isEqualTo(testCabin.getName());
+    assertThat(cabinArgumentCaptor.getValue().getPrice()).isEqualTo(testCabin.getPrice());
+  }
+
+  @Test
+  void testDeleteCabin() {
+    // Arrange
+    given(readPort.get(anyLong())).willReturn(
+        Optional.ofNullable(Cabin.builder().id(CabinFactory.TEST_ID).build()));
+
+    // Act
+    service.delete(CabinFactory.TEST_ID);
+
+    // Assert
+    verify(readPort, times(1)).get(anyLong());
+    verify(deletePort).delete(idArgumentCaptor.capture());
+    assertThat(idArgumentCaptor.getValue()).isEqualTo(CabinFactory.TEST_ID);
+  }
+
+  @Test
+  void testGetCabinList() {
+    // Arrange
+    List<Cabin> testCabinList = CabinFactory.createCabinList(2);
+
+    given(readPort.getAll()).willReturn(testCabinList);
+
+    // Act
+    List<Cabin> foundCabins = service.getAll();
+
+    // Assert
+    assertThat(foundCabins.get(0).getName()).isEqualTo(testCabinList.get(0).getName());
+    assertThat(foundCabins.get(1).getName()).isEqualTo(testCabinList.get(1).getName());
   }
 
   @Test
@@ -56,12 +119,14 @@ class CabinServiceImplTest {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
 
-    given(createPort.save(any(Cabin.class))).willReturn(Cabin.builder().id(testCabin.getId()).build());
+    given(createPort.save(any(Cabin.class))).willReturn(
+        Cabin.builder().id(testCabin.getId()).build());
 
     // Act
     Long savedCabinId = service.save(testCabin);
 
     // Assert
+    verify(createPort, times(1)).save(any(Cabin.class));
     assertThat(savedCabinId).isEqualTo(testCabin.getId());
   }
 }
