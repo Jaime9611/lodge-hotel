@@ -1,7 +1,10 @@
 package com.lodge.lodge_hotel_restapi.web.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,12 +65,49 @@ class CabinControllerTest {
   @Test
   @WithMockUser(username = "testUser", authorities = {"ROLE_ADMIN"})
   void testGetCabinById() throws Exception {
+    // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
 
     given(cabinService.get(testCabin.getId())).willReturn(testCabin);
 
+    // Assert
     mockMvc.perform(get("/api/v1/cabin/{id}", testCabin.getId())
             .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  @WithMockUser(username = "testUser", authorities = {"ROLE_ADMIN"})
+  void testCreateCabin() throws Exception {
+    // Arrange
+    Cabin testCabin = CabinFactory.createSingleCabin();
+
+    given(cabinService.save(any(Cabin.class))).willReturn(testCabin.getId());
+
+    // Assert
+    testCabin.setId(null);
+    mockMvc.perform(post("/api/v1/cabin")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(testCabin)))
+        .andExpect(status().isCreated())
+        .andExpect(header().exists("Location"));
+  }
+
+  @Test
+  @WithMockUser(username = "testUser", authorities = {"ROLE_MANAGER"})
+  void testCreateCabinInvalidRole() throws Exception {
+    // Arrange
+    Cabin testCabin = CabinFactory.createSingleCabin();
+
+    given(cabinService.save(any(Cabin.class))).willReturn(testCabin.getId());
+
+    // Assert
+    testCabin.setId(null);
+    mockMvc.perform(post("/api/v1/cabin")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(testCabin)))
+        .andExpect(status().isForbidden());
   }
 }
