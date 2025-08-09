@@ -1,17 +1,13 @@
-import { useState } from "react";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App(props) {
-  const [count, setCount] = useState(1);
-  return (
-    <div>
-      <h1>
-        Hello {props.name} x{count}!
-      </h1>
-      <button onClick={() => setCount((c) => c + 1)}>Increment</button>
-    </div>
-  );
-  a;
-}
+import Login from "./pages/Login/login.component";
+
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="login" element={<Login />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;
