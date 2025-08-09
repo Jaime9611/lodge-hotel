@@ -12,6 +12,8 @@ export default defineConfig({
     alias: {
       "@features": path.resolve(__dirname, "./src/features"),
       "@ui": path.resolve(__dirname, "./src/ui"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "@services": path.resolve(__dirname, "./src/services"),
     },
   },
   test: {

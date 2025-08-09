@@ -1,13 +1,47 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Login from "./pages/Login/login.component";
+import { Cabins, Login } from "@pages";
+import { AppLayout } from "@ui/layouts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // staleTime: 60 * 1000, // Amount of time the data will be on cache
+      staleTime: 0, // Amount of time the data will be on cache
+    },
+  },
+});
 
 const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="login" element={<Login />} />
-    </Routes>
-  </BrowserRouter>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route index element={<Navigate replace to="cabins" />} />
+          <Route path="cabins" element={<Cabins />} />
+        </Route>
+        <Route path="login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+    <Toaster
+      position="top-center"
+      gutter={12}
+      containerStyle={{ margin: "8px" }}
+      toastOptions={{
+        success: { duration: 3000 },
+        error: { duration: 5000 },
+        style: {
+          fontSize: "16px",
+          maxWidth: "500px",
+          padding: "16px 24px",
+          backgroundColor: "var(--color-grey-0)",
+          color: "var(--color-grey-700)",
+        },
+      }}
+    />
+  </QueryClientProvider>
 );
 
 export default App;

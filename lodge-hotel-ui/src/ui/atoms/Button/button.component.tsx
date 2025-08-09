@@ -7,8 +7,7 @@ const sizes = {
 };
 
 const variations = {
-  primary:
-    "text-gray-600 bg-blue-100 hover:bg-blue-700 hover:text-gray-50 hover:",
+  primary: "text-gray-50 bg-blue-600 hover:bg-blue-700",
   secondary: "",
   danger: "",
 };
@@ -29,7 +28,6 @@ type ButtonProps = {
 const Button: FC<ButtonProps> = ({ variation, size, disabled, children }) => {
   return (
     <button
-      type="button"
       className={`border-none rounded-md shadow-xs hover:cursor-pointer ${getSize(
         size
       )} ${getVariation(variation)}`}

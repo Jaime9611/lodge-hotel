@@ -11,7 +11,9 @@
     "baseUrl": ".",
     "paths": {
       "@features/*": ["src/features/*"],
-      "@ui/*": ["src/ui/*"]
+      "@ui/*": ["src/ui/*"],
+      "@pages": ["src/pages"],
+      "@services": ["src/services"]
     },
 
     /* Bundler mode */

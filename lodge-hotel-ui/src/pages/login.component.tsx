@@ -1,6 +1,6 @@
 import { LoginForm } from "@features/authentication";
-import { LoginLayout } from "@ui/Layouts";
-import { Heading } from "@ui/library";
+import { LoginLayout } from "@ui/layouts";
+import { Heading } from "@ui/atoms";
 
 const Login = () => {
   return (
