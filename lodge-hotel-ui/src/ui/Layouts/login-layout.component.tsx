@@ -6,7 +6,7 @@ type LoginLayoutProps = {
 
 const LoginLayout: FC<LoginLayoutProps> = ({ children }) => {
   return (
-    <main className="h-screen grid col-span-1 w-full content-center justify-center gap-12 bg-grey-50">
+    <main className="h-screen grid w-full content-center justify-center gap-12 bg-grey-50">
       {children}
     </main>
   );

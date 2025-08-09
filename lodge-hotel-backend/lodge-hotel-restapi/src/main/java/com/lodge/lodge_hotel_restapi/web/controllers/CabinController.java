@@ -23,7 +23,7 @@ public class CabinController {
   private final CabinService cabinService;
 
   @GetMapping(Endpoints.CABIN_ID)
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('ROLE_USER')")
   public ResponseEntity<Cabin> getCabin(@PathVariable Long cabinId) {
     return ResponseEntity.ok(cabinService.get(cabinId));
   }

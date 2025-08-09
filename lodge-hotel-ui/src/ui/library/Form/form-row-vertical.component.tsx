@@ -11,7 +11,7 @@ const FormRowVertical: FC<FormRowVerticalProps> = ({
   error,
   children,
 }) => {
-  const formContainerStyles = "flex flex-col gap-0.5 px-1.5 py-0";
+  const formContainerStyles = "flex flex-col gap-0.5 px-1.5 py-3";
 
   if (label === undefined)
     return <div className={formContainerStyles}>{children}</div>;
@@ -19,7 +19,10 @@ const FormRowVertical: FC<FormRowVerticalProps> = ({
   return (
     <div className={formContainerStyles}>
       {label && (
-        <label htmlFor={(children as ReactElement<HTMLInputElement>).props.id}>
+        <label
+          className="pb-2"
+          htmlFor={(children as ReactElement<HTMLInputElement>).props.id}
+        >
           {label}
         </label>
       )}
