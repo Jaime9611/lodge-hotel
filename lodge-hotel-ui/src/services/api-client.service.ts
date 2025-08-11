@@ -68,3 +68,17 @@ abstract class ApiClient {
 }
 
 export default ApiClient;
+
+// TODO: test interceptor
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      console.log("Token has expired. Logging out...");
+      localStorage.removeItem("user");
+      localStorage.removeItem("access_token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);

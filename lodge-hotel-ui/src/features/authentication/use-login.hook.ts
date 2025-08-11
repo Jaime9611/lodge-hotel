@@ -3,17 +3,19 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { apiAuth } from "@services";
 import type { UserModel } from "@models";
+import { useAuth } from "@contexts";
 
 export const useLogin = () => {
   //   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
 
   const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: ({ username, password }: UserModel) =>
       apiAuth.login({ username, password }),
     onSuccess: (data) => {
-      localStorage.setItem("access_token", data.access_token);
+      setAuth(data);
       navigate("/cabins", {
         replace: true,
       });

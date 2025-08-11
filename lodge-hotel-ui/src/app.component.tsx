@@ -4,6 +4,8 @@ import { Cabins, Login } from "@pages";
 import { AppLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import { ProtectedRoute } from "@features/authentication";
+import { AuthProvider } from "@contexts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,13 +19,21 @@ const queryClient = new QueryClient({
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<Navigate replace to="cabins" />} />
-          <Route path="cabins" element={<Cabins />} />
-        </Route>
-        <Route path="login" element={<Login />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route
+            element={
+              <ProtectedRoute matchRole="ROLE_USER">
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate replace to="cabins" />} />
+            <Route path="cabins" element={<Cabins />} />
+          </Route>
+          <Route path="login" element={<Login />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
     <Toaster
       position="top-center"
