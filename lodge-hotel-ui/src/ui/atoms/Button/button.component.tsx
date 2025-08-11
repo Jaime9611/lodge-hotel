@@ -7,7 +7,7 @@ const sizes = {
 };
 
 const variations = {
-  primary: "text-gray-50 bg-blue-600 hover:bg-blue-700",
+  primary: "text-gray-50 bg-primary hover:bg-primary-700",
   secondary: "",
   danger: "",
 };

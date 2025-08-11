@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { apiAuth } from "@services";
-import type { UserModel } from "src/services/api-auth.service";
+import type { UserModel } from "@models";
 
 export const useLogin = () => {
   //   const queryClient = useQueryClient();
@@ -12,8 +12,8 @@ export const useLogin = () => {
   const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: ({ username, password }: UserModel) =>
       apiAuth.login({ username, password }),
-    onSuccess: (user) => {
-      console.log(user);
+    onSuccess: (data) => {
+      localStorage.setItem("access_token", data.access_token);
       navigate("/cabins", {
         replace: true,
       });

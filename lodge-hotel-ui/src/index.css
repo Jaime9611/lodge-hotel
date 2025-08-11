@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: var(--color-blue-600);
+  --color-primary-700: var(--color-blue-700);
+}
+
 body {
   font-family: "Poppins", sans-serif;
   color: var(--color-gray-700);

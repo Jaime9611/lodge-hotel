@@ -1,26 +1,18 @@
 import ApiClient from "./api-client.service";
+import type { LoginResponse, UserModel } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const LOGIN_PATH = "/auth/login";
-
-export interface UserModel {
-  username: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  access_token: string;
-}
 
 class AuthApi extends ApiClient {
   constructor() {
     super(API_BASE_URL);
   }
 
-  async login(user: UserModel): Promise<{ access_token: string } | void> {
+  async login(user: UserModel): Promise<LoginResponse> {
     try {
       return this.post<string, LoginResponse>(
-        `${LOGIN_PATH}?username=testuser&password=123`,
+        `${LOGIN_PATH}?username=${user.username}&password=${user.password}`,
         ""
       );
     } catch (error) {
