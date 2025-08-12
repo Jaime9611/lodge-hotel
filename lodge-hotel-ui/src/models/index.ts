@@ -19,3 +19,11 @@ export interface LoginResponse {
   access_token: string;
   expiresAt: number;
 }
+
+// CABIN MODELS
+
+export interface CabinModel {
+  id: number;
+  name: string;
+  price: number;
+}

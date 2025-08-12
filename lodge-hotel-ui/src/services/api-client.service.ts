@@ -15,6 +15,21 @@ abstract class ApiClient {
   }
 
   protected async request<T>(config: AxiosRequestConfig): Promise<T> {
+    this.instance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          console.log(error.response);
+          if (error.response.statusText === "Unauthorized") {
+            console.log("Token has expired. Logging out...");
+            localStorage.removeItem("user");
+            localStorage.removeItem("access_token");
+            window.location.href = "/login";
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
     try {
       const response = await this.instance.request<T>(config);
 
@@ -65,20 +80,10 @@ abstract class ApiClient {
   ): Promise<void> {
     return this.request({ ...config, method: "DELETE", url });
   }
+
+  protected getToken() {
+    return localStorage.getItem("access_token")?.replace(/"/g, "") ?? "";
+  }
 }
 
 export default ApiClient;
-
-// TODO: test interceptor
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      console.log("Token has expired. Logging out...");
-      localStorage.removeItem("user");
-      localStorage.removeItem("access_token");
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
