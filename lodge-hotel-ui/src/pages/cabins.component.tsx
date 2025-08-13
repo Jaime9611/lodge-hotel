@@ -1,17 +1,16 @@
-import { apiCabin } from "@services";
-import { useQuery } from "@tanstack/react-query";
+import CabinTable from "@features/cabins/cabin-table.component";
+import { Heading } from "@ui/atoms";
 
-type Props = {};
-
-const Cabins = (props: Props) => {
-  const { data: cabin, isPending } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: () => apiCabin.getCabin(1),
-  });
-
-  if (isPending) return <h1>No cabin</h1>;
-
-  return <div>{cabin?.name}</div>;
-};
+// TODO: CREATE COMPONENTS FOR ROW
+const Cabins = () => (
+  <>
+    <div className="flex justify-between items-center">
+      <Heading as="h2">Cabins</Heading>
+    </div>
+    <div className="flex flex-col gap-6">
+      <CabinTable />
+    </div>
+  </>
+);
 
 export default Cabins;

@@ -1,0 +1,57 @@
+import { Table } from "@ui/molecules";
+import CabinRow from "./cabin-row.component";
+import { useQuery } from "@tanstack/react-query";
+import { apiCabin } from "@services";
+
+const CabinTable = () => {
+  const { data: cabin, isPending } = useQuery({
+    queryKey: ["cabins"],
+    queryFn: () => apiCabin.getCabin(1),
+  });
+  //   const { isPending, supplies, totalPages } = useSupplies();
+  //   const [searchParams] = useSearchParams();
+
+  //   if (supplies === undefined || !supplies.length)
+  //     return <Empty resource="insumos" />;
+  if (cabin === undefined) return <h1>No Cabins</h1>;
+
+  //   if (isPending) return <Spinner />;
+  if (isPending) return null;
+
+  //   // SORT
+  //   const sortBy = searchParams.get("sortBy") || "id-asc";
+  //   const [field, direction] = sortBy.split("-");
+  //   const modifier = direction === "asc" ? 1 : -1;
+  //   const sortedSupplies = supplies?.sort((a, b) => {
+  //     if (field == "name") {
+  //       return direction == "asc"
+  //         ? a[field].toLowerCase().localeCompare(b[field].toLowerCase())
+  //         : b[field].toLowerCase().localeCompare(a[field].toLowerCase());
+  //     }
+
+  //     return (a[field] - b[field]) * modifier;
+  //   });
+  return (
+    <Table columns="0.6fr 2.2fr 1fr 1fr">
+      <Table.Header>
+        <div></div>
+        <div>Name</div>
+        <div>Price</div>
+        <div></div>
+      </Table.Header>
+
+      <Table.Body
+        data={Array.of(cabin, cabin)}
+        render={(cabin) => (
+          <CabinRow key={`cabin-table-row-${cabin.id}`} cabin={cabin} />
+        )}
+      />
+
+      <Table.Footer>
+        {/* <Pagination count={totalPages} /> */}pagination...
+      </Table.Footer>
+    </Table>
+  );
+};
+
+export default CabinTable;

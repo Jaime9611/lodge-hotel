@@ -13,14 +13,14 @@ const AppLayout = (props: Props) => {
     >
       <Header />
       <Sidebar />
-      <div className="bg-gray-50 pt-14 px-16 pb-24 overflow-scroll">
+      <main className="bg-gray-50 pt-14 px-16 pb-24 overflow-scroll">
         <div
           className="my-0 mx-auto flex flex-col gap-12"
           style={{ maxWidth: "120rem" }}
         >
           <Outlet />
         </div>
-      </div>
+      </main>
     </div>
   );
 };
