@@ -1,6 +1,6 @@
+import { type FC } from "react";
 import type { CabinModel } from "@models";
 import { Table } from "@ui/molecules";
-import { type FC } from "react";
 
 type CabinRowProps = {
   cabin: CabinModel;

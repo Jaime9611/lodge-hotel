@@ -8,7 +8,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!email || !password) return;
@@ -22,7 +22,7 @@ const LoginForm = () => {
         },
       }
     );
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit}>

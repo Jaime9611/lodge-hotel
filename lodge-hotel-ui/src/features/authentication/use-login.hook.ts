@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { apiAuth } from "@services";
 import type { UserModel } from "@models";
 import { useAuth } from "@contexts";
+import { ROUTES } from "@utils/constants";
 
 export const useLogin = () => {
   //   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export const useLogin = () => {
       apiAuth.login({ username, password }),
     onSuccess: (data) => {
       setAuth(data);
-      navigate("/cabins", {
+      navigate("/", {
         replace: true,
       });
     },

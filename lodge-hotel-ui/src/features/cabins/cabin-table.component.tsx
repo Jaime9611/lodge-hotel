@@ -6,7 +6,7 @@ import { apiCabin } from "@services";
 const CabinTable = () => {
   const { data: cabin, isPending } = useQuery({
     queryKey: ["cabins"],
-    queryFn: () => apiCabin.getCabin(1),
+    queryFn: () => apiCabin.getCabin(1), // TODO: use actual endpoint
   });
   //   const { isPending, supplies, totalPages } = useSupplies();
   //   const [searchParams] = useSearchParams();

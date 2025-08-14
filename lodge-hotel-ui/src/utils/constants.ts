@@ -1,0 +1,19 @@
+export class ROUTES {
+  static readonly dashboard = "dashboard";
+  static readonly dashboard_path = `/${this.dashboard}`;
+
+  static readonly login = "login";
+  static readonly login_path = `/${this.login}`;
+
+  static readonly cabins = "cabins";
+  static readonly cabins_path = `/${this.cabins}`;
+
+  static readonly bookings = "bookings";
+  static readonly bookings_path = `/${this.bookings}`;
+
+  static readonly users = "users";
+  static readonly users_path = `/${this.users}`;
+
+  static readonly settings = "settings";
+  static readonly settings_path = `/${this.settings}`;
+}

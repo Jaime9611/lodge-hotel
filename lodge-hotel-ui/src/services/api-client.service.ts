@@ -1,3 +1,4 @@
+import { ROUTES } from "@utils/constants";
 import axios from "axios";
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 
@@ -24,7 +25,7 @@ abstract class ApiClient {
             console.log("Token has expired. Logging out...");
             localStorage.removeItem("user");
             localStorage.removeItem("access_token");
-            window.location.href = "/login";
+            window.location.href = ROUTES.login_path;
           }
         }
         return Promise.reject(error);

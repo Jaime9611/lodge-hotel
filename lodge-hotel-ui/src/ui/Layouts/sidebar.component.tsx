@@ -1,3 +1,4 @@
+import { ROUTES } from "@utils/constants";
 import type { FC, ReactNode } from "react";
 import {
   HiOutlineBeaker,
@@ -25,31 +26,31 @@ const Sidebar = () => {
       <div className="h-48 w-48 text-center">LOGO</div>
       <ul className="flex flex-col gap-3">
         <li>
-          <CustomNavLink to="/dashboard">
+          <CustomNavLink to={ROUTES.dashboard_path}>
             <HiOutlineHome />
             <span>Home</span>
           </CustomNavLink>
         </li>
         <li>
-          <CustomNavLink to="/cabins">
+          <CustomNavLink to={ROUTES.cabins_path}>
             <HiOutlineHomeModern />
             <span>Cabins</span>
           </CustomNavLink>
         </li>
         <li>
-          <CustomNavLink to="/bookings">
+          <CustomNavLink to={ROUTES.bookings_path}>
             <HiOutlineCalendarDays />
             <span>Bookings</span>
           </CustomNavLink>
         </li>
         <li>
-          <CustomNavLink to="/users">
+          <CustomNavLink to={ROUTES.users_path}>
             <HiOutlineUser />
             <span>Users</span>
           </CustomNavLink>
         </li>
         <li>
-          <CustomNavLink to="/settings">
+          <CustomNavLink to={ROUTES.settings_path}>
             <HiOutlineCog6Tooth />
             <span>Settings</span>
           </CustomNavLink>
