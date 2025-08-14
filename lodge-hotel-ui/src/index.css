@@ -9,3 +9,27 @@ body {
   font-family: "Poppins", sans-serif;
   color: var(--color-gray-700);
 }
+
+/* NAV ITEMS */
+.nav_link:link,
+.nav_link:visited {
+  @apply flex items-center gap-4 text-gray-600 text-xl font-medium py-4 px-7 transition-all;
+}
+
+.nav_link:hover,
+.nav_link:active,
+.nav_link.active:link,
+.nav_link.active:visited {
+  @apply text-gray-800 rounded-sm bg-gray-50;
+}
+
+.nav_link svg {
+  @apply w-7 h-7 text-gray-400 transition-all;
+}
+
+.nav_link:hover svg,
+.nav_link:active svg,
+.nav_link:active:link svg,
+.nav_link:active:visited svg {
+  @apply text-primary;
+}
