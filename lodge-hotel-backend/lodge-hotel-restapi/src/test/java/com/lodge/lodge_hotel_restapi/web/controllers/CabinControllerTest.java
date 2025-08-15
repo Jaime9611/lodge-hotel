@@ -63,7 +63,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_ADMIN"})
+  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
   void testGetCabinById() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
@@ -95,7 +95,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_MANAGER"})
+  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
   void testCreateCabinInvalidRole() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();

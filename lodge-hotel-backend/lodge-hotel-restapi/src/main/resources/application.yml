@@ -7,6 +7,6 @@ server:
 
 spring:
   application:
-    name: lodge-hotel-restapi
+    name: lodge-api
   profiles:
     active: ${PROFILE_ACTIVE}
