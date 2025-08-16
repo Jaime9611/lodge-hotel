@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import { Cabins, Login } from "@pages";
+import { Bookings, Cabins, Dashboard, Login, Settings, Users } from "@pages";
 import { AppLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
@@ -29,8 +29,12 @@ const App = () => (
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate replace to={ROUTES.cabins} />} />
+            <Route index element={<Navigate replace to={ROUTES.dashboard} />} />
+            <Route path={ROUTES.dashboard} element={<Dashboard />} />
             <Route path={ROUTES.cabins} element={<Cabins />} />
+            <Route path={ROUTES.bookings} element={<Bookings />} />
+            <Route path={ROUTES.users} element={<Users />} />
+            <Route path={ROUTES.settings} element={<Settings />} />
           </Route>
           <Route path={ROUTES.login} element={<Login />} />
         </Routes>
