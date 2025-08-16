@@ -1,9 +1,10 @@
 import { type FC } from "react";
 import type { CabinModel } from "@models";
 import { Table } from "@ui/molecules";
-import { HiPencil } from "react-icons/hi2";
+import { HiPencil, HiTrash } from "react-icons/hi2";
 import { Modal } from "@ui/atoms/Modal";
 import { ConfirmDelete } from "@ui/molecules/ConfirmDelete";
+import { IconStackMenu } from "@ui/atoms/IconStack";
 
 type CabinRowProps = {
   cabin: CabinModel;
@@ -19,36 +20,27 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
       <div>{price}</div>
       <div>
         <Modal>
-          <ul className="flex items-center gap-2">
-            <li>
-              <Modal.Open opens="delete">
-                <button
-                  type="button"
-                  className="bg-none p-2 text-lg hover:bg-gray-50 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all "
-                >
-                  <HiPencil />
-                </button>
+          <IconStackMenu>
+            <IconStackMenu.List>
+              <Modal.Open opens="edit">
+                <IconStackMenu.Button icon={<HiPencil />} />
               </Modal.Open>
-            </li>
-            <li>
               <Modal.Open opens="delete">
-                <button
-                  type="button"
-                  className="bg-none p-2 text-lg hover:bg-gray-50 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all"
-                >
-                  <HiPencil />
-                </button>
+                <IconStackMenu.Button icon={<HiTrash />} />
               </Modal.Open>
+            </IconStackMenu.List>
+          </IconStackMenu>
 
-              <Modal.Window name="delete">
-                <ConfirmDelete
-                  resourceName="cabin"
-                  disabled={false}
-                  onConfirm={() => undefined}
-                />
-              </Modal.Window>
-            </li>
-          </ul>
+          <Modal.Window name="edit">
+            <div>Edit Cabin</div>
+          </Modal.Window>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resourceName="cabin"
+              disabled={false}
+              onConfirm={() => undefined}
+            />
+          </Modal.Window>
         </Modal>
       </div>
     </Table.Row>
