@@ -14,14 +14,16 @@ const variations = {
 };
 
 type ButtonProps = {
+  type?: "button" | "submit" | "reset";
   variation?: "primary" | "secondary" | "danger";
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Button: FC<ButtonProps> = ({
+  type = "button",
   variation = "primary",
   size = "small",
   disabled,
@@ -34,6 +36,7 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`border-none rounded-md shadow-xs hover:cursor-pointer ${sizeStyle} ${variationStyle}`}
       disabled={disabled}

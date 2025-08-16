@@ -1,10 +1,10 @@
 import { type FC } from "react";
-import type { CabinModel } from "@models";
-import { Table } from "@ui/molecules";
 import { HiPencil, HiTrash } from "react-icons/hi2";
+import { Table } from "@ui/molecules";
 import { Modal } from "@ui/atoms/Modal";
-import { ConfirmDelete } from "@ui/molecules/ConfirmDelete";
-import { IconStackMenu } from "@ui/atoms/IconStack";
+import { ConfirmDelete } from "@ui/molecules";
+import { IconStackMenu } from "@ui/atoms";
+import type { CabinModel } from "@models";
 
 type CabinRowProps = {
   cabin: CabinModel;

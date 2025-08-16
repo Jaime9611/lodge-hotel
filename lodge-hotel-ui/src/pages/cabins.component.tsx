@@ -1,6 +1,5 @@
-import CabinTable from "@features/cabins/cabin-table.component";
-import { Heading } from "@ui/atoms";
-import { Row } from "@ui/atoms/Row";
+import { CabinTable } from "@features/cabins";
+import { Heading, Row } from "@ui/atoms";
 
 const Cabins = () => (
   <>
