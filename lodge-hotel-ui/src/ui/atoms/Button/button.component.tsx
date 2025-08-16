@@ -1,36 +1,41 @@
 import type { FC, ReactNode } from "react";
 
 const sizes = {
-  small: "text-xl px-1.5 py-3 font-semibold text-center",
-  medium: "text-xl px-2 py-4 font-medium",
+  small: "text-large px-2 py-3 font-semibold text-center",
+  medium: "text-large px-2 py-4 font-medium",
   large: "text-large px-3 py-5 font-medium",
 };
 
 const variations = {
   primary: "text-gray-50 bg-primary hover:bg-primary-700",
-  secondary: "",
-  danger: "",
+  secondary:
+    "text-gray-600 bg-white border border-solid border-gray-200 hover:bg-gray-50",
+  danger: "text-red-100 bg-red-700 hover:bg-red-800",
 };
-
-const getSize = (key: keyof typeof sizes | undefined) =>
-  key ? sizes[key] : "";
-
-const getVariation = (key: keyof typeof variations | undefined) =>
-  key ? variations[key] : variations["primary"];
 
 type ButtonProps = {
   variation?: "primary" | "secondary" | "danger";
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   children: ReactNode;
+  onClick: () => void;
 };
 
-const Button: FC<ButtonProps> = ({ variation, size, disabled, children }) => {
+const Button: FC<ButtonProps> = ({
+  variation = "primary",
+  size = "small",
+  disabled,
+  onClick,
+  children,
+}) => {
+  const sizeStyle = size ? sizes[size] : "";
+
+  const variationStyle = variations[variation];
+
   return (
     <button
-      className={`border-none rounded-md shadow-xs hover:cursor-pointer ${getSize(
-        size
-      )} ${getVariation(variation)}`}
+      onClick={onClick}
+      className={`border-none rounded-md shadow-xs hover:cursor-pointer ${sizeStyle} ${variationStyle}`}
       disabled={disabled}
     >
       {children}

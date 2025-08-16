@@ -16,6 +16,7 @@
       "@services": ["src/services"],
       "@contexts": ["src/contexts"],
       "@utils/*": ["src/utils/*"],
+      "@hooks": ["src/hooks"],
       "@models": ["src/models"]
     },
 
