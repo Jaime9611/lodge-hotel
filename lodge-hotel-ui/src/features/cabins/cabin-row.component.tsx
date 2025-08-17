@@ -5,6 +5,7 @@ import { Modal } from "@ui/atoms/Modal";
 import { ConfirmDelete } from "@ui/molecules";
 import { IconStackMenu } from "@ui/atoms";
 import type { CabinModel } from "@models";
+import CreateCabinForm from "./create-cabin-form.component";
 
 type CabinRowProps = {
   cabin: CabinModel;
@@ -32,7 +33,7 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
           </IconStackMenu>
 
           <Modal.Window name="edit">
-            <div>Edit Cabin</div>
+            <CreateCabinForm cabinToEdit={cabin} />
           </Modal.Window>
           <Modal.Window name="delete">
             <ConfirmDelete

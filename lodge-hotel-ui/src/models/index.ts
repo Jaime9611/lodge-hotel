@@ -1,3 +1,14 @@
+// ---------------- COMMON ----------------
+export interface Page<T> {
+  content: T[];
+  first: boolean;
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+}
+
 // AUTH MODELS
 
 export interface UserModel {
@@ -26,4 +37,27 @@ export interface CabinModel {
   id: number;
   name: string;
   price: number;
+  image: string;
 }
+
+// export interface CabinModel {
+//   id: number;
+//   created_at?: string;
+//   name: string;
+//   maxCapacity: number;
+//   regularPrice: number;
+//   discount: number;
+//   description: string;
+//   image: string;
+// }
+
+export interface CabinModelForm extends Omit<CabinModel, "image" | "id"> {
+  image: FileList | string;
+}
+
+export interface CabinModelFormResult extends Omit<CabinModel, "image" | "id"> {
+  image: File | string;
+  id?: number;
+}
+
+export interface CabinModelPage extends Page<CabinModel> {}

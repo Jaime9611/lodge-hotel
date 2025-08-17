@@ -1,8 +1,16 @@
-import { type FC, type FormEvent, type ReactNode } from "react";
+import {
+  type BaseSyntheticEvent,
+  type FC,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 
 type FormProps = {
   children: ReactNode;
-  onSubmit: (e: FormEvent) => void | (() => void);
+  type?: "modal" | "regular";
+  onSubmit:
+    | ((e?: BaseSyntheticEvent<object, any, any> | undefined) => Promise<void>)
+    | ((e: FormEvent<HTMLFormElement>) => void);
 };
 
 const Form: FC<FormProps> = ({ onSubmit, children }) => {

@@ -1,6 +1,6 @@
-import { Button } from "@ui/atoms";
+import { Button, Input } from "@ui/atoms";
 import { Form, FormRowVertical } from "@ui/atoms/Form";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useLogin } from "./use-login.hook";
 
 const LoginForm = () => {
@@ -8,7 +8,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email || !password) return;
@@ -27,27 +27,29 @@ const LoginForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <FormRowVertical label="Email Address">
-        <input
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        <Input
           type="text"
           id="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.target.value)
+          }
           disabled={isLoading}
         />
       </FormRowVertical>
       <FormRowVertical label="Password">
-        <input
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        <Input
           type="password"
           id="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+          }
           disabled={isLoading}
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button size="large" disabled={isLoading}>
+        <Button type="submit" size="large" disabled={isLoading}>
           Log in
         </Button>
       </FormRowVertical>
