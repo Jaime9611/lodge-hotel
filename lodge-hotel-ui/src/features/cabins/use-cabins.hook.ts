@@ -15,7 +15,7 @@ export const useCabins = () => {
     queryFn: () => apiCabin.getAll(page),
   });
 
-  const { content: cabins, totalPages } = data ?? {};
+  const { content: cabins, totalPages, totalElements: count } = data ?? {};
 
   // PRE-FETCHING
   if (page < (totalPages ?? 0))
@@ -30,5 +30,5 @@ export const useCabins = () => {
       queryFn: () => apiCabin.getAll(page - 1),
     });
 
-  return { isPending, cabins, totalPages };
+  return { isPending, cabins, count };
 };

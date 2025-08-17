@@ -2,6 +2,7 @@ import { PAGE_SIZE } from "@utils/constants";
 import type { FC } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
+import PaginationButton from "./pagination-button.component";
 
 interface PaginationProps {
   count: number | undefined;
@@ -14,7 +15,7 @@ const Pagination: FC<PaginationProps> = ({ count }) => {
     ? 1
     : Number(searchParams.get("page"));
 
-  const pageCount = count ?? 1;
+  const pageCount = Math.ceil(count / PAGE_SIZE);
 
   const nextPage = () => {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
@@ -33,7 +34,7 @@ const Pagination: FC<PaginationProps> = ({ count }) => {
 
   return (
     <div className="w-full flex items-center justify-between">
-      <p className="text-xl ml-3 [&_span]:font-semibold">
+      <p className="text-md ml-3 [&_span]:font-semibold">
         Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
         <span>
           {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
@@ -42,17 +43,16 @@ const Pagination: FC<PaginationProps> = ({ count }) => {
       </p>
 
       <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={previousPage}
-          disabled={currentPage === 1}
-        >
+        <PaginationButton onClick={previousPage} disabled={currentPage === 1}>
           <HiChevronLeft /> <span>Previous</span>
-        </button>
-        <button onClick={nextPage} disabled={currentPage === pageCount}>
+        </PaginationButton>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
           <span>Next</span>
           <HiChevronRight />
-        </button>
+        </PaginationButton>
       </div>
     </div>
   );

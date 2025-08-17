@@ -8,7 +8,7 @@ import { useCabins } from "./use-cabins.hook";
 import { Pagination } from "@ui/atoms";
 
 const CabinTable = () => {
-  const { isPending, cabins, totalPages } = useCabins();
+  const { isPending, cabins, count } = useCabins();
   const [searchParams] = useSearchParams();
 
   // if (cabins === undefined || !cabins.length)
@@ -51,7 +51,7 @@ const CabinTable = () => {
       />
 
       <Table.Footer>
-        <Pagination count={totalPages} />
+        <Pagination count={count} />
       </Table.Footer>
     </Table>
   );

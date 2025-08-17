@@ -4,7 +4,7 @@ import { Row } from "@ui/atoms/Row";
 const Users = () => (
   <>
     <Row>
-      <Heading as="h2">Users</Heading>
+      <Heading as="h1">Users</Heading>
     </Row>
     <Row type="vertical">
       <div>TABLE</div>
