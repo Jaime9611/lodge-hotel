@@ -2,8 +2,6 @@ import { type FC } from "react";
 
 import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
-// import { useCreateCabin } from "./use-create-cabin.hook";
-// import { useEditCabin } from "./use-edit-cabin.hook";
 import { Button, Form, FormRowVertical, Input, Stack } from "@ui/atoms";
 import type { CabinModelForm, CabinModelFormResult } from "@models";
 import { useCreateCabin } from "./use-create-cabin.hook";
@@ -35,8 +33,9 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
   const { errors } = formState; // Form Errors
 
   const onSubmit = (data: CabinModelForm) => {
-    const image =
-      typeof data.image === "string" ? data.image : (data.image[0] as File);
+    // const image =
+    //   typeof data.image === "string" ? data.image : (data.image[0] as File);
+    const image = "";
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
@@ -77,8 +76,10 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
         <Input
           type="text"
           id="name"
-          disabled={false}
-          {...register("name", { required: "This field is required" })}
+          disabled={isWorking}
+          register={{
+            ...register("name", { required: "This field is required" }),
+          }}
         />
       </FormRowVertical>
       {/* // TODO: CHANGE TO REGULAR PRICE */}
@@ -86,11 +87,13 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
         <Input
           type="number"
           id="price"
-          disabled={false}
-          {...register("price", {
-            required: "This field is required",
-            min: { value: 1, message: "Price should be at least 1" },
-          })}
+          disabled={isWorking}
+          register={{
+            ...register("price", {
+              required: "This field is required",
+              min: { value: 1, message: "Price should be at least 1" },
+            }),
+          }}
         />
       </FormRowVertical>
       <Stack columns="24rem 1fr 1.2fr">
@@ -102,7 +105,7 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
         >
           Cancel
         </Button>
-        <Button variation="primary" disabled={false}>
+        <Button type="submit" variation="primary" disabled={isWorking}>
           {isEditSession ? "Edit cabin" : "Create new cabin"}
         </Button>
       </Stack>

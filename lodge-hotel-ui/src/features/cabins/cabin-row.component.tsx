@@ -6,6 +6,8 @@ import { ConfirmDelete } from "@ui/molecules";
 import { IconStackMenu } from "@ui/atoms";
 import type { CabinModel } from "@models";
 import CreateCabinForm from "./create-cabin-form.component";
+import { useDeleteCabin } from "./use-delete-cabin.hook";
+import { useCreateCabin } from "./use-create-cabin.hook";
 
 type CabinRowProps = {
   cabin: CabinModel;
@@ -13,6 +15,10 @@ type CabinRowProps = {
 
 const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
   const { id, name, price } = cabin;
+
+  const { isDeleting, deleteCabin } = useDeleteCabin();
+  // const { isCreating, createCabin } = useCreateCabin();
+
   return (
     <Table.Row>
       <div className="text-xl text-gray-600 font-medium">{`CBN-${id}`}</div>
@@ -38,8 +44,8 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
           <Modal.Window name="delete">
             <ConfirmDelete
               resourceName="cabin"
-              disabled={false}
-              onConfirm={() => undefined}
+              disabled={isDeleting}
+              onConfirm={() => deleteCabin(id)}
             />
           </Modal.Window>
         </Modal>
