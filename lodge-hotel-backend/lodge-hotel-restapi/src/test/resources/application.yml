@@ -9,6 +9,9 @@ spring:
     init:
       mode: never
 
+server:
+  port: 8090
+
 keyStore:
   path: keystore.jks
   password: password
