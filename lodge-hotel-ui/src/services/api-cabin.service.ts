@@ -10,7 +10,7 @@ class CabinsApi extends ApiClient {
     super(API_BASE_URL);
   }
 
-  async getAllSupplies(pageNumber?: number): Promise<CabinModelPage> {
+  async getAll(pageNumber?: number): Promise<CabinModelPage> {
     let url = `${CABIN_PATH}`;
 
     if (pageNumber)

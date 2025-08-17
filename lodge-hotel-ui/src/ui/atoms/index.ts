@@ -6,3 +6,4 @@ export * from "./IconStack";
 export * from "./Row";
 export * from "./Stack";
 export * from "./Input";
+export * from "./Pagination";

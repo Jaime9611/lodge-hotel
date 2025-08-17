@@ -1,19 +1,22 @@
+import { useSearchParams } from "react-router-dom";
+
 import { Table } from "@ui/molecules";
 import CabinRow from "./cabin-row.component";
 import { useQuery } from "@tanstack/react-query";
 import { apiCabin } from "@services";
+import { useCabins } from "./use-cabins.hook";
+import { Pagination } from "@ui/atoms";
 
 const CabinTable = () => {
-  const { data: cabin, isPending } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: () => apiCabin.getCabin(1), // TODO: use actual endpoint
-  });
-  //   const { isPending, supplies, totalPages } = useSupplies();
-  //   const [searchParams] = useSearchParams();
+  const { isPending, cabins, totalPages } = useCabins();
+  const [searchParams] = useSearchParams();
 
-  //   if (supplies === undefined || !supplies.length)
-  //     return <Empty resource="insumos" />;
-  if (cabin === undefined) return <h1>No Cabins</h1>;
+  // if (cabins === undefined || !cabins.length)
+  //   return <Empty resource="cabins" />;
+
+  // if (isPending) return <Spinner />;
+
+  if (cabins === undefined) return <h1>No Cabins</h1>;
 
   //   if (isPending) return <Spinner />;
   if (isPending) return null;
@@ -22,7 +25,7 @@ const CabinTable = () => {
   //   const sortBy = searchParams.get("sortBy") || "id-asc";
   //   const [field, direction] = sortBy.split("-");
   //   const modifier = direction === "asc" ? 1 : -1;
-  //   const sortedSupplies = supplies?.sort((a, b) => {
+  //   const sortedCabins = cabins?.sort((a, b) => {
   //     if (field == "name") {
   //       return direction == "asc"
   //         ? a[field].toLowerCase().localeCompare(b[field].toLowerCase())
@@ -41,14 +44,14 @@ const CabinTable = () => {
       </Table.Header>
 
       <Table.Body
-        data={Array.of(cabin, cabin)}
+        data={cabins}
         render={(cabin) => (
           <CabinRow key={`cabin-table-row-${cabin.id}`} cabin={cabin} />
         )}
       />
 
       <Table.Footer>
-        {/* <Pagination count={totalPages} /> */}pagination...
+        <Pagination count={totalPages} />
       </Table.Footer>
     </Table>
   );
