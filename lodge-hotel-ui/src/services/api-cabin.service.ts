@@ -39,16 +39,13 @@ class CabinsApi extends ApiClient {
     newCabin: CabinModel | CabinModelFormResult,
     id?: number
   ): Promise<boolean> {
-    let query = () => {};
-
-    if (!id)
-      query = async () =>
+    try {
+      if (!id)
         await this.post<CabinModelFormResult, void>(`${CABIN_PATH}`, newCabin, {
           headers: { Authorization: `Bearer ${this.getToken()}` },
         });
 
-    if (id)
-      query = async () =>
+      if (id)
         await this.update<CabinModel>(
           `${CABIN_PATH}/${id}`,
           newCabin as CabinModel,
@@ -56,9 +53,6 @@ class CabinsApi extends ApiClient {
             headers: { Authorization: `Bearer ${this.getToken()}` },
           }
         );
-
-    try {
-      query();
     } catch (error) {
       console.error(error);
       throw Error("Cabin could not be created.");

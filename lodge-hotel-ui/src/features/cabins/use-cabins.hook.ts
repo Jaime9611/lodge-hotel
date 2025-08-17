@@ -20,13 +20,13 @@ export const useCabins = () => {
   // PRE-FETCHING
   if (page < (totalPages ?? 0))
     queryClient.prefetchQuery({
-      queryKey: ["supplies", page + 1],
+      queryKey: ["cabins", page + 1],
       queryFn: () => apiCabin.getAll(page + 1),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["supplies", page - 1],
+      queryKey: ["cabins", page - 1],
       queryFn: () => apiCabin.getAll(page - 1),
     });
 

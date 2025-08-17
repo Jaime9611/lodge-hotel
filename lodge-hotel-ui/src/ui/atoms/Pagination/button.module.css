@@ -1,0 +1,46 @@
+.btn {
+  background-color: var(--color-grey-50);
+  color: "inherit";
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-md);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s;
+}
+
+button.btn:active {
+  color: var(--color-primary-50);
+}
+
+button.btn:active {
+  background-color: var(--color-primary-600);
+}
+
+button.btn:has(span:last-child) {
+  padding-left: 0.4rem;
+}
+
+button.btn:has(span:first-child) {
+  padding-right: 0.4rem;
+}
+
+button.btn svg {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: var(--color-primary-600);
+  color: var(--color-primary-50);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
