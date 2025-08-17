@@ -18,6 +18,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 
 class CabinPersistenceAdapterTest {
@@ -37,21 +41,24 @@ class CabinPersistenceAdapterTest {
   void testGetCabinList() {
     // Arrange
     List<CabinEntity> testCabins = CabinFactory.createCabinEntityList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<CabinEntity> testPage = new PageImpl<>(testCabins, pageable, totalElements );
 
-    given(cabinRepository.findAll()).willReturn(testCabins);
+    given(cabinRepository.findAll(any(PageRequest.class))).willReturn(testPage);
 
     // Act
-    List<Cabin> foundCabins = persistenceAdapter.getAll();
+    Page<Cabin> foundCabins = persistenceAdapter.getAll(PageRequest.of(0, 1));
 
     // Assert
-    assertThat(foundCabins.size()).isEqualTo(2);
-    assertThat(foundCabins.get(0).getId()).isEqualTo(testCabins.get(0).getId());
-    assertThat(foundCabins.get(0).getName()).isEqualTo(testCabins.get(0).getName());
-    assertThat(foundCabins.get(0).getPrice().toString()).isEqualTo(
+    assertThat(foundCabins.getTotalElements()).isEqualTo(2);
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabins.get(0).getId());
+    assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabins.get(0).getName());
+    assertThat(foundCabins.getContent().get(0).getPrice().toString()).isEqualTo(
         testCabins.get(0).getPrice().toString());
-    assertThat(foundCabins.get(1).getId()).isEqualTo(testCabins.get(1).getId());
-    assertThat(foundCabins.get(1).getName()).isEqualTo(testCabins.get(1).getName());
-    assertThat(foundCabins.get(1).getPrice().toString()).isEqualTo(
+    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testCabins.get(1).getId());
+    assertThat(foundCabins.getContent().get(1).getName()).isEqualTo(testCabins.get(1).getName());
+    assertThat(foundCabins.getContent().get(1).getPrice().toString()).isEqualTo(
         testCabins.get(1).getPrice().toString());
   }
 

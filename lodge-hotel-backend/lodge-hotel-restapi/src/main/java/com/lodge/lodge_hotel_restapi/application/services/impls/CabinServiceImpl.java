@@ -6,11 +6,15 @@ import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
+import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
+import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -22,13 +26,26 @@ public class CabinServiceImpl implements CabinService {
   private final CreateCabinPort createCabinPort;
   private final DeleteCabinPort deleteCabinPort;
   private final UpdateCabinPort updateCabinPort;
+  private final PageMapper pageMapper;
+
+  private static final int DEFAULT_PAGE = 0;
+  private static final int DEFAULT_PAGE_SIZE = 25;
+  private static final int PAGE_MAX_SIZE = 500;
+
 
 
   @Override
-  public List<Cabin> getAll() {
+  public PageResponse<Cabin> getAll(String cabinName, Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all cabins was called.", CabinService.class.getSimpleName());
 
-    return readCabinPort.getAll();
+    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+
+    PageResponse<Cabin> cabinPageResponse;
+
+    Page<Cabin> cabinPage = readCabinPort.getAll(pageRequest);
+    cabinPageResponse = pageMapper.pagetoPageResponse(cabinPage);
+
+    return cabinPageResponse;
   }
 
   @Override
@@ -80,5 +97,30 @@ public class CabinServiceImpl implements CabinService {
 
     return readCabinPort.get(id)
         .orElseThrow(() -> new ItemNotFoundException("Cabin with provided ID not found."));
+  }
+
+  private PageRequest buildPageRequest(Integer pageNumber, Integer pageSize) {
+    int queryPageNumber;
+    int queryPageSize;
+
+    if (pageNumber != null && pageNumber > 0) {
+      queryPageNumber = pageNumber - 1;
+    } else {
+      queryPageNumber = DEFAULT_PAGE;
+    }
+
+    if (pageSize == null) {
+      queryPageSize = DEFAULT_PAGE_SIZE;
+    } else {
+      if (pageSize > 500) {
+        queryPageSize = PAGE_MAX_SIZE;
+      } else {
+        queryPageSize = pageSize;
+      }
+    }
+
+    Sort sort = Sort.by(Sort.Order.asc("id"));
+
+    return PageRequest.of(queryPageNumber, queryPageSize, sort);
   }
 }

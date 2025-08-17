@@ -8,11 +8,11 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.CabinMapper;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.CabinRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
@@ -30,11 +30,11 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
   }
 
   @Override
-  public List<Cabin> getAll() {
+  public Page<Cabin> getAll(PageRequest pageRequest) {
 
-    List<CabinEntity> foundCabins = cabinRepository.findAll();
+    Page<CabinEntity> foundCabins = cabinRepository.findAll(pageRequest);
 
-    return foundCabins.stream().map(cabinMapper::cabinEntityToCabin).toList();
+    return foundCabins.map(cabinMapper::cabinEntityToCabin);
   }
 
   @Override

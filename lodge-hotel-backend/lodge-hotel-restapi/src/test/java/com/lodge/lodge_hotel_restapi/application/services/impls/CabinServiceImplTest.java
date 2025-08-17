@@ -14,6 +14,8 @@ import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
+import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
+import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +24,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 class CabinServiceImplTest {
 
@@ -37,6 +43,9 @@ class CabinServiceImplTest {
   @Mock
   UpdateCabinPort updatePort;
 
+  @Mock
+  PageMapper pageMapper;
+
   @Captor
   ArgumentCaptor<Long> idArgumentCaptor;
 
@@ -48,7 +57,7 @@ class CabinServiceImplTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    service = new CabinServiceImpl(readPort, createPort, deletePort, updatePort);
+    service = new CabinServiceImpl(readPort, createPort, deletePort, updatePort, pageMapper);
   }
 
   @Test
@@ -88,15 +97,20 @@ class CabinServiceImplTest {
   void testGetCabinList() {
     // Arrange
     List<Cabin> testCabinList = CabinFactory.createCabinList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<Cabin> testPage = new PageImpl<>(testCabinList, pageable, totalElements );
+    PageResponse.PageResponseBuilder<Cabin> pageResponse= PageResponse.builder();
 
-    given(readPort.getAll()).willReturn(testCabinList);
+    given(readPort.getAll(any(PageRequest.class))).willReturn(testPage);
+    given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(pageResponse.content(testCabinList).build());
 
     // Act
-    List<Cabin> foundCabins = service.getAll();
+    PageResponse<Cabin> foundCabins = service.getAll("test", 1, 5);
 
     // Assert
-    assertThat(foundCabins.get(0).getName()).isEqualTo(testCabinList.get(0).getName());
-    assertThat(foundCabins.get(1).getName()).isEqualTo(testCabinList.get(1).getName());
+    assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabinList.get(0).getName());
+    assertThat(foundCabins.getContent().get(1).getName()).isEqualTo(testCabinList.get(1).getName());
   }
 
   @Test

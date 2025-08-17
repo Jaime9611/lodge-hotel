@@ -18,6 +18,7 @@ import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;
 import com.lodge.lodge_hotel_restapi.config.SecurityConfig;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
+import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -52,6 +53,9 @@ class CabinControllerTest {
   @Mock
   UpdateCabinPort updatePort;
 
+  @Mock
+  PageMapper pageMapper;
+
   @MockitoBean
   CabinService cabinService;
 
@@ -59,7 +63,7 @@ class CabinControllerTest {
 
   @BeforeEach
   void setUp() {
-    cabinServiceImpl = new CabinServiceImpl(readPort, createPort, deletePort, updatePort);
+    cabinServiceImpl = new CabinServiceImpl(readPort, createPort, deletePort, updatePort, pageMapper);
   }
 
   @Test
