@@ -22,5 +22,4 @@ public class Booking {
   private BigDecimal extrasPrice;
   private boolean hasBreakfast;
   private boolean isPaid;
-
 }

@@ -55,11 +55,11 @@ class CabinPersistenceAdapterTest {
     assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabins.get(0).getId());
     assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabins.get(0).getName());
     assertThat(foundCabins.getContent().get(0).getRegularPrice().toString()).isEqualTo(
-        testCabins.get(0).getPrice().toString());
+        testCabins.get(0).getRegularPrice().toString());
     assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testCabins.get(1).getId());
     assertThat(foundCabins.getContent().get(1).getName()).isEqualTo(testCabins.get(1).getName());
     assertThat(foundCabins.getContent().get(1).getRegularPrice().toString()).isEqualTo(
-        testCabins.get(1).getPrice().toString());
+        testCabins.get(1).getRegularPrice().toString());
   }
 
   @Test
@@ -101,7 +101,7 @@ class CabinPersistenceAdapterTest {
     given(cabinRepository.save(any(CabinEntity.class))).willReturn(
         CabinEntity.builder().id(testCabin.getId())
             .name(testCabin.getName())
-            .price(testCabin.getRegularPrice()).build());
+            .regularPrice(testCabin.getRegularPrice()).build());
 
     // Act
     testCabin.setId(null);
@@ -141,6 +141,6 @@ class CabinPersistenceAdapterTest {
 
     assertThat(cabinArgumentCaptor.getValue().getId()).isEqualTo(testCabin.getId());
     assertThat(cabinArgumentCaptor.getValue().getName()).isEqualTo(testCabin.getName());
-    assertThat(cabinArgumentCaptor.getValue().getPrice()).isEqualTo(testCabin.getRegularPrice());
+    assertThat(cabinArgumentCaptor.getValue().getRegularPrice()).isEqualTo(testCabin.getRegularPrice());
   }
 }

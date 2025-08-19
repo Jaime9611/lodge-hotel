@@ -1,6 +1,5 @@
 package com.lodge.lodge_hotel_restapi.persistence.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,14 +7,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @Setter
@@ -23,8 +19,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cabin")
-public class CabinEntity {
+@Table(name = "guest")
+public class GuestEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,21 +28,18 @@ public class CabinEntity {
 
   @NotNull
   @NotBlank
-  @Column(length = 50, columnDefinition = "VARCHAR(50)")
-  private String name;
+  private String fullName;
 
   @NotNull
-  private BigDecimal regularPrice;
+  @NotBlank
+  private String email;
+  private String country;
+  private String countryFlag;
+  private String nationalID;
 
-  @CreationTimestamp
-  @Column(updatable = false)
-  private LocalDateTime createdAt;
-
-  @NotNull
-  private int maxCapacity;
-
-  private BigDecimal discount;
-
-  private String description;
-
+//  @JsonIgnore
+//  @OneToMany(fetch = FetchType.LAZY)
+//  @MapsId("id")
+//  @JoinColumn(name = "id")
+//  private Set<BookingEntity> bookings;
 }
