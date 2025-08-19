@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BookingMapperImpl implements BookingMapper {
 
-  CabinMapper cabinMapper;
-  GuestMapper guestMapper;
+  private final CabinMapper cabinMapper;
+  private final GuestMapper guestMapper;
 
 
   @Override

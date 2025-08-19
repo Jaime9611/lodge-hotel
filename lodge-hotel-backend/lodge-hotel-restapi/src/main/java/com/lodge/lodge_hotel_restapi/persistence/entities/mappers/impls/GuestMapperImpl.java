@@ -3,7 +3,9 @@ package com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls;
 import com.lodge.lodge_hotel_restapi.domain.Guest;
 import com.lodge.lodge_hotel_restapi.persistence.entities.GuestEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.GuestMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GuestMapperImpl implements GuestMapper {
 
   @Override

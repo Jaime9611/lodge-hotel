@@ -10,6 +10,8 @@ import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.BookingMapperImpl;
+import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.CabinMapperImpl;
+import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.GuestMapperImpl;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.BookingRepository;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +31,7 @@ class BookingPersistenceAdapterTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    persistenceAdapter = new BookingPersistenceAdapter(bookingRepository, new BookingMapperImpl());
+    persistenceAdapter = new BookingPersistenceAdapter(bookingRepository, new BookingMapperImpl(new CabinMapperImpl(), new GuestMapperImpl()));
   }
 
   @Test
@@ -46,7 +48,6 @@ class BookingPersistenceAdapterTest {
     verify(bookingRepository).save(bookingArgumentCaptor.capture());
 
     assertThat(bookingArgumentCaptor.getValue().getId()).isEqualTo(testBooking.getId());
-    assertThat(bookingArgumentCaptor.getValue().getName()).isEqualTo(testBooking.getName());
   }
 
   @Test
@@ -69,8 +70,7 @@ class BookingPersistenceAdapterTest {
     Booking testBooking = BookingFactory.createSingleBooking();
 
     given(bookingRepository.save(any(BookingEntity.class))).willReturn(BookingEntity.builder()
-        .id(testBooking.getId())
-        .name(testBooking.getName()).build());
+        .id(testBooking.getId()).build());
 
     // Act
     testBooking.setId(null);
@@ -79,7 +79,6 @@ class BookingPersistenceAdapterTest {
     // Assert
     verify(bookingRepository, times(1)).save(any(BookingEntity.class));
     assertThat(savedBooking.getId()).isNotNull();
-    assertThat(savedBooking.getName()).isEqualTo(testBooking.getName());
   }
 
   @Test
@@ -95,10 +94,8 @@ class BookingPersistenceAdapterTest {
     // Assert
     assertThat(foundBookings.size()).isEqualTo(2);
     assertThat(foundBookings.get(0).getId()).isEqualTo(testBookings.get(0).getId());
-    assertThat(foundBookings.get(0).getName()).isEqualTo(testBookings.get(0).getName());
 
     assertThat(foundBookings.get(1).getId()).isEqualTo(testBookings.get(1).getId());
-    assertThat(foundBookings.get(1).getName()).isEqualTo(testBookings.get(1).getName());
   }
 
   @Test
@@ -129,6 +126,5 @@ class BookingPersistenceAdapterTest {
 
     // Assert
     assertThat(foundBooking.isPresent()).isTrue();
-    assertThat(foundBooking.get().getName()).isEqualTo(testEntity.getName());
   }
 }

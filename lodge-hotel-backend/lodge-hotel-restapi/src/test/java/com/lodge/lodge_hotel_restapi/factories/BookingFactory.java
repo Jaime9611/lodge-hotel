@@ -13,7 +13,6 @@ public class BookingFactory {
   public static Booking createSingleBooking(Long customId) {
     return Booking.builder()
         .id(customId)
-        .name(String.valueOf(NAME + customId))
         .build();
   }
 
@@ -24,7 +23,6 @@ public class BookingFactory {
   public static BookingEntity createSingleBookingEntity(Long customId) {
     return BookingEntity.builder()
         .id(customId)
-        .name(String.valueOf(NAME + customId))
         .build();
   }
 
