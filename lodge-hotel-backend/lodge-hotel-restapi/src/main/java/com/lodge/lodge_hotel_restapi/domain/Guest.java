@@ -12,5 +12,5 @@ public class Guest {
   private String email;
   private String country;
   private String countryFlag;
-  private String nationalID;
+  private String nationalId;
 }

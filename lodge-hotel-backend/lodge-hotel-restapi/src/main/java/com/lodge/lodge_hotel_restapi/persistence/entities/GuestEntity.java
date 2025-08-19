@@ -35,7 +35,7 @@ public class GuestEntity {
   private String email;
   private String country;
   private String countryFlag;
-  private String nationalID;
+  private String nationalId;
 
 //  @JsonIgnore
 //  @OneToMany(fetch = FetchType.LAZY)

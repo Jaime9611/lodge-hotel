@@ -16,7 +16,6 @@ public class BookingMapperImpl implements BookingMapper {
 
     BookingEntity.BookingEntityBuilder entity = BookingEntity.builder();
     entity.id(booking.getId());
-    entity.name(booking.getName());
 
     return entity.build();
   }
@@ -29,7 +28,6 @@ public class BookingMapperImpl implements BookingMapper {
 
     Booking.BookingBuilder domain = Booking.builder();
     domain.id(entity.getId());
-    domain.name(entity.getName());
 
     return domain.build();
   }
