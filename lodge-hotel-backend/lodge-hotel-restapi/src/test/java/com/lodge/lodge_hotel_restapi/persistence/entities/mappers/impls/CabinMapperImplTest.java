@@ -34,7 +34,7 @@ class CabinMapperImplTest {
     // Assert
     assertThat(domainResult.getId()).isEqualTo(entity.getId());
     assertThat(domainResult.getName()).isEqualTo(entity.getName());
-    assertThat(domainResult.getPrice()).isEqualTo(entity.getPrice());
+    assertThat(domainResult.getRegularPrice()).isEqualTo(entity.getPrice());
   }
 
   @Test

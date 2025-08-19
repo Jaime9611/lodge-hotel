@@ -76,7 +76,7 @@ public class CabinServiceImpl implements CabinService {
     Cabin foundCabin = findByCabinId(id);
 
     foundCabin.setName(cabin.getName());
-    foundCabin.setPrice(cabin.getPrice());
+    foundCabin.setRegularPrice(cabin.getRegularPrice());
 
     updateCabinPort.update(foundCabin);
   }

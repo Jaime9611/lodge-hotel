@@ -17,7 +17,7 @@ public class CabinMapperImpl implements CabinMapper {
     CabinEntity.CabinEntityBuilder entity = CabinEntity.builder();
     entity.id(cabin.getId());
     entity.name(cabin.getName());
-    entity.price(cabin.getPrice());
+    entity.price(cabin.getRegularPrice());
 
     return entity.build();
   }
@@ -31,7 +31,7 @@ public class CabinMapperImpl implements CabinMapper {
     Cabin.CabinBuilder cabin = Cabin.builder();
     cabin.id(entity.getId());
     cabin.name(entity.getName());
-    cabin.price(entity.getPrice());
+    cabin.regularPrice(entity.getPrice());
 
     return cabin.build();
   }

@@ -16,7 +16,7 @@ public class CabinFactory {
     return Cabin.builder()
         .id(customId)
         .name(String.valueOf(NAME + customId))
-        .price(BigDecimal.valueOf(PRICE))
+        .regularPrice(BigDecimal.valueOf(PRICE))
         .build();
   }
 

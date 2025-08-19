@@ -54,11 +54,11 @@ class CabinPersistenceAdapterTest {
     assertThat(foundCabins.getTotalElements()).isEqualTo(2);
     assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabins.get(0).getId());
     assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabins.get(0).getName());
-    assertThat(foundCabins.getContent().get(0).getPrice().toString()).isEqualTo(
+    assertThat(foundCabins.getContent().get(0).getRegularPrice().toString()).isEqualTo(
         testCabins.get(0).getPrice().toString());
     assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testCabins.get(1).getId());
     assertThat(foundCabins.getContent().get(1).getName()).isEqualTo(testCabins.get(1).getName());
-    assertThat(foundCabins.getContent().get(1).getPrice().toString()).isEqualTo(
+    assertThat(foundCabins.getContent().get(1).getRegularPrice().toString()).isEqualTo(
         testCabins.get(1).getPrice().toString());
   }
 
@@ -101,7 +101,7 @@ class CabinPersistenceAdapterTest {
     given(cabinRepository.save(any(CabinEntity.class))).willReturn(
         CabinEntity.builder().id(testCabin.getId())
             .name(testCabin.getName())
-            .price(testCabin.getPrice()).build());
+            .price(testCabin.getRegularPrice()).build());
 
     // Act
     testCabin.setId(null);
@@ -111,7 +111,7 @@ class CabinPersistenceAdapterTest {
     verify(cabinRepository, times(1)).save(any(CabinEntity.class));
     assertThat(savedCabin.getId()).isNotNull();
     assertThat(savedCabin.getName()).isEqualTo(testCabin.getName());
-    assertThat(savedCabin.getPrice()).isEqualTo(testCabin.getPrice());
+    assertThat(savedCabin.getRegularPrice()).isEqualTo(testCabin.getRegularPrice());
   }
 
   @Test
@@ -141,6 +141,6 @@ class CabinPersistenceAdapterTest {
 
     assertThat(cabinArgumentCaptor.getValue().getId()).isEqualTo(testCabin.getId());
     assertThat(cabinArgumentCaptor.getValue().getName()).isEqualTo(testCabin.getName());
-    assertThat(cabinArgumentCaptor.getValue().getPrice()).isEqualTo(testCabin.getPrice());
+    assertThat(cabinArgumentCaptor.getValue().getPrice()).isEqualTo(testCabin.getRegularPrice());
   }
 }

@@ -75,7 +75,7 @@ class CabinServiceImplTest {
     verify(updatePort).update(cabinArgumentCaptor.capture());
     assertThat(cabinArgumentCaptor.getValue().getId()).isEqualTo(testCabin.getId());
     assertThat(cabinArgumentCaptor.getValue().getName()).isEqualTo(testCabin.getName());
-    assertThat(cabinArgumentCaptor.getValue().getPrice()).isEqualTo(testCabin.getPrice());
+    assertThat(cabinArgumentCaptor.getValue().getRegularPrice()).isEqualTo(testCabin.getRegularPrice());
   }
 
   @Test
