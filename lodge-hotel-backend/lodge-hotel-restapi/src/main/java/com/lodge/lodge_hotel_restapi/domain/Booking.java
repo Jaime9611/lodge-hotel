@@ -15,8 +15,8 @@ public class Booking {
   private LocalDateTime endDate;
   private int numGuests;
   private BookingStatus status;
-  private Long guestId;
-  private Long cabinId;
+  private Guest guest;
+  private Cabin cabin;
 //  private BigDecimal cabinPrice;
   private BigDecimal extrasPrice;
   private boolean hasBreakfast;
