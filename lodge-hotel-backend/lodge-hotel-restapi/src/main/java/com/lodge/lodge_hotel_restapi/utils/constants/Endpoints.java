@@ -4,8 +4,15 @@ public class Endpoints {
 
   public static final String BASE_URL = "/api/v1";
 
+  // CABINS
+
   public static final String CABIN = BASE_URL + "/cabin";
   public static final String CABIN_ID = "/{cabinId}";
+
+
+  // BOOKINGS
+  public static final String BOOKING = BASE_URL + "/booking";
+  public static final String BOOKING_ID = "/{bookingId}";
 
   // Private constructor to prevent instantiation
   private Endpoints() {

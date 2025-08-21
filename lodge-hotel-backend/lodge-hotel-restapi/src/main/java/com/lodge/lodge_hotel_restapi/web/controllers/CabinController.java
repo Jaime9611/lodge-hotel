@@ -28,7 +28,7 @@ public class CabinController {
 
   private final CabinService cabinService;
 
-  @GetMapping()
+  @GetMapping
   @PreAuthorize("hasRole('ROLE_USER')")
   public ResponseEntity<PageResponse<Cabin>> getAll(@RequestParam(required = false) String cabinName,
       @RequestParam(required = false) Integer pageNumber,

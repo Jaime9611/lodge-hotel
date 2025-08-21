@@ -36,7 +36,11 @@ export interface LoginResponse {
 export interface CabinModel {
   id: number;
   name: string;
-  price: number;
+  regularPrice: number;
+  maxCapacity: number;
+  createdAt: string;
+  discount: number;
+  description: string;
   image: string;
 }
 

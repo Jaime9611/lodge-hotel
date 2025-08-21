@@ -18,6 +18,10 @@ public class CabinMapperImpl implements CabinMapper {
     entity.id(cabin.getId());
     entity.name(cabin.getName());
     entity.regularPrice(cabin.getRegularPrice());
+    entity.maxCapacity(cabin.getMaxCapacity());
+    entity.createdAt(cabin.getCreatedAt());
+    entity.description(cabin.getDescription());
+    entity.discount(cabin.getDiscount());
 
     return entity.build();
   }
@@ -32,6 +36,10 @@ public class CabinMapperImpl implements CabinMapper {
     cabin.id(entity.getId());
     cabin.name(entity.getName());
     cabin.regularPrice(entity.getRegularPrice());
+    cabin.maxCapacity(entity.getMaxCapacity());
+    cabin.createdAt(entity.getCreatedAt());
+    cabin.description(entity.getDescription());
+    cabin.discount(entity.getDiscount());
 
     return cabin.build();
   }

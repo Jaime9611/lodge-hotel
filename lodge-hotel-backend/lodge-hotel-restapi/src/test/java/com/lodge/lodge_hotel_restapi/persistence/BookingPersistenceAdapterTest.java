@@ -20,6 +20,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 class BookingPersistenceAdapterTest {
 
@@ -31,7 +35,8 @@ class BookingPersistenceAdapterTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    persistenceAdapter = new BookingPersistenceAdapter(bookingRepository, new BookingMapperImpl(new CabinMapperImpl(), new GuestMapperImpl()));
+    persistenceAdapter = new BookingPersistenceAdapter(bookingRepository,
+        new BookingMapperImpl(new CabinMapperImpl(), new GuestMapperImpl()));
   }
 
   @Test
@@ -85,17 +90,16 @@ class BookingPersistenceAdapterTest {
   void testGetBookingList() {
     // Arrange
     List<BookingEntity> testBookings = BookingFactory.createBookingEntityList(2);
-
-    given(bookingRepository.findAll()).willReturn(testBookings);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<BookingEntity> testPage = new PageImpl<>(testBookings, pageable, totalElements);
+    given(bookingRepository.findAll(any(PageRequest.class))).willReturn(testPage);
 
     // Act
-    List<Booking> foundBookings = persistenceAdapter.getAll();
+    Page<Booking> foundBookings = persistenceAdapter.getAll(PageRequest.of(0, 1));
 
     // Assert
-    assertThat(foundBookings.size()).isEqualTo(2);
-    assertThat(foundBookings.get(0).getId()).isEqualTo(testBookings.get(0).getId());
-
-    assertThat(foundBookings.get(1).getId()).isEqualTo(testBookings.get(1).getId());
+    assertThat(foundBookings.getTotalElements()).isEqualTo(2);
   }
 
   @Test

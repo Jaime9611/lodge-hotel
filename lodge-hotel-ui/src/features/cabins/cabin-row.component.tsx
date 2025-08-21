@@ -7,24 +7,25 @@ import { IconStackMenu } from "@ui/atoms";
 import type { CabinModel } from "@models";
 import CreateCabinForm from "./create-cabin-form.component";
 import { useDeleteCabin } from "./use-delete-cabin.hook";
-import { useCreateCabin } from "./use-create-cabin.hook";
+import { formatCurrency } from "@utils/helpers";
 
 type CabinRowProps = {
   cabin: CabinModel;
 };
 
 const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
-  const { id, name, price } = cabin;
+  const { id, name, regularPrice, maxCapacity, discount } = cabin;
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  // const { isCreating, createCabin } = useCreateCabin();
 
   return (
     <Table.Row>
       <div className="text-xl text-gray-600 font-medium">{`CBN-${id}`}</div>
       <div>{name}</div>
       {/* <Price>{formatCurrency(regularPrice)}</Price> */}
-      <div>{price}</div>
+      <div>{maxCapacity}</div>
+      <div>{formatCurrency(regularPrice)}</div>
+      {discount ? <div>{formatCurrency(discount)}</div> : <span>&mdash;</span>}
       <div>
         <Modal>
           <IconStackMenu>
