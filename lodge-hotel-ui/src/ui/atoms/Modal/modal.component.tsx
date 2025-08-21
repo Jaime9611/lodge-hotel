@@ -63,7 +63,6 @@ interface OpenProps {
 const Open: FC<OpenProps> = ({ children, opens: opensWindowName }) => {
   const { open } = useContext(ModalContext);
 
-  // Dont oversuse this function
   return cloneElement(children, {
     onClick: () => open(opensWindowName),
   });

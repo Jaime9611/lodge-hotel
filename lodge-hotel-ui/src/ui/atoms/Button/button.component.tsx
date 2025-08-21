@@ -10,7 +10,7 @@ const variations = {
   primary: "text-gray-50 bg-primary hover:bg-primary-700",
   secondary:
     "text-gray-600 bg-white border border-solid border-gray-200 hover:bg-gray-50",
-  danger: "text-red-100 bg-red-700 hover:bg-red-800",
+  danger: "text-red-100 bg-red-600 hover:bg-red-700",
 };
 
 type ButtonProps = {

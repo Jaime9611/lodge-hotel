@@ -20,7 +20,7 @@ const FormRowVertical: FC<FormRowVerticalProps> = ({
     <div className={formContainerStyles}>
       {label && (
         <label
-          className="pb-2"
+          className="pb-2 font-semibold"
           htmlFor={(children as ReactElement<HTMLInputElement>).props.id}
         >
           {label}
@@ -28,7 +28,7 @@ const FormRowVertical: FC<FormRowVerticalProps> = ({
       )}
       {children}
       {/* TODO: ADD COMPONENT FOR THIS */}
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-500 pl-3 text-sm">{error}</p>}
     </div>
   );
 };

@@ -2,7 +2,14 @@ import { type FC } from "react";
 
 import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
-import { Button, Form, FormRowVertical, Input, Stack } from "@ui/atoms";
+import {
+  Button,
+  Form,
+  FormRowVertical,
+  Input,
+  Stack,
+  TextArea,
+} from "@ui/atoms";
 import type { CabinModelForm, CabinModelFormResult } from "@models";
 import { useCreateCabin } from "./use-create-cabin.hook";
 import { useEditCabin } from "./use-edit-cabin.hook";
@@ -82,17 +89,60 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
           }}
         />
       </FormRowVertical>
-      {/* // TODO: CHANGE TO REGULAR PRICE */}
-      <FormRowVertical label="Regular price" error={errors?.price?.message}>
+      <FormRowVertical
+        label="Maximum Capacity"
+        error={errors?.maxCapacity?.message}
+      >
+        <Input
+          type="number"
+          id="maxCapacity"
+          disabled={isWorking}
+          register={{
+            ...register("maxCapacity", {
+              required: "This field is required",
+              min: { value: 1, message: "Capacity should be at least 1" },
+            }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical
+        label="Regular price"
+        error={errors?.regularPrice?.message}
+      >
         <Input
           type="number"
           id="price"
           disabled={isWorking}
           register={{
-            ...register("price", {
+            ...register("regularPrice", {
               required: "This field is required",
               min: { value: 1, message: "Price should be at least 1" },
             }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical label="Discount" error={errors?.discount?.message}>
+        <Input
+          type="number"
+          id="discount"
+          disabled={isWorking}
+          register={{
+            ...register("discount", {
+              required: "This field is required",
+              validate: (value) =>
+                +value <= +getValues().regularPrice ||
+                "Discount should be less than regular price",
+            }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical label="Description" error={errors?.name?.message}>
+        <TextArea
+          id="description"
+          disabled={isWorking}
+          defaultValue=""
+          register={{
+            ...register("description", { required: "This field is required" }),
           }}
         />
       </FormRowVertical>

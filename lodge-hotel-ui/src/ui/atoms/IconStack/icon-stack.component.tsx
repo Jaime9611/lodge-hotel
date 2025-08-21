@@ -16,7 +16,7 @@ const Button: FC<ButtonProps> = ({ icon, onClick }) => (
     <button
       onClick={onClick}
       type="button"
-      className="bg-none p-2 text-lg hover:bg-gray-50 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all "
+      className="bg-none p-2 text-lg hover:bg-primary-100 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all "
     >
       {icon}
     </button>
