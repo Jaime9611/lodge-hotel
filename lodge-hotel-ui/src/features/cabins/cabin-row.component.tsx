@@ -22,7 +22,6 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
     <Table.Row>
       <div className="text-xl text-gray-600 font-medium">{`CBN-${id}`}</div>
       <div>{name}</div>
-      {/* <Price>{formatCurrency(regularPrice)}</Price> */}
       <div>{maxCapacity}</div>
       <div>{formatCurrency(regularPrice)}</div>
       {discount ? <div>{formatCurrency(discount)}</div> : <span>&mdash;</span>}
