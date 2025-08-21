@@ -22,3 +22,9 @@
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
   animation: spin 1.5s infinite linear;
 }
+
+.mini {
+  width: 2.4rem;
+  height: 2.4rem;
+  animation: spin 1.5s infinite linear;
+}

@@ -1,6 +1,7 @@
 export * from "./Heading";
 export * from "./Form";
 export * from "./Button";
+export * from "./ButtonIcon";
 export * from "./Modal";
 export * from "./IconStack";
 export * from "./Row";

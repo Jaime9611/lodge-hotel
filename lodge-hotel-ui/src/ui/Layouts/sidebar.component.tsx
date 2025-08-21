@@ -43,12 +43,12 @@ const Sidebar = () => {
             <span>Bookings</span>
           </CustomNavLink>
         </li>
-        <li>
+        {/* <li>
           <CustomNavLink to={ROUTES.users_path}>
             <HiOutlineUser />
             <span>Users</span>
           </CustomNavLink>
-        </li>
+        </li> */}
         <li>
           <CustomNavLink to={ROUTES.settings_path}>
             <HiOutlineCog6Tooth />
