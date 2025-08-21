@@ -9,7 +9,6 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,7 +32,6 @@ public class CabinServiceImpl implements CabinService {
   private static final int PAGE_MAX_SIZE = 500;
 
 
-
   @Override
   public PageResponse<Cabin> getAll(String cabinName, Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all cabins was called.", CabinService.class.getSimpleName());
@@ -51,11 +49,9 @@ public class CabinServiceImpl implements CabinService {
   @Override
   public Cabin get(Long id) {
     log.debug("{} - Get by id was called with {}", CabinService.class.getSimpleName(),
-        String.valueOf(id));
+        id);
 
-    Optional<Cabin> result = readCabinPort.get(id);
-
-    return result.orElse(null);
+    return findByCabinId(id);
   }
 
   @Override
@@ -71,7 +67,7 @@ public class CabinServiceImpl implements CabinService {
   @Override
   public void update(Long id, Cabin cabin) {
     log.debug("{} - Update was called with {}", CabinService.class.getSimpleName(),
-        String.valueOf(id));
+        id);
 
     Cabin foundCabin = findByCabinId(id);
 
@@ -93,7 +89,7 @@ public class CabinServiceImpl implements CabinService {
 
   private Cabin findByCabinId(Long id) {
     log.debug("{} - FinById was called with {}", CabinService.class.getSimpleName(),
-        String.valueOf(id));
+        id);
 
     return readCabinPort.get(id)
         .orElseThrow(() -> new ItemNotFoundException("Cabin with provided ID not found."));
