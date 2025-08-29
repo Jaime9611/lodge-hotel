@@ -9,7 +9,7 @@ export interface Page<T> {
   number: number;
 }
 
-// AUTH MODELS
+// ---------------- AUTH MODELS ----------------
 
 export interface UserModel {
   username: string;
@@ -31,7 +31,7 @@ export interface LoginResponse {
   expiresAt: number;
 }
 
-// CABIN MODELS
+//---------------- CABIN MODELS ----------------
 
 export interface CabinModel {
   id: number;
@@ -65,3 +65,35 @@ export interface CabinModelFormResult extends Omit<CabinModel, "image" | "id"> {
 }
 
 export interface CabinModelPage extends Page<CabinModel> {}
+
+//---------------- GUEST MODELS ----------------
+
+export interface GuestModel {
+  fullName: string;
+  email: string;
+  country: string;
+  countryFlag: string;
+  nationalID: string;
+}
+
+//---------------- BOOKING MODELS ----------------
+
+export interface BookingModel {
+  id: number;
+  createdAt?: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  numGuests: number;
+  totalPrice: number;
+  status: string;
+  guest: GuestModel;
+  cabin: CabinModel;
+  cabinPrice: number;
+  extrasPrice: number;
+  hasBreakfast: boolean;
+  observations: string;
+  isPaid: boolean;
+}
+
+export interface BookingModelPage extends Page<BookingModel> {}

@@ -31,6 +31,7 @@ public class BookingMapperImpl implements BookingMapper {
     entity.endDate(booking.getEndDate());
     entity.hasBreakfast(booking.isHasBreakfast());
     entity.isPaid(booking.isPaid());
+    entity.status(booking.getStatus());
     entity.cabin(cabinMapper.cabinToCabinEntity(booking.getCabin()));
     entity.guest(guestMapper.guestToGuestEntity(booking.getGuest()));
 
@@ -51,6 +52,7 @@ public class BookingMapperImpl implements BookingMapper {
     booking.endDate(entity.getEndDate());
     booking.hasBreakfast(entity.isHasBreakfast());
     booking.isPaid(entity.isPaid());
+    booking.status(entity.getStatus());
     booking.cabin(cabinMapper.cabinEntityToCabin(entity.getCabin()));
     booking.guest(guestMapper.guestEntityToGuest(entity.getGuest()));
 
