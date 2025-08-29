@@ -35,14 +35,14 @@ const BookingRow: FC<BookingRowProps> = ({
 }) => {
   const { isDeleting, deleteBooking } = useDeleteBooking();
 
-  const statusToTagName: { [key: string]: string } = {
-    CHECKED_IN: "red",
+  const statusToTagName: { [key: string]: "blue" | "green" | "silver" } = {
+    CHECKED_IN: "green",
     UNCONFIRMED: "blue",
     CHECKED_OUT: "silver",
   };
 
   return (
-    <Table.Row key={`tag-booking-${bookingId}-${guestName}`}>
+    <Table.Row>
       <div>{cabinName}</div>
       <Stacked>
         <span>{guestName}</span>
@@ -54,7 +54,7 @@ const BookingRow: FC<BookingRowProps> = ({
         <span>{endDate}</span>
       </Stacked>
       <Tag type={statusToTagName[status]}>{status.replace("_", " ")}</Tag>
-      <div>{formatCurrency(totalPrice)}</div>
+      <div>{formatCurrency(123)}</div>
 
       <Modal>
         <IconStackMenu>
