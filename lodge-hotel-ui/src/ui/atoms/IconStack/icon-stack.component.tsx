@@ -21,7 +21,7 @@ const Button: FC<ButtonProps> = ({ icon, onClick, displayText }) => (
     >
       {icon}
     </button>
-    <div className="absolute w-24 bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-primary-600 text-white text-xs text-center rounded px-2 py-2">
+    <div className="absolute hidden group-hover:block -left-1/2 -top-2 transform -translate-x-1/6 -translate-y-full w-24 px-2 py-1 bg-gray-500 rounded-lg text-center text-white text-xs after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-500">
       {displayText}
     </div>
   </li>

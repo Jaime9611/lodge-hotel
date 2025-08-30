@@ -30,10 +30,10 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
           <IconStackMenu>
             <IconStackMenu.List>
               <Modal.Open opens="edit">
-                <IconStackMenu.Button icon={<HiPencil />} />
+                <IconStackMenu.Button displayText="Edit" icon={<HiPencil />} />
               </Modal.Open>
               <Modal.Open opens="delete">
-                <IconStackMenu.Button icon={<HiTrash />} />
+                <IconStackMenu.Button displayText="Delete" icon={<HiTrash />} />
               </Modal.Open>
             </IconStackMenu.List>
           </IconStackMenu>
