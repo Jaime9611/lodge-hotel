@@ -11,3 +11,9 @@ export const formatDistanceFromNow = (dateStr) =>
   })
     .replace("about ", "")
     .replace("in", "In");
+
+export const statusToTagName: { [key: string]: "blue" | "green" | "silver" } = {
+  CHECKED_IN: "green",
+  UNCONFIRMED: "blue",
+  CHECKED_OUT: "silver",
+};

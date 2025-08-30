@@ -22,10 +22,10 @@ class BookingsApi extends ApiClient {
     });
   }
 
-  async getBooking(cabinId: number): Promise<BookingModel> {
+  async getBooking(bookingId: number): Promise<BookingModel> {
     try {
       const response = await this.get<BookingModel>(
-        `${BOOKING_PATH}/${cabinId}`,
+        `${BOOKING_PATH}/${bookingId}`,
         {
           headers: { Authorization: `Bearer ${this.getToken()}` },
         }

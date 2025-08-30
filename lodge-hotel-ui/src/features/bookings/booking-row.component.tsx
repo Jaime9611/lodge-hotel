@@ -11,11 +11,17 @@ import { ConfirmDelete } from "@ui/molecules";
 import { IconStackMenu } from "@ui/atoms";
 import type { BookingModel } from "@models";
 
-import { formatCurrency, formatDistanceFromNow } from "@utils/helpers";
+import {
+  formatCurrency,
+  formatDistanceFromNow,
+  statusToTagName,
+} from "@utils/helpers";
 import { useDeleteBooking } from "./use-delete-booking.hook";
 import Stacked from "@ui/atoms/Stacked/stacked.component";
 import { Tag } from "@ui/atoms/Tag";
 import { format, isToday } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@utils/constants";
 
 type BookingRowProps = {
   booking: BookingModel;
@@ -33,13 +39,8 @@ const BookingRow: FC<BookingRowProps> = ({
     cabin: { name: cabinName },
   },
 }) => {
+  const navigate = useNavigate();
   const { isDeleting, deleteBooking } = useDeleteBooking();
-
-  const statusToTagName: { [key: string]: "blue" | "green" | "silver" } = {
-    CHECKED_IN: "green",
-    UNCONFIRMED: "blue",
-    CHECKED_OUT: "silver",
-  };
 
   return (
     <Table.Row>
@@ -49,7 +50,6 @@ const BookingRow: FC<BookingRowProps> = ({
         <span>{email}</span>
       </Stacked>
       <Stacked>
-        {/* TODO: FORMAT THESE DATES */}
         <span>
           {isToday(new Date(startDate))
             ? "Today"
@@ -66,16 +66,26 @@ const BookingRow: FC<BookingRowProps> = ({
       <Modal>
         <IconStackMenu>
           <IconStackMenu.List>
-            <IconStackMenu.Button icon={<HiEye />} />
+            <IconStackMenu.Button
+              onClick={() => navigate(`${ROUTES.bookings_path}/${bookingId}`)}
+              icon={<HiEye />}
+              displayText="See details"
+            />
             {status === "UNCONFIRMED" && (
-              <IconStackMenu.Button icon={<HiArrowDownOnSquare />} />
+              <IconStackMenu.Button
+                icon={<HiArrowDownOnSquare />}
+                displayText="Check in"
+              />
             )}
             {status === "CHECKED_IN" && (
-              <IconStackMenu.Button icon={<HiArrowUpOnSquare />} />
+              <IconStackMenu.Button
+                icon={<HiArrowUpOnSquare />}
+                displayText="Check out"
+              />
             )}
 
             <Modal.Open opens="delete">
-              <IconStackMenu.Button icon={<HiTrash />} />
+              <IconStackMenu.Button icon={<HiTrash />} displayText="Delete" />
             </Modal.Open>
           </IconStackMenu.List>
         </IconStackMenu>

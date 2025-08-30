@@ -80,7 +80,7 @@ export interface GuestModel {
 
 export interface BookingModel {
   id: number;
-  createdAt?: string;
+  createdAt: string;
   startDate: string;
   endDate: string;
   numNights: number;

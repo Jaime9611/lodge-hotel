@@ -10,6 +10,7 @@ export class ROUTES {
 
   static readonly bookings = "bookings";
   static readonly bookings_path = `/${this.bookings}`;
+  static readonly bookingId_path = `${this.bookings}/:bookingId`;
 
   static readonly users = "users";
   static readonly users_path = `/${this.users}`;

@@ -11,3 +11,4 @@ export * from "./TextArea";
 export * from "./Pagination";
 export * from "./Empty";
 export * from "./Spinner";
+export * from "./DataItem";

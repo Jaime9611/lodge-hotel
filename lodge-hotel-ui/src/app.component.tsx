@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "@features/authentication";
 import { AuthProvider } from "@contexts";
 import { ROUTES } from "@utils/constants";
+import Booking from "./pages/booking.component";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +34,7 @@ const App = () => (
             <Route path={ROUTES.dashboard} element={<Dashboard />} />
             <Route path={ROUTES.cabins} element={<Cabins />} />
             <Route path={ROUTES.bookings} element={<Bookings />} />
+            <Route path={ROUTES.bookingId_path} element={<Booking />} />
             <Route path={ROUTES.users} element={<Users />} />
             <Route path={ROUTES.settings} element={<Settings />} />
           </Route>

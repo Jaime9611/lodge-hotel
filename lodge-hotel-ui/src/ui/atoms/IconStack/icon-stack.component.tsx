@@ -10,16 +10,20 @@ const List: FC<ListProps> = ({ children }) => (
 interface ButtonProps {
   icon: ReactElement;
   onClick?: () => void;
+  displayText: string;
 }
-const Button: FC<ButtonProps> = ({ icon, onClick }) => (
-  <li>
+const Button: FC<ButtonProps> = ({ icon, onClick, displayText }) => (
+  <li className="relative group">
     <button
       onClick={onClick}
       type="button"
-      className="bg-none p-2 text-lg hover:bg-primary-100 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all "
+      className="bg-none p-2 text-lg hover:bg-primary-100 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all"
     >
       {icon}
     </button>
+    <div className="absolute w-24 bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-primary-600 text-white text-xs text-center rounded px-2 py-2">
+      {displayText}
+    </div>
   </li>
 );
 
