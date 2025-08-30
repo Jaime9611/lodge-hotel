@@ -9,7 +9,7 @@ const Tag: FC<TagProps> = ({ type, children }) => {
   const variation = {
     blue: "text-blue-700 bg-blue-100",
     green: "text-green-700 bg-green-100",
-    silver: "text-silver-700 bg-silver-100",
+    silver: "text-slate-700 bg-slate-100",
   };
   return (
     <span

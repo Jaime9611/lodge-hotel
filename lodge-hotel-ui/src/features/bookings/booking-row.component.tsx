@@ -11,10 +11,11 @@ import { ConfirmDelete } from "@ui/molecules";
 import { IconStackMenu } from "@ui/atoms";
 import type { BookingModel } from "@models";
 
-import { formatCurrency } from "@utils/helpers";
+import { formatCurrency, formatDistanceFromNow } from "@utils/helpers";
 import { useDeleteBooking } from "./use-delete-booking.hook";
 import Stacked from "@ui/atoms/Stacked/stacked.component";
 import { Tag } from "@ui/atoms/Tag";
+import { format, isToday } from "date-fns";
 
 type BookingRowProps = {
   booking: BookingModel;
@@ -25,7 +26,6 @@ const BookingRow: FC<BookingRowProps> = ({
     id: bookingId,
     startDate,
     endDate,
-    numNights,
     numGuests,
     totalPrice,
     status,
@@ -50,8 +50,15 @@ const BookingRow: FC<BookingRowProps> = ({
       </Stacked>
       <Stacked>
         {/* TODO: FORMAT THESE DATES */}
-        <span>{startDate}</span>
-        <span>{endDate}</span>
+        <span>
+          {isToday(new Date(startDate))
+            ? "Today"
+            : formatDistanceFromNow(startDate)}{" "}
+        </span>
+        <span>
+          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
+          {format(new Date(endDate), "MMM dd yyyy")}
+        </span>
       </Stacked>
       <Tag type={statusToTagName[status]}>{status.replace("_", " ")}</Tag>
       <div>{formatCurrency(123)}</div>
@@ -60,8 +67,12 @@ const BookingRow: FC<BookingRowProps> = ({
         <IconStackMenu>
           <IconStackMenu.List>
             <IconStackMenu.Button icon={<HiEye />} />
-            <IconStackMenu.Button icon={<HiArrowDownOnSquare />} />
-            <IconStackMenu.Button icon={<HiArrowUpOnSquare />} />
+            {status === "UNCONFIRMED" && (
+              <IconStackMenu.Button icon={<HiArrowDownOnSquare />} />
+            )}
+            {status === "CHECKED_IN" && (
+              <IconStackMenu.Button icon={<HiArrowUpOnSquare />} />
+            )}
 
             <Modal.Open opens="delete">
               <IconStackMenu.Button icon={<HiTrash />} />

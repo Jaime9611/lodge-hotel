@@ -60,6 +60,7 @@ public class CabinController {
   }
 
   @PutMapping(Endpoints.CABIN_ID)
+  @PreAuthorize("hasRole('ROLE_USER')")
   public ResponseEntity<?> updateCabinById(@PathVariable Long cabinId,
       @RequestBody Cabin cabin) {
     log.debug("PUT - Update Cabin by Id: {} in Controller", cabinId);
@@ -69,8 +70,8 @@ public class CabinController {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
-  @PreAuthorize("hasRole('ROLE_USER')")
   @DeleteMapping(Endpoints.CABIN_ID)
+  @PreAuthorize("hasRole('ROLE_USER')")
   public ResponseEntity<?> deleteCabinById(@PathVariable Long cabinId) {
     log.debug("DELETE - Delete Cabin by Id: {} in Controller", cabinId);
 
