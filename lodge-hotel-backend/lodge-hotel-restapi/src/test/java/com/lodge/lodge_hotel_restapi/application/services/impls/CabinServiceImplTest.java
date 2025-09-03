@@ -100,7 +100,7 @@ class CabinServiceImplTest {
     Pageable pageable = PageRequest.of(0, 1);
     long totalElements = 2;
     Page<Cabin> testPage = new PageImpl<>(testCabinList, pageable, totalElements );
-    PageResponse.PageResponseBuilder<Cabin> pageResponse= PageResponse.builder();
+    PageResponse.PageResponseBuilder<Cabin> pageResponse = PageResponse.builder();
 
     given(readPort.getAll(any(PageRequest.class))).willReturn(testPage);
     given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(pageResponse.content(testCabinList).build());
