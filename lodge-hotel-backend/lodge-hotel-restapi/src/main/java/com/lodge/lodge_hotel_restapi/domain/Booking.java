@@ -17,7 +17,7 @@ public class Booking {
   private BookingStatus status;
   private Guest guest;
   private Cabin cabin;
-//  private BigDecimal cabinPrice;
+  //  private BigDecimal cabinPrice;
   private BigDecimal extrasPrice;
   private boolean hasBreakfast;
   private boolean isPaid;
