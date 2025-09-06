@@ -112,7 +112,7 @@ class CabinControllerTest {
     given(cabinService.get(testCabin.getId())).willReturn(testCabin);
 
     // Assert
-    mockMvc.perform(get("/api/v1/cabin/{id}", testCabin.getId())
+    mockMvc.perform(get(Endpoints.CABIN + "/{id}", testCabin.getId())
             .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
@@ -124,7 +124,7 @@ class CabinControllerTest {
     Cabin testCabin = CabinFactory.createSingleCabin();
 
     // Assert
-    mockMvc.perform(put("/api/v1/cabin/{id}", testCabin.getId())
+    mockMvc.perform(put(Endpoints.CABIN + "/{id}", testCabin.getId())
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(testCabin)))
@@ -146,7 +146,7 @@ class CabinControllerTest {
 
     // Assert
     testCabin.setId(null);
-    mockMvc.perform(post("/api/v1/cabin")
+    mockMvc.perform(post(Endpoints.CABIN)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(testCabin)))
@@ -164,7 +164,7 @@ class CabinControllerTest {
 
     // Assert
     testCabin.setId(null);
-    mockMvc.perform(post("/api/v1/cabin")
+    mockMvc.perform(post(Endpoints.CABIN)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(testCabin)))
@@ -178,7 +178,7 @@ class CabinControllerTest {
     Cabin testCabin = CabinFactory.createSingleCabin();
 
     // Assert
-    mockMvc.perform(delete("/api/v1/cabin/{id}", testCabin.getId()))
+    mockMvc.perform(delete(Endpoints.CABIN + "/{id}", testCabin.getId()))
         .andExpect(status().isNoContent());
 
     verify(cabinService, times(1)).delete(idArgumentCaptor.capture());
