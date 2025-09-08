@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 type ProtectedRouteProps = {
   children: ReactNode;
-  matchRole: string;
+  matchRole: string[];
 };
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, matchRole }) => {
   const navigate = useNavigate();
   const { isAuthenticated, role } = useAuth();
 
-  const isAuthorized = role === matchRole;
+  const isAuthorized = matchRole.includes(role);
 
   useEffect(() => {
     if (!isAuthenticated || !isAuthorized) navigate("/login");

@@ -1,4 +1,5 @@
-import { ROUTES } from "@utils/constants";
+import { useAuth } from "@contexts";
+import { ROLE, ROUTES } from "@utils/constants";
 import type { FC, ReactNode } from "react";
 import {
   HiOutlineBeaker,
@@ -21,6 +22,10 @@ const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children }) => (
 );
 
 const Sidebar = () => {
+  const { isAuthenticated, role } = useAuth();
+
+  console.log({ role });
+
   return (
     <aside className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11">
       <div className="h-48 w-48 text-center">LOGO</div>
@@ -43,18 +48,24 @@ const Sidebar = () => {
             <span>Bookings</span>
           </CustomNavLink>
         </li>
-        {/* <li>
-          <CustomNavLink to={ROUTES.users_path}>
-            <HiOutlineUser />
-            <span>Users</span>
-          </CustomNavLink>
-        </li> */}
-        <li>
-          <CustomNavLink to={ROUTES.settings_path}>
-            <HiOutlineCog6Tooth />
-            <span>Settings</span>
-          </CustomNavLink>
-        </li>
+
+        {role === ROLE.MANAGER && (
+          <li>
+            <CustomNavLink to={ROUTES.users_path}>
+              <HiOutlineUser />
+              <span>Users</span>
+            </CustomNavLink>
+          </li>
+        )}
+
+        {role === ROLE.MANAGER && (
+          <li>
+            <CustomNavLink to={ROUTES.settings_path}>
+              <HiOutlineCog6Tooth />
+              <span>Settings</span>
+            </CustomNavLink>
+          </li>
+        )}
       </ul>
     </aside>
   );

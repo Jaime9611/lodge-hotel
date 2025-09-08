@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import ApiClient from "./api-client.service";
 import type { LoginModel, LoginResponse, UserModel } from "@models";
 
@@ -16,8 +17,11 @@ class AuthApi extends ApiClient {
         ""
       );
 
+      const decoded = jwtDecode(response.access_token);
+
+      console.log(decoded);
       return {
-        user: { user: user.username, role: "ROLE_USER" },
+        user: { user: user.username, role: decoded.role[0] },
         access_token: response.access_token,
       };
     } catch (error) {

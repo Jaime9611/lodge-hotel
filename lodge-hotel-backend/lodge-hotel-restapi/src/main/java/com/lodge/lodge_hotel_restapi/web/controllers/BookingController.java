@@ -3,6 +3,7 @@ package com.lodge.lodge_hotel_restapi.web.controllers;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
+import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class BookingController {
   private final BookingService bookingService;
 
   @GetMapping
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<PageResponse<Booking>> getAll(
       @RequestParam(required = false) String cabinName,
       @RequestParam(required = false) Integer pageNumber,
@@ -38,7 +39,7 @@ public class BookingController {
   }
 
   @GetMapping(Endpoints.BOOKING_ID)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<Booking> getCabin(@PathVariable Long bookingId) {
     log.debug("GET - Get Booking by Id: {} in Controller", bookingId);
 
@@ -46,7 +47,7 @@ public class BookingController {
   }
 
   @PutMapping(Endpoints.BOOKING_ID)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<?> updateBookingById(@PathVariable Long bookingId,
       @RequestBody Booking booking) {
     log.debug("PUT - Update Cabin by Id: {} in Controller", bookingId);
@@ -57,7 +58,7 @@ public class BookingController {
   }
 
   @DeleteMapping(Endpoints.BOOKING_ID)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<?> deleteBookingById(@PathVariable Long bookingId) {
     log.debug("DELETE - Delete Cabin by Id: {} in Controller", bookingId);
 

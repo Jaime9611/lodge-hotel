@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "@features/authentication";
 import { AuthProvider } from "@contexts";
-import { ROUTES } from "@utils/constants";
+import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 
 const queryClient = new QueryClient({
@@ -25,7 +25,7 @@ const App = () => (
         <Routes>
           <Route
             element={
-              <ProtectedRoute matchRole="ROLE_USER">
+              <ProtectedRoute matchRole={[ROLE.MANAGER]}>
                 <AppLayout />
               </ProtectedRoute>
             }
