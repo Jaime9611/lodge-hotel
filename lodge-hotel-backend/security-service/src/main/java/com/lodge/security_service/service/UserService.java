@@ -2,6 +2,7 @@ package com.lodge.security_service.service;
 
 import com.lodge.security_service.model.UserEntity;
 import com.lodge.security_service.repository.UserRepository;
+import com.lodge.security_service.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +38,20 @@ public class UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_USER");
+        user.setRole(Constants.ROLE_USER);
+        userRepository.save(user);
+
+        return "User Registered successfully.";
+    }
+
+    public String registerEmployee(UserEntity user) {
+        Optional<UserEntity> userEntity = userRepository.findByUsername(user.getUsername());
+        if (userEntity.isPresent()) {
+            return "Username already taken";
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Constants.ROLE_STAFF);
         userRepository.save(user);
 
         return "User Registered successfully.";

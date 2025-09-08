@@ -18,6 +18,11 @@ public class UserController {
         return ResponseEntity.ok(userService.registerUser(user));
     }
 
+    @PostMapping("/register/employee")
+    public ResponseEntity<?> createEmployee(@RequestBody UserEntity user) {
+        return ResponseEntity.ok(userService.registerEmployee(user));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         return ResponseEntity.ok(userService.login(username, password));
