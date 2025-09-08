@@ -5,14 +5,15 @@ import com.lodge.security_service.repository.UserRepository;
 import com.lodge.security_service.utils.Constants;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer {
   @Bean
-  CommandLineRunner initDatabase(UserRepository userRepository) {
+  CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     return args -> {
-      userRepository.save(new UserEntity(null, "admin@admin.com", "pwd123", Constants.ROLE_MANAGER));
+      userRepository.save(new UserEntity(null, "admin@admin.com", passwordEncoder.encode("pwd123"), Constants.ROLE_MANAGER));
     };
   }
 }

@@ -3,6 +3,7 @@ package com.lodge.lodge_hotel_restapi.web.controllers;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
+import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,9 @@ public class CabinController {
   private final CabinService cabinService;
 
   @GetMapping
-  @PreAuthorize("hasRole('ROLE_USER')")
-  public ResponseEntity<PageResponse<Cabin>> getAll(@RequestParam(required = false) String cabinName,
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
+  public ResponseEntity<PageResponse<Cabin>> getAll(
+      @RequestParam(required = false) String cabinName,
       @RequestParam(required = false) Integer pageNumber,
       @RequestParam(required = false) Integer pageSize) {
     log.debug("GET - All Cabins in Controller");
@@ -39,7 +41,7 @@ public class CabinController {
   }
 
   @GetMapping(Endpoints.CABIN_ID)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<Cabin> getCabin(@PathVariable Long cabinId) {
     log.debug("GET - Get Cabin by Id: {} in Controller", cabinId);
 
@@ -47,7 +49,7 @@ public class CabinController {
   }
 
   @PostMapping
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.MANAGER_ACCESS)
   public ResponseEntity<Void> createCabin(@RequestBody Cabin cabin) {
     log.debug("POST - Create Cabin in Controller");
 
@@ -60,7 +62,7 @@ public class CabinController {
   }
 
   @PutMapping(Endpoints.CABIN_ID)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<?> updateCabinById(@PathVariable Long cabinId,
       @RequestBody Cabin cabin) {
     log.debug("PUT - Update Cabin by Id: {} in Controller", cabinId);
@@ -71,7 +73,7 @@ public class CabinController {
   }
 
   @DeleteMapping(Endpoints.CABIN_ID)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize(UserConstants.MANAGER_ACCESS)
   public ResponseEntity<?> deleteCabinById(@PathVariable Long cabinId) {
     log.debug("DELETE - Delete Cabin by Id: {} in Controller", cabinId);
 
