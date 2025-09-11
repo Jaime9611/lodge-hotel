@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { HiClock, HiPencil, HiTrash } from "react-icons/hi2";
+import { HiClock, HiEye, HiPencil, HiTrash } from "react-icons/hi2";
 import { Table } from "@ui/molecules";
 import { Modal } from "@ui/atoms/Modal";
 import { ConfirmDelete } from "@ui/molecules";
@@ -8,19 +8,22 @@ import type { CabinModel } from "@models";
 import CreateCabinForm from "./create-cabin-form.component";
 import { useDeleteCabin } from "./use-delete-cabin.hook";
 import { formatCurrency } from "@utils/helpers";
+import { ROUTES } from "@utils/constants";
+import { useNavigate } from "react-router-dom";
 
 type CabinRowProps = {
   cabin: CabinModel;
 };
 
 const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
-  const { id, name, regularPrice, maxCapacity, discount } = cabin;
+  const { id: cabinId, name, regularPrice, maxCapacity, discount } = cabin;
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const navigate = useNavigate();
 
   return (
     <Table.Row>
-      <div className="text-xl text-gray-600 font-medium">{`CBN-${id}`}</div>
+      <div className="text-xl text-gray-600 font-medium">{`CBN-${cabinId}`}</div>
       <div>{name}</div>
       <div>{maxCapacity}</div>
       <div>{formatCurrency(regularPrice)}</div>
@@ -29,6 +32,11 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
         <Modal>
           <IconStackMenu>
             <IconStackMenu.List>
+              <IconStackMenu.Button
+                onClick={() => navigate(`${ROUTES.cabins_path}/${cabinId}`)}
+                icon={<HiEye />}
+                displayText="See details"
+              />
               <Modal.Open opens="edit">
                 <IconStackMenu.Button displayText="Edit" icon={<HiPencil />} />
               </Modal.Open>

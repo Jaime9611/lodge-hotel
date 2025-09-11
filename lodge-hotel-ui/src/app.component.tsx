@@ -8,6 +8,7 @@ import { ProtectedRoute } from "@features/authentication";
 import { AuthProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
+import CabinDetail from "@features/cabins/cabin-detail.component";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +34,7 @@ const App = () => (
             <Route index element={<Navigate replace to={ROUTES.dashboard} />} />
             <Route path={ROUTES.dashboard} element={<Dashboard />} />
             <Route path={ROUTES.cabins} element={<Cabins />} />
+            <Route path={ROUTES.cabinId_path} element={<CabinDetail />} />
             <Route path={ROUTES.bookings} element={<Bookings />} />
             <Route path={ROUTES.bookingId_path} element={<Booking />} />
             <Route path={ROUTES.users} element={<Users />} />

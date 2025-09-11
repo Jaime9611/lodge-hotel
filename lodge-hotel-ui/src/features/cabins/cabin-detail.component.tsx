@@ -1,39 +1,39 @@
 import { useNavigate } from "react-router-dom";
-import { useBooking } from "./use-booking.hook";
-import { useDeleteBooking } from "./use-delete-booking.hook";
+
 import { Button, Empty, Heading, Modal, Row, Spinner } from "@ui/atoms";
-import type { BookingModel } from "@models";
+import type { BookingModel, CabinModel } from "@models";
 import { Tag } from "@ui/atoms/Tag";
 import { statusToTagName } from "@utils/helpers";
 import { ConfirmDelete } from "@ui/molecules";
 import { useMoveBack } from "@hooks";
-import BookingDataBox from "./booking-data-box.component";
-import { ButtonText } from "@ui/atoms/ButtonText";
 
-const BookingDetail = () => {
-  const { booking, isLoading } = useBooking();
-  const { isDeleting, deleteBooking } = useDeleteBooking();
-  // TODO: ADD CHECKOUT FUNCTIONALITY
+import { ButtonText } from "@ui/atoms/ButtonText";
+import { useDeleteCabin } from "./use-delete-cabin.hook";
+import { useCabin } from "./use-cabin.hook";
+
+const CabinDetail = () => {
+  //   const { booking, isLoading } = useBooking();
+  const { cabin, isLoading } = useCabin();
+  const { isDeleting, deleteCabin } = useDeleteCabin();
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
-  if (!booking) return <Empty resource="booking" />;
+  if (!cabin) return <Empty resource="cabin" />;
 
-  const { status, id } = booking as BookingModel;
+  const { id } = cabin as CabinModel;
 
   return (
     <>
       <Row type="horizontal">
         <div className="flex items-center gap-9">
-          <Heading as="h1">Booking #{id}</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Heading as="h1">Cabin #{id}</Heading>
         </div>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
-      <BookingDataBox booking={booking} />
+      {/* <BookingDataBox booking={booking} /> */}
 
       <div className="flex gap-5 justify-end">
         {status === "UNCONFIRMED" && (
@@ -51,9 +51,9 @@ const BookingDetail = () => {
           <Modal.Window name="delete">
             <ConfirmDelete
               disabled={isDeleting}
-              resourceName="booking"
+              resourceName="cabin"
               onConfirm={() => {
-                deleteBooking(id, { onSettled: () => navigate(-1) });
+                deleteCabin(id, { onSettled: () => navigate(-1) });
               }}
             />
           </Modal.Window>
@@ -66,4 +66,4 @@ const BookingDetail = () => {
     </>
   );
 };
-export default BookingDetail;
+export default CabinDetail;
