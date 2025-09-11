@@ -23,6 +23,7 @@ import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
+import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,7 +82,7 @@ class BookingControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testuser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testuser", authorities = {UserConstants.ROLE_STAFF})
   void testGetBookings() throws Exception {
     // Arrange
     List<Booking> testBookings = BookingFactory.createBookingList(2);
@@ -100,7 +101,7 @@ class BookingControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_STAFF})
   void testGetBookingById() throws Exception {
     // Arrange
     Booking testBooking = BookingFactory.createSingleBooking();
@@ -114,7 +115,7 @@ class BookingControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_STAFF})
   void testUpdateCabin() throws Exception {
     // Arrange
     Booking testBooking = BookingFactory.createSingleBooking();
@@ -133,7 +134,7 @@ class BookingControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_STAFF})
   void testDeleteBooking() throws Exception {
     // Arrange
     Booking testBooking = BookingFactory.createSingleBooking();

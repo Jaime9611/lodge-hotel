@@ -25,7 +25,7 @@ const App = () => (
         <Routes>
           <Route
             element={
-              <ProtectedRoute matchRole={[ROLE.MANAGER]}>
+              <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
                 <AppLayout />
               </ProtectedRoute>
             }

@@ -103,7 +103,7 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
         <div>
           <HiOutlineHomeModern />
           <p>
-            {numNights} nights in Cabin <span>{cabinName}</span>
+            <span>{cabinName}</span>
           </p>
         </div>
 

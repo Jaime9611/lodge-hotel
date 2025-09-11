@@ -26,6 +26,7 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
+import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -85,7 +86,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testuser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testuser", authorities = {UserConstants.ROLE_STAFF})
   void testGetCabins() throws Exception {
     // Arrange
     List<Cabin> testCabins = CabinFactory.createCabinList(2);
@@ -104,7 +105,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_STAFF})
   void testGetCabinById() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
@@ -118,7 +119,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_STAFF})
   void testUpdateCabin() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
@@ -137,7 +138,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_MANAGER})
   void testCreateCabin() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
@@ -155,7 +156,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_ADMIN"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_STAFF})
   void testCreateCabinInvalidRole() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
@@ -172,7 +173,7 @@ class CabinControllerTest {
   }
 
   @Test
-  @WithMockUser(username = "testUser", authorities = {"ROLE_USER"})
+  @WithMockUser(username = "testUser", authorities = {UserConstants.ROLE_MANAGER})
   void testDeleteCabin() throws Exception {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();
