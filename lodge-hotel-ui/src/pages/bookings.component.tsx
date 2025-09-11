@@ -1,4 +1,5 @@
 import { BookingTable } from "@features/bookings";
+import AddBooking from "@features/bookings/add-booking.component";
 import { Heading } from "@ui/atoms";
 import { Row } from "@ui/atoms/Row";
 
@@ -9,6 +10,7 @@ const Bookings = () => (
     </Row>
     <Row type="vertical">
       <BookingTable />
+      <AddBooking />
     </Row>
   </>
 );
