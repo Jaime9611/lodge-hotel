@@ -44,17 +44,6 @@ export interface CabinModel {
   image: string;
 }
 
-// export interface CabinModel {
-//   id: number;
-//   created_at?: string;
-//   name: string;
-//   maxCapacity: number;
-//   regularPrice: number;
-//   discount: number;
-//   description: string;
-//   image: string;
-// }
-
 export interface CabinModelForm extends Omit<CabinModel, "image" | "id"> {
   image: FileList | string;
 }
@@ -89,11 +78,22 @@ export interface BookingModel {
   status: string;
   guest: GuestModel;
   cabin: CabinModel;
-  cabinPrice: number;
-  extrasPrice: number;
-  hasBreakfast: boolean;
   observations: string;
   isPaid: boolean;
+}
+
+export interface BookingModelForm extends Omit<BookingModel, "id"> {
+  image: FileList | string;
+}
+
+export interface BookingModelFormResult
+  extends Omit<
+    BookingModel,
+    "createdAt" | "id" | "numNights" | "totalPrice" | "status" | "isPaid"
+  > {
+  id?: number;
+  isPaid?: boolean;
+  status?: string;
 }
 
 export interface BookingModelPage extends Page<BookingModel> {}

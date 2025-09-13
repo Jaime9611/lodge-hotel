@@ -1,6 +1,10 @@
 import { PAGE_SIZE } from "@utils/constants";
 import ApiClient from "./api-client.service";
-import type { BookingModel, BookingModelPage } from "@models";
+import type {
+  BookingModel,
+  BookingModelFormResult,
+  BookingModelPage,
+} from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const BOOKING_PATH = "/api/v1/booking";
@@ -39,14 +43,18 @@ class BookingsApi extends ApiClient {
   }
 
   async createEditBooking(
-    newBooking: BookingModel,
+    newBooking: BookingModel | BookingModelFormResult,
     id?: number
   ): Promise<boolean> {
     try {
       if (!id)
-        await this.post<BookingModel, void>(`${BOOKING_PATH}`, newBooking, {
-          headers: { Authorization: `Bearer ${this.getToken()}` },
-        });
+        await this.post<BookingModelFormResult, void>(
+          `${BOOKING_PATH}`,
+          newBooking,
+          {
+            headers: { Authorization: `Bearer ${this.getToken()}` },
+          }
+        );
 
       if (id)
         await this.update<BookingModel>(

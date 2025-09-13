@@ -58,14 +58,14 @@ const Sidebar = () => {
           </li>
         )}
 
-        {role === ROLE.MANAGER && (
+        {/* {role === ROLE.MANAGER && (
           <li>
             <CustomNavLink to={ROUTES.settings_path}>
               <HiOutlineCog6Tooth />
               <span>Settings</span>
             </CustomNavLink>
           </li>
-        )}
+        )} */}
       </ul>
     </aside>
   );
