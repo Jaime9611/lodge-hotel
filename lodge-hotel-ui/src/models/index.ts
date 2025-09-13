@@ -77,7 +77,7 @@ export interface BookingModel {
   totalPrice: number;
   status: string;
   guest: GuestModel;
-  cabin: CabinModel;
+  cabins: CabinModel[];
   observations: string;
   isPaid: boolean;
 }
