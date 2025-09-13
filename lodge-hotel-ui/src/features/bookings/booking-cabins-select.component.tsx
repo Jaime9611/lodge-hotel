@@ -19,17 +19,17 @@ const ItemLabel: FC<UIComponentProps> = ({ children }) => (
 );
 
 const LabelContainer: FC<UIComponentProps> = ({ children }) => (
-  <div className="flex w-full justify-between items-center py-1 px-0">
+  <div className="flex w-full justify-between items-center py-1 px-0 pl-2">
     {children}
   </div>
 );
 
 const ListContainer: FC<UIComponentProps> = ({ children }) => (
-  <div className="py-3 px-0.5 [&:not(:has(*))]:hidden">{children}</div>
+  <div className=" py-3 px-2 [&:not(:has(*))]:hidden">{children}</div>
 );
 
 const InputContainer: FC<UIComponentProps> = ({ children }) => (
-  <div className="p-0.5">{children}</div>
+  <div className="p-2">{children}</div>
 );
 
 const CabinList: FC<UIComponentProps> = ({ children }) => (
@@ -51,7 +51,7 @@ interface LabelProps {
 }
 
 const Label: FC<LabelProps> = ({ children }) => (
-  <label className="font-medium">{children}</label>
+  <label className="font-semibold">{children}</label>
 );
 
 const customStyles = {
@@ -59,31 +59,26 @@ const customStyles = {
     ...styles,
     maxHeight: "100px",
     overflowY: "auto",
-    backgroundColor: "var(--color-gray-0)",
+    backgroundColor: "var(--color-white)",
     color: "var(--color-gray-700)",
     border: "2px solid var(--color-gray-100)",
-    zIndex: 100,
   }),
   input: (styles) => ({
     ...styles,
     color: "var(--color-gray-600)",
-    zIndex: 1000,
   }),
   control: (styles) => ({
     ...styles,
     color: "var(--color-gray-700)",
     borderRadius: "var(--radius-md)",
-    backgroundColor: "var(--color-gray-0)",
+    backgroundColor: "var(--color-white)",
     boxShadow: "var(--radius-sm)",
-    zIndex: 1000,
   }),
   option: (styles) => ({
     ...styles,
     color: "var(--color-gray-700)",
-    backgroundColor: "var(--color-gray-0)",
+    backgroundColor: "var(--color-white)",
     border: "1px solid var(--color-gray-100)",
-    zIndex: 1000,
-    // color: "green",
   }),
 };
 
@@ -169,7 +164,10 @@ const BookingCabinsSelect: FC<BookingCabinsSelectProps> = ({
             <CabinItem key={`selected-cabin-${cabin.name}-${cabin.id}`}>
               <p>{`CBN-${cabin.id}`}</p>
               <ItemLabel>{cabin.name}</ItemLabel>
-              <ItemLabel>{cabin.maxCapacity}</ItemLabel>
+              <ItemLabel>
+                <span>Max Cap. </span>
+                {cabin.maxCapacity}
+              </ItemLabel>
               <ItemOptions>
                 <ButtonIcon onClick={() => handleDeleteCabin(cabin.id)}>
                   <HiOutlineXMark color="var(--color-red-400)" />
