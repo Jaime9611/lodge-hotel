@@ -2,11 +2,18 @@ package com.lodge.lodge_hotel_restapi.web.validations.exceptions;
 
 public class ItemNotFoundException extends RuntimeException {
 
+  private String resourcePath;
+
   public ItemNotFoundException() {
   }
 
   public ItemNotFoundException(String message) {
     super(message);
+  }
+
+  public ItemNotFoundException(String message, String path) {
+    super(message);
+    this.resourcePath = path;
   }
 
   public ItemNotFoundException(String message, Throwable cause) {

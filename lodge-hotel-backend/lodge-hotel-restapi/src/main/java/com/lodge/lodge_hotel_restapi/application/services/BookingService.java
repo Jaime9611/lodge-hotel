@@ -1,9 +1,13 @@
 package com.lodge.lodge_hotel_restapi.application.services;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
+import java.math.BigDecimal;
 
 public interface BookingService {
+
+  public BigDecimal getBookingQuotation(BookingQuotationDto booking);
 
   public PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize);
 

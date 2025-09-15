@@ -4,7 +4,9 @@ import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
+import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookingController {
 
   private final BookingService bookingService;
+
+  @PostMapping(Endpoints.BOOKING_QUOTATION)
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  public ResponseEntity<BigDecimal> getBookingQuotation(@RequestBody BookingQuotationDto booking) {
+    log.debug("POST - booking quotation in Controller");
+
+    return ResponseEntity.ok(bookingService.getBookingQuotation(booking));
+  }
 
   @GetMapping
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)

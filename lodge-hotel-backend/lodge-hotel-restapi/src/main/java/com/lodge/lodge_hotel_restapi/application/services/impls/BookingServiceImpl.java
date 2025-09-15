@@ -3,12 +3,19 @@ package com.lodge.lodge_hotel_restapi.application.services.impls;
 import com.lodge.lodge_hotel_restapi.application.ports.CreateBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.DeleteBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.ReadBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.UpdateBookingPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
+import com.lodge.lodge_hotel_restapi.web.dtos.CabinSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,11 +32,32 @@ public class BookingServiceImpl implements BookingService {
   private final CreateBookingPort createBookingPort;
   private final DeleteBookingPort deleteBookingPort;
   private final UpdateBookingPort updateBookingPort;
+  private final ReadCabinPort readCabinPort;
   private final PageMapper pageMapper;
+  private final HttpServletRequest httpServletRequest;
 
   private static final int DEFAULT_PAGE = 0;
   private static final int DEFAULT_PAGE_SIZE = 25;
   private static final int PAGE_MAX_SIZE = 500;
+
+  @Override
+  public BigDecimal getBookingQuotation(BookingQuotationDto booking) {
+    log.debug("{} - getBookingQuotation was called.", BookingService.class.getSimpleName());
+
+    BigDecimal total = BigDecimal.ZERO;
+    long daysBetween = ChronoUnit.DAYS.between(booking.getStartDate(), booking.getEndDate());
+    log.debug("{} - days between - .", daysBetween);
+    for (CabinSimpleDto cabin : booking.getCabins()) {
+      Cabin foundCabin = readCabinPort.get(cabin.getId())
+          .orElseThrow(() -> new ItemNotFoundException(
+              "Cabin with provide ID" + cabin.getId() + " not found.",
+              httpServletRequest.getRequestURI()));
+
+      total = total.add(foundCabin.getRegularPrice());
+    }
+
+    return total.multiply(BigDecimal.valueOf(daysBetween));
+  }
 
   @Override
   public PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize) {
