@@ -34,11 +34,11 @@ const DivRowSelect: FC<UIComponentProps> = ({ children }) => (
 );
 
 const TotalLabel: FC<UIComponentProps> = ({ children }) => (
-  <p className="text-2xl">{children}</p>
+  <p className="text-lg pl-2">{children}</p>
 );
 
 const TotalPrice: FC<UIComponentProps> = ({ children }) => (
-  <span className="text-2xl font-semibold text-gray-400">{children}</span>
+  <span className="text-xl font-semibold text-gray-400">{children}</span>
 );
 
 // ------------ MAIN COMPONENT ------------
@@ -173,20 +173,6 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
           onUpdateCabins={handleCabinChange}
         />
       </DivRowSelect>
-
-      {/* TODO:  Add total calculation */}
-      <DivRowSelect>
-        {isCalculatingTotal ? (
-          <TotalLabel>
-            Total Estimado: <small>...calculando</small>
-          </TotalLabel>
-        ) : (
-          <TotalLabel>
-            Total Estimado:{" "}
-            <TotalPrice>{formatCurrency(totalPrice ?? 0)}</TotalPrice>
-          </TotalLabel>
-        )}
-      </DivRowSelect>
       <FormRowVertical
         label="Observations"
         error={errors?.observations?.message}
@@ -200,6 +186,17 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
           }}
         />
       </FormRowVertical>
+      <DivRowSelect>
+        {isCalculatingTotal ? (
+          <TotalLabel>
+            Total: <small>...calculating</small>
+          </TotalLabel>
+        ) : (
+          <TotalLabel>
+            Total: <TotalPrice>{formatCurrency(totalPrice ?? 0)}</TotalPrice>
+          </TotalLabel>
+        )}
+      </DivRowSelect>
       <Stack columns="24rem 1fr 1.2fr">
         <Button
           type="reset"
