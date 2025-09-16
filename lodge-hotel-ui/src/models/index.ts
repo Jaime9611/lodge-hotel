@@ -55,6 +55,11 @@ export interface CabinModelFormResult extends Omit<CabinModel, "image" | "id"> {
 
 export interface CabinModelPage extends Page<CabinModel> {}
 
+export interface CabinRequest {
+  id: number;
+  name: string;
+}
+
 //---------------- GUEST MODELS ----------------
 
 export interface GuestModel {
@@ -97,3 +102,9 @@ export interface BookingModelFormResult
 }
 
 export interface BookingModelPage extends Page<BookingModel> {}
+
+export interface BookingQuotationRequest {
+  cabins: CabinRequest[];
+  startDate: string;
+  endDate: string;
+}

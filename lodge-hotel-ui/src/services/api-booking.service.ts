@@ -4,6 +4,7 @@ import type {
   BookingModel,
   BookingModelFormResult,
   BookingModelPage,
+  BookingQuotationRequest,
 } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -83,6 +84,16 @@ class BookingsApi extends ApiClient {
     }
 
     return true;
+  }
+
+  async getQuotation(booking: BookingQuotationRequest): Promise<number> {
+    return await this.post<BookingQuotationRequest, number>(
+      `${BOOKING_PATH}/quotation`,
+      booking,
+      {
+        headers: { Authorization: `Bearer ${this.getToken()}` },
+      }
+    );
   }
 }
 

@@ -13,12 +13,15 @@ import {
 import type {
   BookingModelForm,
   BookingModelFormResult,
+  BookingQuotationRequest,
   CabinModel,
+  CabinRequest,
 } from "@models";
 import { useCreateBooking } from "./use-create-booking.hook";
 import { useEditBooking } from "./use-edit-booking.hook";
 import BookingCabinsSelect from "./booking-cabins-select.component";
 import { formatCurrency } from "@utils/helpers";
+import { useBookingQuotation } from "./use-booking-quotation";
 
 // ------------ UI COMPONENT ------------
 
@@ -68,25 +71,31 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
 
   const { isEditing, editBooking } = useEditBooking();
 
+  const { isCalculatingTotal, calculateTotalPrice, totalPrice } =
+    useBookingQuotation();
+
   const isWorking = isCreating || isEditing;
 
   const { errors } = formState; // Form Errors
 
-  // TODO: TOTAL CALCULATION LOGIC
   const handlePricesChange = () => {
     const data = getValues();
 
     if (Object.keys(data).length === 0) return;
 
     if (data.cabins?.length >= 1) {
-      const cabinsBody: { id: number }[] = data.cabins.map((cabin) => ({
+      const cabinsBody: CabinRequest[] = data.cabins.map((cabin) => ({
         id: cabin.id,
+        name: cabin.name,
       }));
-      const bookingRequest: { cabins: { id: number }[] } = {
+      const bookingRequest: BookingQuotationRequest = {
         cabins: cabinsBody,
+        startDate: "2025-08-19T08:00:00.123456",
+        endDate: "2025-08-22T08:00:00.123456",
       };
+      // TODO: ADD ACTUAL DATE PICKER LOGIC
 
-      // calculateTotalPrice(treatmentRequest);
+      calculateTotalPrice(bookingRequest);
     }
   };
 
@@ -166,7 +175,7 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
       </DivRowSelect>
 
       {/* TODO:  Add total calculation */}
-      {/* <DivRowSelect>
+      <DivRowSelect>
         {isCalculatingTotal ? (
           <TotalLabel>
             Total Estimado: <small>...calculando</small>
@@ -177,7 +186,7 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
             <TotalPrice>{formatCurrency(totalPrice ?? 0)}</TotalPrice>
           </TotalLabel>
         )}
-      </DivRowSelect> */}
+      </DivRowSelect>
       <FormRowVertical
         label="Observations"
         error={errors?.observations?.message}
