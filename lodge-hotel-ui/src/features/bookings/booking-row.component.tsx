@@ -36,7 +36,6 @@ const BookingRow: FC<BookingRowProps> = ({
     totalPrice,
     status,
     guest: { fullName: guestName, email },
-    cabin: { name: cabinName },
   },
 }) => {
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ const BookingRow: FC<BookingRowProps> = ({
 
   return (
     <Table.Row>
-      <div>{cabinName}</div>
+      <div>BK-{bookingId}</div>
       <Stacked>
         <span>{guestName}</span>
         <span>{email}</span>

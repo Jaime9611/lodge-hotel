@@ -4,6 +4,7 @@ import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
 import {
   Button,
+  DateRangeInput,
   Form,
   FormRowVertical,
   Input,
@@ -105,6 +106,15 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
     handlePricesChange();
   };
 
+  const handleDateChange = (dateRange: { startDate: Date; endDate: Date }) => {
+    setValue("startDate", dateRange.startDate.toISOString());
+    setValue("endDate", dateRange.endDate.toISOString());
+    trigger("startDate");
+    trigger("endDate");
+    console.log({ startDate: getValues("startDate") });
+    console.log({ endDate: getValues("endDate") });
+  };
+
   const onSubmit = (data: BookingModelForm) => {
     if (isEditSession)
       editBooking(
@@ -165,6 +175,18 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
           register={{
             ...register("guest", { required: "This field is required" }),
           }}
+        />
+      </FormRowVertical>
+      <FormRowVertical
+        label="Reservation Date"
+        error={errors?.startDate?.message || errors?.endDate?.message}
+      >
+        <DateRangeInput
+          initalRange={{
+            startDate: getValues("startDate"),
+            endDate: getValues("endDate"),
+          }}
+          onUpdate={handleDateChange}
         />
       </FormRowVertical>
       <DivRowSelect>
