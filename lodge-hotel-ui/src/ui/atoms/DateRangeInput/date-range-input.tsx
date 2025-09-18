@@ -44,11 +44,10 @@ const DateRangeInput: FC<DateRangeInputProps> = ({ initalRange, onUpdate }) => {
 
   useEffect(() => {
     onUpdate(range[0]);
-  }, [range[0]]);
+  }, [range[0].startDate, range[0].endDate]);
 
   // hide dropdown on ESC press
   const hideOnEscape = (e) => {
-    // console.log(e.key)
     if (e.key === "Escape") {
       setOpen(false);
     }

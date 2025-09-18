@@ -20,9 +20,7 @@ abstract class ApiClient {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          console.log(error.response);
           if (error.response.statusText === "Unauthorized") {
-            console.log("Token has expired. Logging out...");
             localStorage.removeItem("user");
             localStorage.removeItem("access_token");
             window.location.href = ROUTES.login_path;

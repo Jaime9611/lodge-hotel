@@ -15,7 +15,9 @@ import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -44,19 +46,7 @@ public class BookingServiceImpl implements BookingService {
   public BigDecimal getBookingQuotation(BookingQuotationDto booking) {
     log.debug("{} - getBookingQuotation was called.", BookingService.class.getSimpleName());
 
-    BigDecimal total = BigDecimal.ZERO;
-    long daysBetween = ChronoUnit.DAYS.between(booking.getStartDate(), booking.getEndDate());
-    log.debug("{} - days between - .", daysBetween);
-    for (CabinSimpleDto cabin : booking.getCabins()) {
-      Cabin foundCabin = readCabinPort.get(cabin.getId())
-          .orElseThrow(() -> new ItemNotFoundException(
-              "Cabin with provide ID" + cabin.getId() + " not found.",
-              httpServletRequest.getRequestURI()));
-
-      total = total.add(foundCabin.getRegularPrice());
-    }
-
-    return total.multiply(BigDecimal.valueOf(daysBetween));
+    return calculateTotal(booking.getCabins(), booking.getStartDate(), booking.getEndDate());
   }
 
   @Override
@@ -122,6 +112,22 @@ public class BookingServiceImpl implements BookingService {
 
     return readBookingPort.get(id)
         .orElseThrow(() -> new ItemNotFoundException("Booking with provided ID not found."));
+  }
+
+  private BigDecimal calculateTotal(List<CabinSimpleDto> cabins,  LocalDateTime startDate, LocalDateTime endDate) {
+    BigDecimal total = BigDecimal.ZERO;
+    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+
+    for (CabinSimpleDto cabin : cabins) {
+      Cabin foundCabin = readCabinPort.get(cabin.getId())
+          .orElseThrow(() -> new ItemNotFoundException(
+              "Cabin with provide ID" + cabin.getId() + " not found.",
+              httpServletRequest.getRequestURI()));
+
+      total = total.add(foundCabin.getRegularPrice());
+    }
+
+    return total.multiply(BigDecimal.valueOf(daysBetween));
   }
 
   private PageRequest buildPageRequest(Integer pageNumber, Integer pageSize) {

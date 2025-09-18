@@ -91,10 +91,9 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
       }));
       const bookingRequest: BookingQuotationRequest = {
         cabins: cabinsBody,
-        startDate: "2025-08-19T08:00:00.123456",
-        endDate: "2025-08-22T08:00:00.123456",
+        startDate: data.startDate,
+        endDate: data.endDate,
       };
-      // TODO: ADD ACTUAL DATE PICKER LOGIC
 
       calculateTotalPrice(bookingRequest);
     }
@@ -111,8 +110,7 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
     setValue("endDate", dateRange.endDate.toISOString());
     trigger("startDate");
     trigger("endDate");
-    console.log({ startDate: getValues("startDate") });
-    console.log({ endDate: getValues("endDate") });
+    handlePricesChange();
   };
 
   const onSubmit = (data: BookingModelForm) => {

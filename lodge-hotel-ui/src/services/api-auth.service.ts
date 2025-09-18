@@ -19,7 +19,6 @@ class AuthApi extends ApiClient {
 
       const decoded = jwtDecode(response.access_token);
 
-      console.log(decoded);
       return {
         user: { user: user.username, role: decoded.role[0] },
         access_token: response.access_token,
