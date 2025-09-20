@@ -49,7 +49,7 @@ export interface CabinModelForm extends Omit<CabinModel, "image" | "id"> {
 }
 
 export interface CabinModelFormResult extends Omit<CabinModel, "image" | "id"> {
-  image: File;
+  image: File | string;
   id?: number;
 }
 

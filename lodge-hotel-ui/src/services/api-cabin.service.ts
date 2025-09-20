@@ -4,7 +4,7 @@ import type { CabinModel, CabinModelFormResult, CabinModelPage } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CABIN_PATH = "/api/v1/cabin";
-const IMAGE_PATH = "storage/cabin";
+const IMAGE_PATH = "/api/v1/storage/public/cabin";
 
 class CabinsApi extends ApiClient {
   constructor() {
@@ -50,7 +50,7 @@ class CabinsApi extends ApiClient {
       }`.replace("/", "");
       const imagePath = hasImagePath
         ? (newCabin as CabinModel).image
-        : `${API_BASE_URL}/storage/cabin/${imageName}`;
+        : `${API_BASE_URL}${IMAGE_PATH}/${imageName}`;
 
       let cabinResponse = {};
       if (!id)
@@ -74,8 +74,8 @@ class CabinsApi extends ApiClient {
       if (hasImagePath) return true;
 
       const formData = new FormData();
-      formData.append("image", newCabin.image); // Replace 'file' with your file object
-      formData.append("imageName", newCabin.image); // Replace 'file' with your file object
+      formData.append("images", newCabin.image);
+      formData.append("imageName", newCabin.image);
 
       const response = this.post<object, {}>(`${IMAGE_PATH}`, formData, {
         headers: {

@@ -40,9 +40,8 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
   const { errors } = formState; // Form Errors
 
   const onSubmit = (data: CabinModelForm) => {
-    // const image =
-    //   typeof data.image === "string" ? data.image : (data.image[0] as File);
-    const image = "";
+    const image =
+      typeof data.image === "string" ? data.image : (data.image[0] as File);
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
