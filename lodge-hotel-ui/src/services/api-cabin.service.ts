@@ -4,7 +4,7 @@ import type { CabinModel, CabinModelFormResult, CabinModelPage } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CABIN_PATH = "/api/v1/cabin";
-const IMAGE_PATH = "/api/v1/storage/public/cabin";
+const IMAGE_PATH = "/api/v1/storage/cabin-images";
 
 class CabinsApi extends ApiClient {
   constructor() {
@@ -50,11 +50,10 @@ class CabinsApi extends ApiClient {
       }`.replace("/", "");
       const imagePath = hasImagePath
         ? (newCabin as CabinModel).image
-        : `${API_BASE_URL}${IMAGE_PATH}/${imageName}`;
+        : `${API_BASE_URL}/api/v1/storage/public/cabin/${imageName}`;
 
-      let cabinResponse = {};
       if (!id)
-        cabinResponse = await this.post<CabinModel, object>(
+        await this.post<CabinModel, object>(
           `${CABIN_PATH}`,
           { ...newCabin, image: imagePath } as CabinModel,
           {
@@ -73,16 +72,21 @@ class CabinsApi extends ApiClient {
 
       if (hasImagePath) return true;
 
+      // Save Image
       const formData = new FormData();
       formData.append("images", newCabin.image);
-      formData.append("imageName", newCabin.image);
+      formData.append("imageName", imageName);
 
-      const response = this.post<object, {}>(`${IMAGE_PATH}`, formData, {
-        headers: {
-          Authorization: `Bearer ${this.getToken()}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      const response = this.post<object, {}>(
+        `${API_BASE_URL}${IMAGE_PATH}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${this.getToken()}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
         .then((response) => {
           console.log("File uploaded successfully");
         })

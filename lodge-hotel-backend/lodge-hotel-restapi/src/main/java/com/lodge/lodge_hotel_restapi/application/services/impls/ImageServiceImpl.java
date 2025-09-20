@@ -19,13 +19,8 @@ public class ImageServiceImpl implements ImageService {
   public void saveImageToStorage(String uploadDirectory, MultipartFile imageFile, String imageName)
       throws IOException {
 
-    String fileExtension = "";
-    String originalFilename = imageFile.getOriginalFilename();
-    if (originalFilename != null && originalFilename.contains(".")) {
-      fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-    }
     Path uploadPath = Path.of(uploadDirectory);
-    Path filePath = uploadPath.resolve(imageName + "." + fileExtension);
+    Path filePath = uploadPath.resolve(imageName);
 
     if (!Files.exists(uploadPath)) {
       Files.createDirectories(uploadPath);

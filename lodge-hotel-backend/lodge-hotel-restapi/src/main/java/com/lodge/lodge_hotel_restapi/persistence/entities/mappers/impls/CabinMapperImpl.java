@@ -22,6 +22,7 @@ public class CabinMapperImpl implements CabinMapper {
     entity.createdAt(cabin.getCreatedAt());
     entity.description(cabin.getDescription());
     entity.discount(cabin.getDiscount());
+    entity.image(cabin.getImage());
 
     return entity.build();
   }
@@ -40,6 +41,7 @@ public class CabinMapperImpl implements CabinMapper {
     cabin.createdAt(entity.getCreatedAt());
     cabin.description(entity.getDescription());
     cabin.discount(entity.getDiscount());
+    cabin.image(entity.getImage());
 
     return cabin.build();
   }

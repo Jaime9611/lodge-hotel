@@ -9,8 +9,6 @@ public interface CabinService {
 
   Cabin get(Long id);
 
-  String getCabinImage(Long id);
-
   void delete(Long id);
 
   void update(Long id, Cabin cabin);

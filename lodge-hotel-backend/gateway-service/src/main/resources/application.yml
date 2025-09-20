@@ -31,7 +31,7 @@ spring:
             allowCredentials: true
 
 gateway:
-  excludedUrl: /auth/register, /auth/login
+  excludedUrl: /auth/register, /auth/login, /api/v1/storage/public/cabin/.*
 
 server:
   port: 8080

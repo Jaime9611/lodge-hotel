@@ -2,29 +2,11 @@ import type { FC } from "react";
 
 type FileInputProps = {
   register?: {};
-
   id?: string;
-  value?: string;
-  defaultValue?: string | number;
-  onChange?: (() => void) | ((e: React.ChangeEvent<HTMLInputElement>) => void);
-  disabled?: boolean;
+  accept: string;
 };
-const FileInput: FC<FileInputProps> = ({
-  register,
-  id,
-  value,
-  defaultValue,
-  disabled,
-}) => {
-  return (
-    <input
-      type="file"
-      id={id}
-      defaultValue={defaultValue}
-      value={value}
-      disabled={disabled}
-      {...register}
-    />
-  );
+
+const FileInput: FC<FileInputProps> = ({ register, id, accept }) => {
+  return <input type="file" id={id} accept={accept} {...register} />;
 };
 export default FileInput;

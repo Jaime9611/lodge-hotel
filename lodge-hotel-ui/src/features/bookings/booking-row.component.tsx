@@ -61,6 +61,7 @@ const BookingRow: FC<BookingRowProps> = ({
       </Stacked>
       <Tag type={statusToTagName[status]}>{status.replace("_", " ")}</Tag>
       <div>{formatCurrency(123)}</div>
+      {/* TODO: ADD TOTAL  */}
 
       <Modal>
         <IconStackMenu>

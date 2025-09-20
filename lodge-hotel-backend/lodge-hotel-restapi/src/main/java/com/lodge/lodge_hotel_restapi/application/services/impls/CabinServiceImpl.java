@@ -55,16 +55,6 @@ public class CabinServiceImpl implements CabinService {
   }
 
   @Override
-  public String getCabinImage(Long id) {
-    log.debug("{} - Get by image was called with id {}", CabinService.class.getSimpleName(),
-        id);
-
-    Cabin foundCabin = findByCabinId(id);
-
-    return foundCabin.getMainImage();
-  }
-
-  @Override
   public void delete(Long id) {
     log.debug("{} - Delete by id was called with {}", CabinService.class.getSimpleName(),
         String.valueOf(id));
@@ -86,6 +76,7 @@ public class CabinServiceImpl implements CabinService {
     foundCabin.setDiscount(cabin.getDiscount());
     foundCabin.setMaxCapacity(cabin.getMaxCapacity());
     foundCabin.setDescription(cabin.getDescription());
+    foundCabin.setImage(cabin.getImage());
 
     updateCabinPort.update(foundCabin);
   }
