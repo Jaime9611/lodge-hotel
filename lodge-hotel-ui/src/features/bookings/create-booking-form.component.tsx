@@ -193,19 +193,6 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
           onUpdateCabins={handleCabinChange}
         />
       </DivRowSelect>
-      <FormRowVertical
-        label="Observations"
-        error={errors?.observations?.message}
-      >
-        <TextArea
-          id="observations"
-          disabled={isWorking}
-          defaultValue=""
-          register={{
-            ...register("observations", { required: "This field is required" }),
-          }}
-        />
-      </FormRowVertical>
       <DivRowSelect>
         {isCalculatingTotal ? (
           <TotalLabel>

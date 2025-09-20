@@ -83,7 +83,6 @@ export interface BookingModel {
   status: string;
   guest: GuestModel;
   cabins: CabinModel[];
-  observations: string;
   isPaid: boolean;
 }
 
