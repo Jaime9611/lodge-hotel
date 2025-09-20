@@ -18,4 +18,5 @@ public class Cabin {
   private int maxCapacity;
   private BigDecimal discount;
   private String description;
+  private String mainImage;
 }

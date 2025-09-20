@@ -49,4 +49,6 @@ public class CabinEntity {
 
   private String description;
 
+  private String mainImage;
+
 }
