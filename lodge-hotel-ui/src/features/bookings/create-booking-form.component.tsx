@@ -150,6 +150,49 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
       type={onCloseModal ? "modal" : "regular"}
     >
       <FormRowVertical
+        label="Guest Name"
+        error={errors?.guest?.fullName?.message}
+      >
+        <Input
+          type="text"
+          id="guest.fullName"
+          disabled={isWorking}
+          register={{
+            ...register("guest.fullName", {
+              required: "This field is required",
+            }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical
+        label="Guest Email"
+        error={errors?.guest?.email?.message}
+      >
+        <Input
+          type="text"
+          id="email"
+          disabled={isWorking}
+          register={{
+            ...register("guest.email", { required: "This field is required" }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical
+        label="Guest Country"
+        error={errors?.guest?.country?.message}
+      >
+        <Input
+          type="text"
+          id="country"
+          disabled={isWorking}
+          register={{
+            ...register("guest.country", {
+              required: "This field is required",
+            }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical
         label="Number of Guests"
         error={errors?.numGuests?.message}
       >
@@ -162,16 +205,6 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
               required: "This field is required",
               min: { value: 1, message: "Number should be at least 1" },
             }),
-          }}
-        />
-      </FormRowVertical>
-      <FormRowVertical label="Guest name" error={errors?.guest?.message}>
-        <Input
-          type="text"
-          id="name"
-          disabled={isWorking}
-          register={{
-            ...register("guest", { required: "This field is required" }),
           }}
         />
       </FormRowVertical>

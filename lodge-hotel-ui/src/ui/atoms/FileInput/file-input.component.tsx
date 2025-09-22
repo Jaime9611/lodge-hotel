@@ -1,5 +1,7 @@
 import type { FC } from "react";
 
+import styles from "./file-input.module.css";
+
 type FileInputProps = {
   register?: {};
   id?: string;
@@ -7,6 +9,14 @@ type FileInputProps = {
 };
 
 const FileInput: FC<FileInputProps> = ({ register, id, accept }) => {
-  return <input type="file" id={id} accept={accept} {...register} />;
+  return (
+    <input
+      className={styles.fileInput}
+      type="file"
+      id={id}
+      accept={accept}
+      {...register}
+    />
+  );
 };
 export default FileInput;
