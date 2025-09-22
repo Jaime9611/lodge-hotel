@@ -26,9 +26,17 @@ INSERT INTO `cabin`( `id`, `name`, `description`, `discount`, `max_capacity`, `r
 
 
 -- Bookings Data
-INSERT INTO `booking`(`id`, `cabin_id`, `guest_id`, `has_breakfast`, `is_paid`, `num_guests`, `extras_price`, `created_at`, `start_date`, `end_date`, `status`)
-    VALUES (1, 1, 1, FALSE, FALSE, 3, 50,'2025-08-19 08:00:00.123456', '2025-08-19 08:00:00.123456', '2025-08-22 08:00:00.123456','CHECKED_IN');
-INSERT INTO `booking`(`id`, `cabin_id`, `guest_id`, `has_breakfast`, `is_paid`, `num_guests`, `extras_price`, `created_at`, `start_date`, `end_date`, `status`)
-    VALUES (2, 2, 2, TRUE, TRUE, 2, 60, '2025-08-18 08:00:00.123456','2025-08-18 08:00:00.123456', '2025-08-22 08:00:00.123456', 'CHECKED_OUT');
-INSERT INTO `booking`(`id`, `cabin_id`, `guest_id`, `has_breakfast`, `is_paid`, `num_guests`, `extras_price`, `created_at`, `start_date`, `end_date`, `status`)
-    VALUES (3, 7, 3, TRUE, FALSE, 4, 40, '2025-08-17 08:00:00.123456','2025-08-17 08:00:00.123456', '2025-08-22 08:00:00.123456', 'UNCONFIRMED');
+INSERT INTO `booking`(`id`, `guest_id`, `is_paid`, `num_guests`, `created_at`, `start_date`, `end_date`, `status`)
+    VALUES (1, 1, FALSE, 3,'2025-08-19 08:00:00.123456', '2025-08-19 08:00:00.123456', '2025-08-22 08:00:00.123456','CHECKED_IN');
+INSERT INTO `booking`(`id`, `guest_id`, `is_paid`, `num_guests`, `created_at`, `start_date`, `end_date`, `status`)
+    VALUES (2, 2, TRUE, 2,'2025-08-18 08:00:00.123456', '2025-08-18 08:00:00.123456', '2025-08-22 08:00:00.123456','CHECKED_OUT');
+INSERT INTO `booking`(`id`, `guest_id`, `is_paid`, `num_guests`, `created_at`, `start_date`, `end_date`, `status`)
+    VALUES (3, 3, FALSE, 4,'2025-08-17 08:00:00.123456', '2025-08-17 08:00:00.123456', '2025-08-22 08:00:00.123456','UNCONFIRMED');
+
+
+INSERT INTO `booking_cabin`(`booking_id`, `cabin_id`)
+    VALUES (1, 1);
+INSERT INTO `booking_cabin`(`booking_id`, `cabin_id`)
+    VALUES (2, 2);
+INSERT INTO `booking_cabin`(`booking_id`, `cabin_id`)
+    VALUES (3, 7);

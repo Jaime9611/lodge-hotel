@@ -11,10 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lodge.lodge_hotel_restapi.application.ports.CreateBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.DeleteBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.CreateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.DeleteBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.ReadBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.application.services.impls.BookingServiceImpl;
 import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;

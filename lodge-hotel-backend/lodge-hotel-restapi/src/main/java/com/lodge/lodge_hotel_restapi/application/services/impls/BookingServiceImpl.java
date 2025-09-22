@@ -1,15 +1,18 @@
 package com.lodge.lodge_hotel_restapi.application.services.impls;
 
-import com.lodge.lodge_hotel_restapi.application.ports.CreateBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.DeleteBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.CreateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.DeleteBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.ReadBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
+import com.lodge.lodge_hotel_restapi.domain.Guest;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.CabinSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +39,7 @@ public class BookingServiceImpl implements BookingService {
   private final DeleteBookingPort deleteBookingPort;
   private final UpdateBookingPort updateBookingPort;
   private final ReadCabinPort readCabinPort;
+  private final CreateGuestPort createGuestPort;
   private final PageMapper pageMapper;
   private final HttpServletRequest httpServletRequest;
 
@@ -97,11 +102,29 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
-  public Long save(Booking booking) {
-    log.debug("{} - Save was called with {}", BookingService.class.getSimpleName(),
-        booking.getCabin().getName());
+  public Long save(BookingSimpleDto booking) {
+    log.debug("{} - Save was called", BookingService.class.getSimpleName());
 
-    Booking savedCabin = createBookingPort.save(booking);
+    Booking newBooking = Booking.builder().build();
+    newBooking.setStatus(booking.getStatus());
+    newBooking.setStartDate(booking.getStartDate());
+    newBooking.setEndDate(booking.getEndDate());
+    newBooking.setPaid(booking.isPaid());
+
+    Guest savedGuest = createGuestPort.save(booking.getGuest());
+    newBooking.setGuest(savedGuest);
+
+    List<Cabin> foundCabins = new ArrayList<>();
+    for (CabinSimpleDto cabin : booking.getCabins()) {
+      Cabin foundCabin = readCabinPort.get(cabin.getId())
+          .orElseThrow(() -> new ItemNotFoundException(
+              "Cabin with provide ID" + cabin.getId() + " not found.",
+              httpServletRequest.getRequestURI()));
+      foundCabins.add(foundCabin);
+    }
+    newBooking.setCabins(foundCabins);
+
+    Booking savedCabin = createBookingPort.save(newBooking);
 
     return savedCabin.getId();
   }

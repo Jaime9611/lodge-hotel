@@ -7,10 +7,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.lodge.lodge_hotel_restapi.application.ports.CreateCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.DeleteCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.CreateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.DeleteCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;

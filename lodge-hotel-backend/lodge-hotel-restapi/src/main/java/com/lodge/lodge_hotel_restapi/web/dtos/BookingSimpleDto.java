@@ -1,5 +1,7 @@
-package com.lodge.lodge_hotel_restapi.domain;
+package com.lodge.lodge_hotel_restapi.web.dtos;
 
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
+import com.lodge.lodge_hotel_restapi.domain.Guest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Booking {
+public class BookingSimpleDto {
 
   private Long id;
   private LocalDateTime createdAt;
@@ -18,10 +20,8 @@ public class Booking {
   private int numbNights;
   private BookingStatus status;
   private Guest guest;
-  private List<Cabin> cabins;
+  private List<CabinSimpleDto> cabins;
   private BigDecimal totalPrice;
-  //  private BigDecimal cabinPrice;
-//  private BigDecimal extrasPrice;
-//  private boolean hasBreakfast;
   private boolean isPaid;
+
 }

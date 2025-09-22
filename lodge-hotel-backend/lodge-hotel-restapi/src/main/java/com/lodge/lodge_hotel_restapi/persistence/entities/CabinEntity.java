@@ -1,15 +1,19 @@
 package com.lodge.lodge_hotel_restapi.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,5 +54,9 @@ public class CabinEntity {
   private String description;
 
   private String image;
+
+  @JsonIgnore
+  @ManyToMany(mappedBy = "cabins")
+  private Set<BookingEntity> bookings = new HashSet<>();
 
 }

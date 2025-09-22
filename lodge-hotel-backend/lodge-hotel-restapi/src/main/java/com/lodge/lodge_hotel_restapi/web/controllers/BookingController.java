@@ -5,6 +5,7 @@ import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +61,7 @@ public class BookingController {
 
   @PostMapping
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
-  public ResponseEntity<Void> createBooking(@RequestBody Booking booking) {
+  public ResponseEntity<Void> createBooking(@RequestBody BookingSimpleDto booking) {
     log.debug("POST - Create Booking in Controller");
 
     Long savedBookingId = bookingService.save(booking);

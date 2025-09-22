@@ -2,10 +2,17 @@ package com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.domain.Booking.BookingBuilder;
+import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
+import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.BookingMapper;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.CabinMapper;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.GuestMapper;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,14 +32,18 @@ public class BookingMapperImpl implements BookingMapper {
 
     BookingEntity.BookingEntityBuilder entity = BookingEntity.builder();
     entity.id(booking.getId());
-    entity.extrasPrice(booking.getExtrasPrice());
     entity.createdAt(booking.getCreatedAt());
     entity.startDate(booking.getStartDate());
     entity.endDate(booking.getEndDate());
-    entity.hasBreakfast(booking.isHasBreakfast());
     entity.isPaid(booking.isPaid());
     entity.status(booking.getStatus());
-    entity.cabin(cabinMapper.cabinToCabinEntity(booking.getCabin()));
+
+    Set<CabinEntity> parsedCabins = new HashSet<>();
+    if (booking.getCabins() != null) {
+      parsedCabins = booking.getCabins().stream().map(cabinMapper::cabinToCabinEntity).collect(
+          Collectors.toSet());
+    }
+    entity.cabins(parsedCabins);
     entity.guest(guestMapper.guestToGuestEntity(booking.getGuest()));
 
     return entity.build();
@@ -40,21 +51,28 @@ public class BookingMapperImpl implements BookingMapper {
 
   @Override
   public Booking bookingEntityToBooking(BookingEntity entity) {
-    if ( entity == null) {
+    if (entity == null) {
       return null;
     }
 
     BookingBuilder booking = Booking.builder();
     booking.id(entity.getId());
-    booking.extrasPrice(entity.getExtrasPrice());
+
     booking.createdAt(entity.getCreatedAt());
     booking.startDate(entity.getStartDate());
     booking.endDate(entity.getEndDate());
-    booking.hasBreakfast(entity.isHasBreakfast());
     booking.isPaid(entity.isPaid());
     booking.status(entity.getStatus());
-    booking.cabin(cabinMapper.cabinEntityToCabin(entity.getCabin()));
+    List<Cabin> parsedCabins = new ArrayList<>();
+
+    if (entity.getCabins() != null) {
+      parsedCabins = entity.getCabins().stream().map(cabinMapper::cabinEntityToCabin).toList();
+    }
+
+    booking.cabins(parsedCabins);
     booking.guest(guestMapper.guestEntityToGuest(entity.getGuest()));
+    booking.numbNights(entity.getNumNights());
+    booking.totalPrice(entity.getTotalPrice());
 
     return booking.build();
   }

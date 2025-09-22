@@ -2,6 +2,7 @@ package com.lodge.lodge_hotel_restapi.application.services;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
 
@@ -17,5 +18,5 @@ public interface BookingService {
 
   void update(Long id, Booking booking);
 
-  Long save(Booking booking);
+  Long save(BookingSimpleDto booking);
 }
