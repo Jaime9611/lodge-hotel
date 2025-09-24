@@ -89,7 +89,7 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
     numGuests,
     totalPrice,
     isPaid,
-    guest: { fullName: guestName, email, country, nationalId },
+    guest: { fullName: guestName, email, country, countryFlag, nationalId },
     cabins,
   } = booking;
 
@@ -114,10 +114,7 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
 
       <div className="pt-12 px-16 pb-5">
         <DataGuest>
-          {/* TODO: ADD REAL FLAGS */}
-          {true && (
-            <Flag src="https://flagcdn.com/co.svg" alt={`Flag of ${country}`} />
-          )}
+          {true && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>

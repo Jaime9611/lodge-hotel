@@ -4,6 +4,7 @@ import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
 import {
   Button,
+  CountrySelector,
   DateRangeInput,
   Form,
   FormRowVertical,
@@ -23,6 +24,7 @@ import { useEditBooking } from "./use-edit-booking.hook";
 import BookingCabinsSelect from "./booking-cabins-select.component";
 import { formatCurrency } from "@utils/helpers";
 import { useBookingQuotation } from "./use-booking-quotation";
+import type { CountryModel } from "@ui/atoms/CountrySelector/country-selector.component";
 
 // ------------ UI COMPONENT ------------
 
@@ -113,6 +115,12 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
     handlePricesChange();
   };
 
+  const handleCountryChange = (country: CountryModel) => {
+    setValue("guest.country", country.label);
+    setValue("guest.countryFlag", country.image);
+    trigger("guest");
+  };
+
   const onSubmit = (data: BookingModelForm) => {
     if (isEditSession)
       editBooking(
@@ -184,16 +192,7 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
           label="Guest Country"
           error={errors?.guest?.country?.message}
         >
-          <Input
-            type="text"
-            id="country"
-            disabled={isWorking}
-            register={{
-              ...register("guest.country", {
-                required: "This field is required",
-              }),
-            }}
-          />
+          <CountrySelector onUpdate={handleCountryChange} />
         </FormRowVertical>
         <FormRowVertical
           label="Guest NationalID"
