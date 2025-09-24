@@ -8,6 +8,7 @@ import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort
 import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.domain.Guest;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
@@ -106,7 +107,7 @@ public class BookingServiceImpl implements BookingService {
     log.debug("{} - Save was called", BookingService.class.getSimpleName());
 
     Booking newBooking = Booking.builder().build();
-    newBooking.setStatus(booking.getStatus());
+    newBooking.setStatus(BookingStatus.UNCONFIRMED);
     newBooking.setStartDate(booking.getStartDate());
     newBooking.setEndDate(booking.getEndDate());
     newBooking.setPaid(booking.isPaid());
@@ -124,9 +125,9 @@ public class BookingServiceImpl implements BookingService {
     }
     newBooking.setCabins(foundCabins);
 
-    Booking savedCabin = createBookingPort.save(newBooking);
+    Booking savedBooking = createBookingPort.save(newBooking);
 
-    return savedCabin.getId();
+    return savedBooking.getId();
   }
 
   private Booking findByBookingId(Long id) {

@@ -149,49 +149,68 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
       onSubmit={handleSubmit(onSubmit, onError)}
       type={onCloseModal ? "modal" : "regular"}
     >
-      <FormRowVertical
-        label="Guest Name"
-        error={errors?.guest?.fullName?.message}
-      >
-        <Input
-          type="text"
-          id="guest.fullName"
-          disabled={isWorking}
-          register={{
-            ...register("guest.fullName", {
-              required: "This field is required",
-            }),
-          }}
-        />
-      </FormRowVertical>
-      <FormRowVertical
-        label="Guest Email"
-        error={errors?.guest?.email?.message}
-      >
-        <Input
-          type="text"
-          id="email"
-          disabled={isWorking}
-          register={{
-            ...register("guest.email", { required: "This field is required" }),
-          }}
-        />
-      </FormRowVertical>
-      <FormRowVertical
-        label="Guest Country"
-        error={errors?.guest?.country?.message}
-      >
-        <Input
-          type="text"
-          id="country"
-          disabled={isWorking}
-          register={{
-            ...register("guest.country", {
-              required: "This field is required",
-            }),
-          }}
-        />
-      </FormRowVertical>
+      <div className="grid grid-cols-2 gap-4">
+        <FormRowVertical
+          label="Guest Name"
+          error={errors?.guest?.fullName?.message}
+        >
+          <Input
+            type="text"
+            id="guest.fullName"
+            disabled={isWorking}
+            register={{
+              ...register("guest.fullName", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest Email"
+          error={errors?.guest?.email?.message}
+        >
+          <Input
+            type="text"
+            id="email"
+            disabled={isWorking}
+            register={{
+              ...register("guest.email", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest Country"
+          error={errors?.guest?.country?.message}
+        >
+          <Input
+            type="text"
+            id="country"
+            disabled={isWorking}
+            register={{
+              ...register("guest.country", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest NationalID"
+          error={errors?.guest?.nationalId?.message}
+        >
+          <Input
+            type="text"
+            id="nationalID"
+            disabled={isWorking}
+            register={{
+              ...register("guest.nationalId", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+      </div>
       <FormRowVertical
         label="Number of Guests"
         error={errors?.numGuests?.message}

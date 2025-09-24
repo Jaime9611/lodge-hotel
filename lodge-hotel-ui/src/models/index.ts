@@ -67,7 +67,7 @@ export interface GuestModel {
   email: string;
   country: string;
   countryFlag: string;
-  nationalID: string;
+  nationalId: string;
 }
 
 //---------------- BOOKING MODELS ----------------

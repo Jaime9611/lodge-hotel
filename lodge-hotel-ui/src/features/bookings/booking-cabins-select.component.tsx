@@ -186,7 +186,7 @@ const BookingCabinsSelect: FC<BookingCabinsSelectProps> = ({
             isLoading={isPending}
             options={
               filteredCabinsOptions?.map((c) => ({
-                label: c.name,
+                label: `${c.name} -  Max Capacity:  x${c.maxCapacity}`,
                 value: c.id,
               })) ?? []
             }
