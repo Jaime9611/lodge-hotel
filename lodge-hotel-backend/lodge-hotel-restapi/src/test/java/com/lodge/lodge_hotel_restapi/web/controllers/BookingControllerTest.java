@@ -15,6 +15,8 @@ import com.lodge.lodge_hotel_restapi.application.ports.booking.CreateBookingPort
 import com.lodge.lodge_hotel_restapi.application.ports.booking.DeleteBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.ReadBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.application.services.impls.BookingServiceImpl;
 import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;
@@ -25,6 +27,7 @@ import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,6 +64,15 @@ class BookingControllerTest {
   @Mock
   UpdateBookingPort updatePort;
 
+  @Mock
+  ReadCabinPort readCabinPort;
+
+  @Mock
+  CreateGuestPort createGuestPort;
+
+  @Mock
+  HttpServletRequest httpServletRequest;
+
   @Captor
   ArgumentCaptor<Long> idArgumentCaptor;
 
@@ -77,8 +89,8 @@ class BookingControllerTest {
 
   @BeforeEach
   void setUp() {
-    bookingServiceImpl = new BookingServiceImpl(readPort, createPort, deletePort, updatePort,
-        pageMapper);
+    bookingServiceImpl = new BookingServiceImpl(readPort, createPort, deletePort, updatePort, readCabinPort,
+        createGuestPort, pageMapper, httpServletRequest);
   }
 
   @Test

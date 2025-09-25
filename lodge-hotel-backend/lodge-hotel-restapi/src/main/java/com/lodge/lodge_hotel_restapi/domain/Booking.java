@@ -15,7 +15,7 @@ public class Booking {
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private int numGuests;
-  private int numbNights;
+  private int numNights;
   private BookingStatus status;
   private Guest guest;
   private List<Cabin> cabins;

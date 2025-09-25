@@ -71,7 +71,7 @@ public class BookingMapperImpl implements BookingMapper {
 
     booking.cabins(parsedCabins);
     booking.guest(guestMapper.guestEntityToGuest(entity.getGuest()));
-    booking.numbNights(entity.getNumNights());
+    booking.numNights(entity.getNumNights());
     booking.totalPrice(entity.getTotalPrice());
 
     return booking.build();

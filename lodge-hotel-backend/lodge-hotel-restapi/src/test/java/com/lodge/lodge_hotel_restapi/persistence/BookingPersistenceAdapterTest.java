@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
+import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.BookingMapperImpl;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.CabinMapperImpl;
@@ -15,6 +16,7 @@ import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.GuestMap
 import com.lodge.lodge_hotel_restapi.persistence.repositories.BookingRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -75,7 +77,10 @@ class BookingPersistenceAdapterTest {
     Booking testBooking = BookingFactory.createSingleBooking();
 
     given(bookingRepository.save(any(BookingEntity.class))).willReturn(BookingEntity.builder()
-        .id(testBooking.getId()).build());
+        .id(testBooking.getId()).cabins(
+            testBooking.getCabins().stream().map(cabin -> CabinFactory.createSingleCabinEntity())
+                .collect(Collectors.toSet())).startDate(testBooking.getStartDate())
+        .endDate(testBooking.getEndDate()).build());
 
     // Act
     testBooking.setId(null);

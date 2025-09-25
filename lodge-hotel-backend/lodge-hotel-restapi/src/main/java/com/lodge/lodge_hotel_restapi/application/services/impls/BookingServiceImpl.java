@@ -145,7 +145,7 @@ public class BookingServiceImpl implements BookingService {
     for (CabinSimpleDto cabin : cabins) {
       Cabin foundCabin = readCabinPort.get(cabin.getId())
           .orElseThrow(() -> new ItemNotFoundException(
-              "Cabin with provide ID" + cabin.getId() + " not found.",
+              "Cabin with provide ID: " + cabin.getId() + " not found.",
               httpServletRequest.getRequestURI()));
 
       total = total.add(foundCabin.getRegularPrice());
