@@ -1,21 +1,33 @@
 package com.lodge.lodge_hotel_restapi.application.services.impls;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.lodge.lodge_hotel_restapi.application.ports.CreateBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.DeleteBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.CreateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.DeleteBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.ReadBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
+import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
+import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
+import com.lodge.lodge_hotel_restapi.web.dtos.CabinSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
+import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +56,16 @@ class BookingServiceImplTest {
   UpdateBookingPort updatePort;
 
   @Mock
+  ReadCabinPort readCabinPort;
+
+  @Mock
+  CreateGuestPort createGuestPort;
+
+  @Mock
   PageMapper pageMapper;
+
+  @Mock
+  HttpServletRequest httpServletRequest;
 
   @Captor
   ArgumentCaptor<Long> idArgumentCaptor;
@@ -57,7 +78,58 @@ class BookingServiceImplTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    service = new BookingServiceImpl(readPort, createPort, deletePort, updatePort, pageMapper);
+    service = new BookingServiceImpl(readPort, createPort, deletePort, updatePort, readCabinPort,
+        createGuestPort, pageMapper, httpServletRequest);
+  }
+
+  @Test
+  void testBookingQuotation() {
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+
+    int daysBetween = 3;
+    LocalDateTime testingEndDate = LocalDateTime.now();
+    LocalDateTime testingStartDate = testingEndDate.minusDays(daysBetween);
+
+    given(readCabinPort.get(anyLong())).willReturn(
+        Optional.ofNullable(CabinFactory.createSingleCabin()));
+
+    BookingQuotationDto dto = BookingQuotationDto.builder().cabins(testBooking.getCabins().stream()
+        .map(cabin -> CabinSimpleDto.builder().id(1L).build())
+        .toList()).startDate(testingStartDate).endDate(testingEndDate).build();
+
+    // Act
+    BigDecimal amount = service.getBookingQuotation(dto);
+
+    // Assert
+    BigDecimal total = BigDecimal.valueOf(CabinFactory.PRICE)
+        .multiply(BigDecimal.valueOf(daysBetween));
+    assertThat(amount).isEqualTo(total);
+  }
+
+  @Test
+  public void testBookingQuotationCabinNotFound() {
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+
+    int daysBetween = 3;
+    LocalDateTime testingEndDate = LocalDateTime.now();
+    LocalDateTime testingStartDate = testingEndDate.minusDays(daysBetween);
+
+    given(readCabinPort.get(anyLong())).willReturn(
+        Optional.empty());
+
+    BookingQuotationDto dto = BookingQuotationDto.builder().cabins(testBooking.getCabins().stream()
+        .map(cabin -> CabinSimpleDto.builder().id(CabinFactory.TEST_ID).build())
+        .toList()).startDate(testingStartDate).endDate(testingEndDate).build();
+
+    ItemNotFoundException exception = assertThrows(ItemNotFoundException.class, () -> {
+      // Act
+      BigDecimal amount = service.getBookingQuotation(dto);
+    });
+
+    assertEquals("Cabin with provide ID: " + CabinFactory.TEST_ID + " not found.",
+        exception.getMessage());
   }
 
   @Test
@@ -76,9 +148,24 @@ class BookingServiceImplTest {
 
     assertThat(bookingArgumentCaptor.getValue().getId()).isEqualTo(testBooking.getId());
     assertThat(bookingArgumentCaptor.getValue().isPaid()).isEqualTo(testBooking.isPaid());
-    assertThat(bookingArgumentCaptor.getValue().isHasBreakfast()).isEqualTo(
-        testBooking.isHasBreakfast());
     assertThat(bookingArgumentCaptor.getValue().getStatus()).isEqualTo(testBooking.getStatus());
+  }
+
+  @Test
+  void testUpdateBookingNotFound() {
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+    given(readPort.get(testBooking.getId())).willReturn(Optional.empty());
+
+    // Act
+    ItemNotFoundException exception = assertThrows(ItemNotFoundException.class, () -> {
+      // Act
+      service.update(testBooking.getId(), testBooking);
+    });
+
+    // Assert
+    assertEquals("Booking with provided ID not found.",
+        exception.getMessage());
   }
 
   @Test
@@ -94,6 +181,22 @@ class BookingServiceImplTest {
     verify(readPort, times(1)).get(anyLong());
     verify(deletePort).delete(idArgumentCaptor.capture());
     assertThat(idArgumentCaptor.getValue()).isEqualTo(BookingFactory.TEST_ID);
+  }
+
+  @Test
+  void testDeleteBookingNotFound() {
+    // Arrange
+    given(readPort.get(anyLong())).willReturn(
+        Optional.empty());
+
+    // Act
+    ItemNotFoundException exception = assertThrows(ItemNotFoundException.class, () -> {
+      service.delete(BookingFactory.TEST_ID);
+    });
+
+    // Assert
+    assertEquals("Booking with provided ID not found.",
+        exception.getMessage());
   }
 
   @Test
@@ -115,15 +218,11 @@ class BookingServiceImplTest {
     // Assert
     assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabinList.get(0).getId());
     assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testCabinList.get(0).isPaid());
-    assertThat(foundCabins.getContent().get(0).isHasBreakfast()).isEqualTo(
-        testCabinList.get(0).isHasBreakfast());
     assertThat(foundCabins.getContent().get(0).getStatus()).isEqualTo(
         testCabinList.get(0).getStatus());
     assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabinList.get(0).getId());
     assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testCabinList.get(1).getId());
     assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testCabinList.get(1).isPaid());
-    assertThat(foundCabins.getContent().get(1).isHasBreakfast()).isEqualTo(
-        testCabinList.get(1).isHasBreakfast());
     assertThat(foundCabins.getContent().get(1).getStatus()).isEqualTo(
         testCabinList.get(1).getStatus());
   }
@@ -141,8 +240,23 @@ class BookingServiceImplTest {
     // Assert
     assertThat(foundBooking.getId()).isEqualTo(testBooking.getId());
     assertThat(foundBooking.isPaid()).isEqualTo(testBooking.isPaid());
-    assertThat(foundBooking.isHasBreakfast()).isEqualTo(testBooking.isHasBreakfast());
+  }
 
+  @Test
+  void testGetBookingNotFound() {
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+
+    given(readPort.get(testBooking.getId())).willReturn(Optional.empty());
+
+    // Act
+    ItemNotFoundException exception = assertThrows(ItemNotFoundException.class, () -> {
+      Booking foundBooking = service.get(testBooking.getId());
+    });
+
+    // Assert
+    assertEquals("Booking with provided ID not found.",
+        exception.getMessage());
   }
 
   @Test
@@ -153,13 +267,20 @@ class BookingServiceImplTest {
     given(createPort.save(any(Booking.class))).willReturn(
         Booking.builder().id(testBooking.getId()).build());
 
+    given(readCabinPort.get(anyLong())).willReturn(
+        Optional.ofNullable(testBooking.getCabins().get(0)));
+
+    BookingSimpleDto dto = BookingSimpleDto.builder().cabins(testBooking.getCabins().stream()
+        .map(cabin -> CabinSimpleDto.builder().name(cabin.getName()).id(cabin.getId()).build())
+        .toList()).build();
+
     // Act
-    Long savedCabinId = service.save(testBooking);
+    Long savedBookingId = service.save(dto);
 
     // Assert
     verify(createPort, times(1)).save(any(Booking.class));
 
-    assertThat(savedCabinId).isEqualTo(testBooking.getId());
+    assertThat(savedBookingId).isEqualTo(testBooking.getId());
   }
 
 }

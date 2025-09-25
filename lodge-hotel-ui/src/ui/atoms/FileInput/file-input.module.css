@@ -1,0 +1,22 @@
+.fileInput {
+  font-size: var(--text-md);
+  border-radius: var(--radius-sm);
+}
+
+.fileInput::file-selector-button {
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  padding: 4px 16px;
+  margin-right: 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-600);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.fileInput:hover {
+  background-color: var(--color-primary-500);
+  color: white;
+}

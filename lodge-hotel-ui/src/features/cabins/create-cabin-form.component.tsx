@@ -4,6 +4,7 @@ import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
 import {
   Button,
+  FileInput,
   Form,
   FormRowVertical,
   Input,
@@ -40,9 +41,9 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
   const { errors } = formState; // Form Errors
 
   const onSubmit = (data: CabinModelForm) => {
-    // const image =
-    //   typeof data.image === "string" ? data.image : (data.image[0] as File);
-    const image = "";
+    console.log(data);
+    const image =
+      typeof data.image === "string" ? data.image : (data.image[0] as File);
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
@@ -146,6 +147,19 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
           }}
         />
       </FormRowVertical>
+
+      <FormRowVertical label="Cabin photo" error={errors?.image?.message}>
+        <FileInput
+          id="image"
+          accept="image/*"
+          register={{
+            ...register("image", {
+              required: isEditSession ? false : "This field is required",
+            }),
+          }}
+        />
+      </FormRowVertical>
+
       <Stack columns="24rem 1fr 1.2fr">
         {/* type is an HTML attribute! */}
         <Button

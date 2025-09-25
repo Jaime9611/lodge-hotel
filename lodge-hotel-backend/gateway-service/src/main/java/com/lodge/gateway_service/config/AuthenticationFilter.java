@@ -124,7 +124,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     }
 
     private boolean isExcluded(String path) {
-        Predicate<String> isPathExcluded = pattern -> path.matches(pattern.replace("**", ".*"));
+        Predicate<String> isPathExcluded = url -> path.matches("/api/v1/storage/public/cabin/.*");
+        var solution = excludedUrls.stream().anyMatch(isPathExcluded);
         return excludedUrls.stream().anyMatch(isPathExcluded);
     }
 

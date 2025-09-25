@@ -14,10 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lodge.lodge_hotel_restapi.application.ports.CreateCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.DeleteCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.CreateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.DeleteCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.application.services.CabinService;
 import com.lodge.lodge_hotel_restapi.application.services.impls.CabinServiceImpl;
 import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;

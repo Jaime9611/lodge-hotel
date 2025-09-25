@@ -4,20 +4,25 @@ import com.lodge.lodge_hotel_restapi.domain.Booking;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BookingFactory {
 
   public static final long TEST_ID = 1L;
-  public static final String NAME = "Test Booking";
 
   public static Booking createSingleBooking(Long customId) {
     Cabin newCabin = CabinFactory.createSingleCabin();
 
     return Booking.builder()
         .id(customId)
-        .cabin(newCabin)
+        .cabins(Arrays.asList(newCabin))
+        .createdAt(LocalDateTime.now())
+        .startDate(LocalDateTime.now())
+        .endDate(LocalDateTime.now())
         .build();
   }
 
@@ -34,7 +39,10 @@ public class BookingFactory {
 
     return BookingEntity.builder()
         .id(customId)
-        .cabin(newCabin)
+        .cabins(Arrays.asList(newCabin).stream().collect(Collectors.toSet()))
+        .createdAt(LocalDateTime.now())
+        .startDate(LocalDateTime.now())
+        .endDate(LocalDateTime.now())
         .build();
   }
 

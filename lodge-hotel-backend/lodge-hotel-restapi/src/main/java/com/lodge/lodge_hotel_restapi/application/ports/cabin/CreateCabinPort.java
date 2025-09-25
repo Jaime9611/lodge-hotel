@@ -1,4 +1,4 @@
-package com.lodge.lodge_hotel_restapi.application.ports;
+package com.lodge.lodge_hotel_restapi.application.ports.cabin;
 
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 

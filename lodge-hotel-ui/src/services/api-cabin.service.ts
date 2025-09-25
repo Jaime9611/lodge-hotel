@@ -4,6 +4,7 @@ import type { CabinModel, CabinModelFormResult, CabinModelPage } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CABIN_PATH = "/api/v1/cabin";
+const IMAGE_PATH = "/api/v1/storage/cabin-images";
 
 class CabinsApi extends ApiClient {
   constructor() {
@@ -40,19 +41,59 @@ class CabinsApi extends ApiClient {
     id?: number
   ): Promise<boolean> {
     try {
-      if (!id)
-        await this.post<CabinModelFormResult, void>(`${CABIN_PATH}`, newCabin, {
-          headers: { Authorization: `Bearer ${this.getToken()}` },
-        });
+      const hasImagePath =
+        typeof newCabin.image === "string" &&
+        (newCabin as CabinModel).image?.startsWith(API_BASE_URL);
 
-      if (id)
-        await this.update<CabinModel>(
-          `${CABIN_PATH}/${id}`,
-          newCabin as CabinModel,
+      const imageName = `${Math.random()}-${
+        (newCabin as CabinModelFormResult).image.name
+      }`.replace("/", "");
+      const imagePath = hasImagePath
+        ? (newCabin as CabinModel).image
+        : `${API_BASE_URL}/api/v1/storage/public/cabin/${imageName}`;
+
+      if (!id)
+        await this.post<CabinModel, object>(
+          `${CABIN_PATH}`,
+          { ...newCabin, image: imagePath } as CabinModel,
           {
             headers: { Authorization: `Bearer ${this.getToken()}` },
           }
         );
+
+      if (id)
+        await this.update<CabinModel>(
+          `${CABIN_PATH}/${id}`,
+          { ...newCabin, image: imagePath } as CabinModel,
+          {
+            headers: { Authorization: `Bearer ${this.getToken()}` },
+          }
+        );
+
+      if (hasImagePath) return true;
+
+      // Save Image
+      const formData = new FormData();
+      formData.append("images", newCabin.image);
+      formData.append("imageName", imageName);
+
+      const response = this.post<object, {}>(
+        `${API_BASE_URL}${IMAGE_PATH}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${this.getToken()}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+        .then((response) => {
+          console.log("File uploaded successfully");
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+          console.log(cabinResponse);
+        });
     } catch (error) {
       console.error(error);
       throw Error("Cabin could not be created.");

@@ -4,6 +4,7 @@ import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
 import {
   Button,
+  CountrySelector,
   DateRangeInput,
   Form,
   FormRowVertical,
@@ -23,6 +24,7 @@ import { useEditBooking } from "./use-edit-booking.hook";
 import BookingCabinsSelect from "./booking-cabins-select.component";
 import { formatCurrency } from "@utils/helpers";
 import { useBookingQuotation } from "./use-booking-quotation";
+import type { CountryModel } from "@ui/atoms/CountrySelector/country-selector.component";
 
 // ------------ UI COMPONENT ------------
 
@@ -113,6 +115,12 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
     handlePricesChange();
   };
 
+  const handleCountryChange = (country: CountryModel) => {
+    setValue("guest.country", country.label);
+    setValue("guest.countryFlag", country.image);
+    trigger("guest");
+  };
+
   const onSubmit = (data: BookingModelForm) => {
     if (isEditSession)
       editBooking(
@@ -149,6 +157,59 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
       onSubmit={handleSubmit(onSubmit, onError)}
       type={onCloseModal ? "modal" : "regular"}
     >
+      <div className="grid grid-cols-2 gap-4">
+        <FormRowVertical
+          label="Guest Name"
+          error={errors?.guest?.fullName?.message}
+        >
+          <Input
+            type="text"
+            id="guest.fullName"
+            disabled={isWorking}
+            register={{
+              ...register("guest.fullName", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest Email"
+          error={errors?.guest?.email?.message}
+        >
+          <Input
+            type="text"
+            id="email"
+            disabled={isWorking}
+            register={{
+              ...register("guest.email", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest Country"
+          error={errors?.guest?.country?.message}
+        >
+          <CountrySelector onUpdate={handleCountryChange} />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest NationalID"
+          error={errors?.guest?.nationalId?.message}
+        >
+          <Input
+            type="text"
+            id="nationalID"
+            disabled={isWorking}
+            register={{
+              ...register("guest.nationalId", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+      </div>
       <FormRowVertical
         label="Number of Guests"
         error={errors?.numGuests?.message}
@@ -162,16 +223,6 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
               required: "This field is required",
               min: { value: 1, message: "Number should be at least 1" },
             }),
-          }}
-        />
-      </FormRowVertical>
-      <FormRowVertical label="Guest name" error={errors?.guest?.message}>
-        <Input
-          type="text"
-          id="name"
-          disabled={isWorking}
-          register={{
-            ...register("guest", { required: "This field is required" }),
           }}
         />
       </FormRowVertical>

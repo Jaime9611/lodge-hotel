@@ -1,4 +1,4 @@
-import React, { type FC, type ReactElement, type ReactNode } from "react";
+import type { FC, ReactElement, ReactNode } from "react";
 
 type FormRowVerticalProps = {
   label?: string;

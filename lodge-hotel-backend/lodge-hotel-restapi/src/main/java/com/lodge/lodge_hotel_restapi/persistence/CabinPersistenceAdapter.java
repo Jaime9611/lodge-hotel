@@ -1,9 +1,9 @@
 package com.lodge.lodge_hotel_restapi.persistence;
 
-import com.lodge.lodge_hotel_restapi.application.ports.CreateCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.DeleteCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.ReadCabinPort;
-import com.lodge.lodge_hotel_restapi.application.ports.UpdateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.CreateCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.DeleteCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.UpdateCabinPort;
 import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.CabinMapper;

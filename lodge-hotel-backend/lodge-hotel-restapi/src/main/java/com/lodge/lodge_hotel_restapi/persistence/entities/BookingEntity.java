@@ -9,10 +9,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,12 +54,28 @@ public class BookingEntity {
   @JoinColumn(name = "guest_id")
   private GuestEntity guest;
 
-  @ManyToOne
-  @JoinColumn(name = "cabin_id")
-  private CabinEntity cabin;
+  @ManyToMany
+  @JoinTable(
+      name = "booking_cabin",
+      joinColumns = @JoinColumn(name = "booking_id"),
+      inverseJoinColumns = @JoinColumn(name = "cabin_id")
+  )
+  private Set<CabinEntity> cabins = new HashSet<>();
 
-//  private BigDecimal cabinPrice;
-  private BigDecimal extrasPrice;
-  private boolean hasBreakfast;
+  //  private BigDecimal cabinPrice;
+//  private BigDecimal extrasPrice;
+//  private boolean hasBreakfast;
   private boolean isPaid;
+
+  @Transient
+  public Integer getNumNights() {
+    return Math.toIntExact(ChronoUnit.DAYS.between(this.startDate, this.endDate));
+  }
+
+  @Transient
+  public BigDecimal getTotalPrice() {
+    return this.cabins.stream().map(CabinEntity::getRegularPrice)
+        .reduce(BigDecimal.valueOf(0), BigDecimal::add)
+        .multiply(BigDecimal.valueOf(this.getNumNights()));
+  }
 }

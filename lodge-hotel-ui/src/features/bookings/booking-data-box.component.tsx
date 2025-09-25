@@ -87,14 +87,10 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
     endDate,
     numNights,
     numGuests,
-    cabinPrice,
-    extrasPrice,
     totalPrice,
-    hasBreakfast,
-    observations,
     isPaid,
-    guest: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabin: { name: cabinName },
+    guest: { fullName: guestName, email, country, countryFlag, nationalId },
+    cabins,
   } = booking;
 
   return (
@@ -103,7 +99,7 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
         <div>
           <HiOutlineHomeModern />
           <p>
-            <span>{cabinName}</span>
+            <span>{cabins[0].name}</span>
           </p>
         </div>
 
@@ -118,40 +114,19 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
 
       <div className="pt-12 px-16 pb-5">
         <DataGuest>
-          {/* TODO: ADD REAL FLAGS */}
-          {true && (
-            <Flag src="https://flagcdn.com/co.svg" alt={`Flag of ${country}`} />
-          )}
+          {true && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>
           <span>&bull;</span>
           <p>{email}</p>
           <span>&bull;</span>
-          <p>National ID {nationalID}</p>
+          <p>National ID: {nationalId}</p>
         </DataGuest>
-
-        {observations && (
-          <DataItem
-            icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Observations"
-          >
-            {observations}
-          </DataItem>
-        )}
-
-        <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
-          {hasBreakfast ? "Yes" : "No"}
-        </DataItem>
 
         <DataPrice isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
-
-            {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
-              )} breakfast)`}
           </DataItem>
 
           <p>{isPaid ? "Paid" : "Will pay at property"}</p>

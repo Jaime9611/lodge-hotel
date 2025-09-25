@@ -16,14 +16,24 @@ type CabinRowProps = {
 };
 
 const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
-  const { id: cabinId, name, regularPrice, maxCapacity, discount } = cabin;
+  const {
+    id: cabinId,
+    name,
+    regularPrice,
+    maxCapacity,
+    discount,
+    image,
+  } = cabin;
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const navigate = useNavigate();
 
   return (
     <Table.Row>
-      <div className="text-xl text-gray-600 font-medium">{`CBN-${cabinId}`}</div>
+      <img
+        className="block w-24 rounded-sm aspect-3/2 object-cover object-center scale-1.5 -translate-x-1.5"
+        src={image}
+      />
       <div>{name}</div>
       <div>{maxCapacity}</div>
       <div>{formatCurrency(regularPrice)}</div>
@@ -53,7 +63,7 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
             <ConfirmDelete
               resourceName="cabin"
               disabled={isDeleting}
-              onConfirm={() => deleteCabin(id)}
+              onConfirm={() => deleteCabin(cabinId)}
             />
           </Modal.Window>
         </Modal>
