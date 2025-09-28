@@ -1,4 +1,4 @@
-import { DashboardFilter } from "@features/dashboard";
+import { DashboardFilter, DashboardLayout } from "@features/dashboard";
 import { Heading } from "@ui/atoms";
 import { Row } from "@ui/atoms/Row";
 
@@ -9,7 +9,7 @@ const Dashboard = () => (
       <DashboardFilter />
     </Row>
     <Row type="vertical">
-      <div>DATA</div>
+      <DashboardLayout />
     </Row>
   </>
 );
