@@ -9,7 +9,7 @@ const AppLayout = (props: Props) => {
   return (
     <div
       className="h-screen grid"
-      style={{ gridTemplateColumns: "26rem 1fr", gridTemplateRows: "auto 1fr" }}
+      style={{ gridTemplateColumns: "23rem 1fr", gridTemplateRows: "auto 1fr" }}
     >
       <Header />
       <Sidebar />

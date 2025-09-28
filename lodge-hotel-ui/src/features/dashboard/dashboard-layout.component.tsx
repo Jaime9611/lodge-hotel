@@ -5,6 +5,7 @@ import { useCabins } from "@features/cabins";
 import Stats from "./stats.component";
 import { useBookings } from "@features/bookings";
 import DurationChart from "./duration-chart.component";
+import SalesChart from "./sales-chart.component";
 
 interface DashboardLayoutProps {}
 
@@ -26,7 +27,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
       />
       <div className="">TODAY</div>
       <DurationChart confirmedStays={bookings} />
-      <div className="">SALES</div>
+      <SalesChart bookings={bookings} numDays={7} />
     </div>
   );
 };

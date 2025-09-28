@@ -37,6 +37,7 @@ const Stats: FC<StatsProps> = ({
   //     confirmedStays?.reduce((acc, cur) => acc + cur.numNights, 0) /
   //     (numDays * cabinCount);
   const occupation = 0.9;
+  // TODO: ADD OCCUPANCY RATE
 
   return (
     <>
@@ -54,7 +55,7 @@ const Stats: FC<StatsProps> = ({
       />
       <Stat
         title="Check ins"
-        color="indigo"
+        color="slate"
         icon={<HiOutlineCalendarDays />}
         value={checkins}
       />

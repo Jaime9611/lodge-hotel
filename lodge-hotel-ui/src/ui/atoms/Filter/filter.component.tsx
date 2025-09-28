@@ -41,7 +41,7 @@ interface FilterProps {
 const Filter: FC<FilterProps> = ({ filterField, options }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  let currentFilter = searchParams.get(filterField) || options[0];
+  let currentFilter = searchParams.get(filterField) || options[0].value;
 
   const handleClick = (value: string) => {
     searchParams.set(filterField, value);

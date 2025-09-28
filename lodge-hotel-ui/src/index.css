@@ -37,7 +37,7 @@ button:hover {
 
 .nav_link:hover svg,
 .nav_link:active svg,
-.nav_link:active:link svg,
-.nav_link:active:visited svg {
+.nav_link.active:link svg,
+.nav_link.active:visited svg {
   @apply text-primary;
 }
