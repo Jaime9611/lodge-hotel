@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from "react";
 
 import {
+  HiOutlineCalendarDays,
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
   HiOutlineCurrencyDollar,
@@ -91,15 +92,16 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
     isPaid,
     guest: { fullName: guestName, email, country, countryFlag, nationalId },
     cabins,
+    id,
   } = booking;
 
   return (
     <DataBox>
       <DataHeader>
         <div>
-          <HiOutlineHomeModern />
+          <HiOutlineCalendarDays />
           <p>
-            <span>{cabins[0].name}</span>
+            <span>BK-{id}</span>
           </p>
         </div>
 
@@ -123,6 +125,16 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
           <span>&bull;</span>
           <p>National ID: {nationalId}</p>
         </DataGuest>
+        <div className="pl-12 pt-4">
+          {booking.cabins.map((cabin) => (
+            <DataItem icon={<HiOutlineHomeModern />} label={cabin.name}>
+              <span>&bull;</span>
+              <p>Max capacity: {cabin.maxCapacity}</p>
+              <span>&bull;</span>
+              <p>Price ${cabin.regularPrice}</p>
+            </DataItem>
+          ))}
+        </div>
 
         <DataPrice isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>

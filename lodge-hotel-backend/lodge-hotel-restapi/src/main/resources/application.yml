@@ -9,4 +9,4 @@ spring:
   application:
     name: lodge-api
   profiles:
-    active: ${PROFILE_ACTIVE}
+    active: ${PROFILE_ACTIVE:dev}

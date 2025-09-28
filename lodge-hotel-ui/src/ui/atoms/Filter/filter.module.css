@@ -1,0 +1,19 @@
+.filter {
+  background-color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-medium);
+  font-size: calc(var(--spacing) * 4);
+  padding: 0.44rem 0.8rem;
+  transition: all 0.3s;
+}
+
+.filter:hover:not(:disabled) {
+  background-color: var(--color-primary-600);
+  color: var(--color-primary-50);
+}
+
+.filter.active {
+  background-color: var(--color-primary-600);
+  color: var(--color-primary-50);
+}
