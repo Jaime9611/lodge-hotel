@@ -55,12 +55,13 @@ public class BookingController {
   @GetMapping(Endpoints.BOOKING_AFTER)
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<PageResponse<Booking>> getAllAfterDate(
-      @RequestParam(required = false) LocalDate date,
+      @RequestParam(required = false) boolean fromCreation,
+      @RequestParam(required = true) LocalDate date,
       @RequestParam(required = false) Integer pageNumber,
       @RequestParam(required = false) Integer pageSize) {
     log.debug("GET - All Bookings after date in Controller");
 
-    return ResponseEntity.ok(bookingService.getAllAfterDate(date, pageNumber, pageSize));
+    return ResponseEntity.ok(bookingService.getAllAfterDate(fromCreation, date, pageNumber, pageSize));
   }
 
   @GetMapping(Endpoints.BOOKING_ID)

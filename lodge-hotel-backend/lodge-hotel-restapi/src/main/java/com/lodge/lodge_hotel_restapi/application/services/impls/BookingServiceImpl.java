@@ -71,7 +71,7 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
-  public PageResponse<Booking> getAllAfterDate(LocalDate date, Integer pageNumber, Integer pageSize) {
+  public PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date, Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all bookings after date was called.", BookingService.class.getSimpleName());
 
     PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
@@ -80,7 +80,14 @@ public class BookingServiceImpl implements BookingService {
 
     LocalDate today = LocalDate.now();
 
-    Page<Booking> bookingPage = readBookingPort.getAfterDate(date, today, pageRequest);
+    Page<Booking> bookingPage;
+
+    if(fromCreation) {
+      bookingPage = readBookingPort.getAfterDate(date, today, pageRequest);
+    } else {
+      bookingPage = readBookingPort.getStaysAfterDate(date, pageRequest);
+    }
+
     bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
 
     return bookingPageResponse;

@@ -13,7 +13,7 @@ public interface BookingService {
 
   PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize);
 
-  PageResponse<Booking> getAllAfterDate(LocalDate date, Integer pageNumber, Integer pageSize);
+  PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date, Integer pageNumber, Integer pageSize);
 
   Booking get(Long id);
 
