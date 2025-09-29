@@ -3,8 +3,8 @@ package com.lodge.lodge_hotel_restapi.application.services.impls;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.CreateBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.DeleteBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.ReadBookingPort;
-import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort;
+import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
@@ -19,6 +19,7 @@ import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -63,8 +64,24 @@ public class BookingServiceImpl implements BookingService {
 
     PageResponse<Booking> bookingPageResponse;
 
-    Page<Booking> cabinPage = readBookingPort.getAll(pageRequest);
-    bookingPageResponse = pageMapper.pagetoPageResponse(cabinPage);
+    Page<Booking> bookingPage = readBookingPort.getAll(pageRequest);
+    bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
+
+    return bookingPageResponse;
+  }
+
+  @Override
+  public PageResponse<Booking> getAllAfterDate(LocalDate date, Integer pageNumber, Integer pageSize) {
+    log.debug("{} - Get all bookings after date was called.", BookingService.class.getSimpleName());
+
+    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+
+    PageResponse<Booking> bookingPageResponse;
+
+    LocalDate today = LocalDate.now();
+
+    Page<Booking> bookingPage = readBookingPort.getAfterDate(date, today, pageRequest);
+    bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
 
     return bookingPageResponse;
   }

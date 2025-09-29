@@ -5,12 +5,15 @@ import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public interface BookingService {
 
-  public BigDecimal getBookingQuotation(BookingQuotationDto booking);
+  BigDecimal getBookingQuotation(BookingQuotationDto booking);
 
-  public PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize);
+  PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize);
+
+  PageResponse<Booking> getAllAfterDate(LocalDate date, Integer pageNumber, Integer pageSize);
 
   Booking get(Long id);
 

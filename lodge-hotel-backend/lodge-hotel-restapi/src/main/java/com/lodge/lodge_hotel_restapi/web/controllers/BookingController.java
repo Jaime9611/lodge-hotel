@@ -8,6 +8,7 @@ import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +50,17 @@ public class BookingController {
     log.debug("GET - All Bookings in Controller");
 
     return ResponseEntity.ok(bookingService.getAll(bookingName, pageNumber, pageSize));
+  }
+
+  @GetMapping(Endpoints.BOOKING_AFTER)
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  public ResponseEntity<PageResponse<Booking>> getAllAfterDate(
+      @RequestParam(required = false) LocalDate date,
+      @RequestParam(required = false) Integer pageNumber,
+      @RequestParam(required = false) Integer pageSize) {
+    log.debug("GET - All Bookings after date in Controller");
+
+    return ResponseEntity.ok(bookingService.getAllAfterDate(date, pageNumber, pageSize));
   }
 
   @GetMapping(Endpoints.BOOKING_ID)

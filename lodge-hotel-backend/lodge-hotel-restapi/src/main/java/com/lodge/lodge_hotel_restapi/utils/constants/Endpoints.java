@@ -13,6 +13,7 @@ public class Endpoints {
   // BOOKINGS
   public static final String BOOKING = BASE_URL + "/booking";
   public static final String BOOKING_ID = "/{bookingId}";
+  public static final String BOOKING_AFTER = "/after";
   public static final String BOOKING_QUOTATION = "/quotation";
 
   // Private constructor to prevent instantiation
