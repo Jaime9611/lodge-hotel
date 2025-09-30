@@ -15,4 +15,6 @@ public interface ReadBookingPort {
   Page<Booking> getAfterDate(LocalDate start, LocalDate end, PageRequest pageRequest);
 
   Page<Booking> getStaysAfterDate(LocalDate date, PageRequest pageRequest);
+
+  Page<Booking> getTodaysActivity(PageRequest pageRequest);
 }

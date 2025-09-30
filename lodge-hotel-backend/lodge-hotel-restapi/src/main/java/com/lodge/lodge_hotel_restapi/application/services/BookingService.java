@@ -15,6 +15,8 @@ public interface BookingService {
 
   PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date, Integer pageNumber, Integer pageSize);
 
+  PageResponse<Booking> getTodaysActivity(Integer pageNumber, Integer pageSize);
+
   Booking get(Long id);
 
   void delete(Long id);

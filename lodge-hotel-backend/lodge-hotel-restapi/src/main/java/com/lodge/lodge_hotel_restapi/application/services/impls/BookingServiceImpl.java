@@ -94,6 +94,20 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
+  public PageResponse<Booking> getTodaysActivity(Integer pageNumber, Integer pageSize) {
+    log.debug("{} - Get todays activity bookings was called.", BookingService.class.getSimpleName());
+
+    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+
+    PageResponse<Booking> bookingPageResponse;
+
+    Page<Booking> bookingPage = readBookingPort.getTodaysActivity(pageRequest);
+    bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
+
+    return bookingPageResponse;
+  }
+
+  @Override
   public Booking get(Long id) {
     log.debug("{} - Get by id was called with {}", BookingService.class.getSimpleName(),
         String.valueOf(id));

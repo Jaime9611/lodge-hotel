@@ -64,6 +64,16 @@ public class BookingController {
     return ResponseEntity.ok(bookingService.getAllAfterDate(fromCreation, date, pageNumber, pageSize));
   }
 
+  @GetMapping(Endpoints.BOOKING_TODAY)
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  public ResponseEntity<PageResponse<Booking>> getTodaysActivity(
+      @RequestParam(required = false) Integer pageNumber,
+      @RequestParam(required = false) Integer pageSize) {
+    log.debug("GET - All Bookings for todays activity in Controller");
+
+    return ResponseEntity.ok(bookingService.getTodaysActivity(pageNumber, pageSize));
+  }
+
   @GetMapping(Endpoints.BOOKING_ID)
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<Booking> getBooking(@PathVariable Long bookingId) {
