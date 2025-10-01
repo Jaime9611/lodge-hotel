@@ -2,6 +2,7 @@ package com.lodge.lodge_hotel_restapi.web.controllers;
 
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -102,6 +104,17 @@ public class BookingController {
     log.debug("PUT - Update Booking by Id: {} in Controller", bookingId);
 
     bookingService.update(bookingId, booking);
+
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  @PatchMapping(Endpoints.BOOKING_ID)
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  public ResponseEntity<?> updateBookingStatus(@PathVariable Long bookingId,
+      @RequestBody BookingStatus status) {
+    log.debug("PATCH - Check-in-out Booking by Id: {} in Controller", bookingId);
+
+    bookingService.updateBookingStatus(bookingId, status);
 
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }

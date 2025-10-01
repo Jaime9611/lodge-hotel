@@ -1,6 +1,7 @@
 package com.lodge.lodge_hotel_restapi.application.services;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingQuotationDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
@@ -22,6 +23,8 @@ public interface BookingService {
   void delete(Long id);
 
   void update(Long id, Booking booking);
+
+  void updateBookingStatus(Long id, BookingStatus status);
 
   Long save(BookingSimpleDto booking);
 }

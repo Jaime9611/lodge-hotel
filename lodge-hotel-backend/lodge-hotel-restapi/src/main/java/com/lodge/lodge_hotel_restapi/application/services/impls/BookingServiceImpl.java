@@ -71,7 +71,8 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
-  public PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date, Integer pageNumber, Integer pageSize) {
+  public PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date,
+      Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all bookings after date was called.", BookingService.class.getSimpleName());
 
     PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
@@ -82,7 +83,7 @@ public class BookingServiceImpl implements BookingService {
 
     Page<Booking> bookingPage;
 
-    if(fromCreation) {
+    if (fromCreation) {
       bookingPage = readBookingPort.getAfterDate(date, today, pageRequest);
     } else {
       bookingPage = readBookingPort.getStaysAfterDate(date, pageRequest);
@@ -95,7 +96,8 @@ public class BookingServiceImpl implements BookingService {
 
   @Override
   public PageResponse<Booking> getTodaysActivity(Integer pageNumber, Integer pageSize) {
-    log.debug("{} - Get todays activity bookings was called.", BookingService.class.getSimpleName());
+    log.debug("{} - Get todays activity bookings was called.",
+        BookingService.class.getSimpleName());
 
     PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
 
@@ -141,6 +143,17 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
+  public void updateBookingStatus(Long id, BookingStatus status) {
+    log.debug("{} - Update Status was called with {}", BookingService.class.getSimpleName(),
+        id);
+
+    Booking foundBooking = findByBookingId(id);
+    foundBooking.setStatus(status);
+
+    updateBookingPort.update(foundBooking);
+  }
+
+  @Override
   public Long save(BookingSimpleDto booking) {
     log.debug("{} - Save was called", BookingService.class.getSimpleName());
 
@@ -176,7 +189,8 @@ public class BookingServiceImpl implements BookingService {
         .orElseThrow(() -> new ItemNotFoundException("Booking with provided ID not found."));
   }
 
-  private BigDecimal calculateTotal(List<CabinSimpleDto> cabins,  LocalDateTime startDate, LocalDateTime endDate) {
+  private BigDecimal calculateTotal(List<CabinSimpleDto> cabins, LocalDateTime startDate,
+      LocalDateTime endDate) {
     BigDecimal total = BigDecimal.ZERO;
     long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
 

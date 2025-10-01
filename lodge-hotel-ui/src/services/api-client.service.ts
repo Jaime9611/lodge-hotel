@@ -73,6 +73,14 @@ abstract class ApiClient {
     return this.request({ ...config, method: "PUT", url, data });
   }
 
+  protected async patch<T>(
+    url: string,
+    data: T,
+    config?: AxiosRequestConfig
+  ): Promise<void> {
+    return this.request({ ...config, method: "PATCH", url, data });
+  }
+
   protected async delete(
     url: string,
     config?: AxiosRequestConfig

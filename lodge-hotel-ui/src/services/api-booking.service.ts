@@ -73,6 +73,23 @@ class BookingsApi extends ApiClient {
     return true;
   }
 
+  async updateBookingStatus(id: number, status: string) {
+    try {
+      await this.patch(
+        `${BOOKING_PATH}/${id}`,
+        { status },
+        {
+          headers: { Authorization: `Bearer ${this.getToken()}` },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      throw Error("Booking Status could not be updated.");
+    }
+
+    return true;
+  }
+
   async deleteBooking(id: number): Promise<boolean> {
     try {
       await this.delete(`${BOOKING_PATH}/${id}`, {
@@ -94,6 +111,24 @@ class BookingsApi extends ApiClient {
         headers: { Authorization: `Bearer ${this.getToken()}` },
       }
     );
+  }
+
+  async getBookingsAfterDate(date: Date): Promise<BookingModelPage> {
+    const dateOnlyStr = date.toISOString().split("T")[0];
+
+    return await this.get<BookingModelPage>(`${BOOKING_PATH}/after`, {
+      headers: { Authorization: `Bearer ${this.getToken()}` },
+      params: { date: dateOnlyStr, fromCreation: true },
+    });
+  }
+
+  async getTodayStays(): Promise<BookingModelPage> {
+    const dateOnlyStr = new Date().toISOString().split("T")[0];
+
+    return await this.get<BookingModelPage>(`${BOOKING_PATH}/after`, {
+      headers: { Authorization: `Bearer ${this.getToken()}` },
+      params: { date: dateOnlyStr },
+    });
   }
 }
 
