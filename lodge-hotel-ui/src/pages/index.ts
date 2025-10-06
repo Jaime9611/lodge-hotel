@@ -4,3 +4,4 @@ export { default as Cabins } from "./cabins.component";
 export { default as Bookings } from "./bookings.component";
 export { default as Users } from "./users.component";
 export { default as Settings } from "./settings.component";
+export { default as Checkin } from "./checkin.component";

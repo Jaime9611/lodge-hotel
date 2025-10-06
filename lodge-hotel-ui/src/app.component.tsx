@@ -1,6 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import { Bookings, Cabins, Dashboard, Login, Settings, Users } from "@pages";
+import {
+  Bookings,
+  Cabins,
+  Checkin,
+  Dashboard,
+  Login,
+  Settings,
+  Users,
+} from "@pages";
 import { AppLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
@@ -37,6 +45,7 @@ const App = () => (
             <Route path={ROUTES.cabinId_path} element={<CabinDetail />} />
             <Route path={ROUTES.bookings} element={<Bookings />} />
             <Route path={ROUTES.bookingId_path} element={<Booking />} />
+            <Route path={ROUTES.booking_checkin} element={<Checkin />} />
             <Route path={ROUTES.users} element={<Users />} />
             {/* <Route path={ROUTES.settings} element={<Settings />} /> */}
           </Route>

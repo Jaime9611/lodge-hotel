@@ -16,3 +16,4 @@ export * from "./DateRangeInput";
 export * from "./FileInput";
 export * from "./CountrySelector";
 export * from "./Filter";
+export * from "./CheckBox";

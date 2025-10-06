@@ -24,6 +24,7 @@ spring:
               - POST
               - DELETE
               - PUT
+              - PATCH
             allowedHeaders:
               - Content-Type
               - responseType

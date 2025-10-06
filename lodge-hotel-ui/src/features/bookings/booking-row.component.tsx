@@ -22,6 +22,7 @@ import { Tag } from "@ui/atoms/Tag";
 import { format, isToday } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
+import { useCheckout } from "@features/check-in-out";
 
 type BookingRowProps = {
   booking: BookingModel;
@@ -40,6 +41,7 @@ const BookingRow: FC<BookingRowProps> = ({
 }) => {
   const navigate = useNavigate();
   const { isDeleting, deleteBooking } = useDeleteBooking();
+  const { checkout, isCheckingOut } = useCheckout();
 
   return (
     <Table.Row>
@@ -73,12 +75,14 @@ const BookingRow: FC<BookingRowProps> = ({
             {status === "UNCONFIRMED" && (
               <IconStackMenu.Button
                 icon={<HiArrowDownOnSquare />}
+                onClick={() => navigate(`/checkin/${bookingId}`)}
                 displayText="Check in"
               />
             )}
             {status === "CHECKED_IN" && (
               <IconStackMenu.Button
                 icon={<HiArrowUpOnSquare />}
+                onClick={() => checkout(bookingId)}
                 displayText="Check out"
               />
             )}

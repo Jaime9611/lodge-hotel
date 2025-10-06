@@ -11,12 +11,14 @@ interface ButtonProps {
   icon: ReactElement;
   onClick?: () => void;
   displayText: string;
+  disabled?: boolean;
 }
-const Button: FC<ButtonProps> = ({ icon, onClick, displayText }) => (
+const Button: FC<ButtonProps> = ({ icon, onClick, displayText, disabled }) => (
   <li className="relative group">
     <button
       onClick={onClick}
       type="button"
+      disabled={disabled}
       className="bg-none p-2 text-lg hover:bg-primary-100 border border-gray-300 rounded-md [&_svg]:w-4 [&_svg]:h-4 [&_svg]:text-gray-400 [&_svg]:transition-all"
     >
       {icon}

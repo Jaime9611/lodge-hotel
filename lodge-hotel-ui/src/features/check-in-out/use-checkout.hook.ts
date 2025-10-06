@@ -8,7 +8,7 @@ export const useCheckout = () => {
   const { mutate: checkout, isPending: isCheckingOut } = useMutation({
     mutationFn: (bookingId: number) =>
       apiBooking.updateBookingStatus(bookingId, "CHECKED_OUT"),
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success(`Booking succesfully checked out`);
       queryClient.invalidateQueries({ exact: true });
     },

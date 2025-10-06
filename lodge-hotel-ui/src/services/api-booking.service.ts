@@ -75,13 +75,9 @@ class BookingsApi extends ApiClient {
 
   async updateBookingStatus(id: number, status: string) {
     try {
-      await this.patch(
-        `${BOOKING_PATH}/${id}`,
-        { status },
-        {
-          headers: { Authorization: `Bearer ${this.getToken()}` },
-        }
-      );
+      await this.patch(`${BOOKING_PATH}/${id}?status=${status}`, "", {
+        headers: { Authorization: `Bearer ${this.getToken()}` },
+      });
     } catch (error) {
       console.error(error);
       throw Error("Booking Status could not be updated.");

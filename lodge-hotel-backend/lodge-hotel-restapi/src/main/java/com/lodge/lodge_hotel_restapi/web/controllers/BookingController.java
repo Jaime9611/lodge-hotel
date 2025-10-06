@@ -111,7 +111,7 @@ public class BookingController {
   @PatchMapping(Endpoints.BOOKING_ID)
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<?> updateBookingStatus(@PathVariable Long bookingId,
-      @RequestBody BookingStatus status) {
+      @RequestParam(required = false) BookingStatus status) {
     log.debug("PATCH - Check-in-out Booking by Id: {} in Controller", bookingId);
 
     bookingService.updateBookingStatus(bookingId, status);
