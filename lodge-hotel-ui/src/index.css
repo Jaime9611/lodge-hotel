@@ -41,3 +41,7 @@ button:hover {
 .nav_link.active:visited svg {
   @apply text-primary;
 }
+
+&::-webkit-scrollbar {
+  width: 0 !important;
+}

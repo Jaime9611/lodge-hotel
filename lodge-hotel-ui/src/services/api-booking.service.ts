@@ -109,12 +109,15 @@ class BookingsApi extends ApiClient {
     );
   }
 
-  async getBookingsAfterDate(date: Date): Promise<BookingModelPage> {
+  async getBookingsAfterDate(
+    date: Date,
+    fromCreation: boolean = false
+  ): Promise<BookingModelPage> {
     const dateOnlyStr = date.toISOString().split("T")[0];
 
     return await this.get<BookingModelPage>(`${BOOKING_PATH}/after`, {
       headers: { Authorization: `Bearer ${this.getToken()}` },
-      params: { date: dateOnlyStr, fromCreation: true },
+      params: { date: dateOnlyStr, fromCreation },
     });
   }
 

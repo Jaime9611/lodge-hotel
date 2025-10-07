@@ -103,7 +103,7 @@ public class BookingServiceImpl implements BookingService {
 
     PageResponse<Booking> bookingPageResponse;
 
-    Page<Booking> bookingPage = readBookingPort.getTodaysActivity(pageRequest);
+    Page<Booking> bookingPage = readBookingPort.getTodayActivity(pageRequest);
     bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
 
     return bookingPageResponse;

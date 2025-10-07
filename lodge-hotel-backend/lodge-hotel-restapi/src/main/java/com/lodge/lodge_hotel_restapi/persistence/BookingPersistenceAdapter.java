@@ -66,7 +66,7 @@ public class BookingPersistenceAdapter implements CreateBookingPort, ReadBooking
   }
 
   @Override
-  public Page<Booking> getTodaysActivity(PageRequest pageRequest) {
+  public Page<Booking> getTodayActivity(PageRequest pageRequest) {
     Page<BookingEntity> foundBookings = bookingRepository.findAllStaysForToday(pageRequest);
 
     return foundBookings.map(bookingMapper::bookingEntityToBooking);

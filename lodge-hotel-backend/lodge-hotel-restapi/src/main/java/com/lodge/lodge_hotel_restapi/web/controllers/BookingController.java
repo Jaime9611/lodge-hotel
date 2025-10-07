@@ -68,7 +68,7 @@ public class BookingController {
 
   @GetMapping(Endpoints.BOOKING_TODAY)
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
-  public ResponseEntity<PageResponse<Booking>> getTodaysActivity(
+  public ResponseEntity<PageResponse<Booking>> getTodayActivity(
       @RequestParam(required = false) Integer pageNumber,
       @RequestParam(required = false) Integer pageSize) {
     log.debug("GET - All Bookings for todays activity in Controller");

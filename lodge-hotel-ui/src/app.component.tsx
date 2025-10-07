@@ -47,7 +47,6 @@ const App = () => (
             <Route path={ROUTES.bookingId_path} element={<Booking />} />
             <Route path={ROUTES.booking_checkin} element={<Checkin />} />
             <Route path={ROUTES.users} element={<Users />} />
-            {/* <Route path={ROUTES.settings} element={<Settings />} /> */}
           </Route>
           <Route path={ROUTES.login} element={<Login />} />
         </Routes>

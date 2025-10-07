@@ -17,3 +17,5 @@ export * from "./FileInput";
 export * from "./CountrySelector";
 export * from "./Filter";
 export * from "./CheckBox";
+export * from "./Tag";
+export * from "./Flag";
