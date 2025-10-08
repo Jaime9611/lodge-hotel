@@ -1,6 +1,5 @@
 import { type FC } from "react";
 
-// import CreateCabinForm from "./create-cabin-form.component";
 import { Button, Modal } from "@ui/atoms";
 import CreateBookingForm from "./create-booking-form.component";
 

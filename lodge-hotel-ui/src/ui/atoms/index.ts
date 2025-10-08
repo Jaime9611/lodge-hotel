@@ -7,6 +7,7 @@ export * from "./IconStack";
 export * from "./Row";
 export * from "./Stack";
 export * from "./Input";
+export * from "./Avatar";
 export * from "./TextArea";
 export * from "./Pagination";
 export * from "./Empty";

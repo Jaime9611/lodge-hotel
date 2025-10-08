@@ -1,3 +1,4 @@
+import { AddUser, UserGrid } from "@features/authentication";
 import { Heading } from "@ui/atoms";
 import { Row } from "@ui/atoms/Row";
 
@@ -7,7 +8,8 @@ const Users = () => (
       <Heading as="h1">Users</Heading>
     </Row>
     <Row type="vertical">
-      <div>TABLE</div>
+      <AddUser />
+      <UserGrid />
     </Row>
   </>
 );

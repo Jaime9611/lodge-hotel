@@ -1,9 +1,9 @@
 import type { FC, ReactNode } from "react";
 
 const sizes = {
-  small: "text-large px-2 py-3 font-semibold text-center",
-  medium: "text-large px-2 py-4 font-medium",
-  large: "text-large px-3 py-5 font-medium",
+  small: "text-large px-3 py-2 font-semibold text-center",
+  medium: "text-large px-4 py-2 font-medium",
+  large: "text-large px-5 py-3 font-medium",
 };
 
 const variations = {
