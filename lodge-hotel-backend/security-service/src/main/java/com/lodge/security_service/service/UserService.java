@@ -3,7 +3,9 @@ package com.lodge.security_service.service;
 import com.lodge.security_service.model.UserEntity;
 import com.lodge.security_service.repository.UserRepository;
 import com.lodge.security_service.utils.Constants;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,10 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     private static final int EXPIRATION_TIME_SEC = 3600;
+
+    public List<UserEntity> getEmployees() {
+      return userRepository.findAllByRole("ROLE_STAFF");
+    }
 
     public String registerUser(UserEntity user) {
         Optional<UserEntity> userEntity = userRepository.findByUsername(user.getUsername());

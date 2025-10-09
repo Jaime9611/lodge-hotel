@@ -28,54 +28,63 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Value("${keyStore.path}")
-    private String keyStorePath;
+  @Value("${keyStore.path}")
+  private String keyStorePath;
 
-    @Value("${keyStore.password}")
-    private String keyStorePassword;
+  @Value("${keyStore.password}")
+  private String keyStorePassword;
 
-    private final CustomUserDetailService customUserDetailService;
+  private final CustomUserDetailService customUserDetailService;
+  private final JwtTokenFilter jwtTokenFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(AbstractHttpConfigurer::disable);
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+            .anyRequest().authenticated())
+        .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+        .formLogin(AbstractHttpConfigurer::disable);
 
-        return http.build();
-    }
+    return http.build();
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(
+      AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
+  }
 
-    @Bean
-    public JwtEncoder jwtEncoder() throws UnrecoverableKeyException, CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException {
-        RSAKey rsaKey = loadRSAKey();
-        JWKSource<SecurityContext> jwkSource = ((jwkSelector, securityContext) -> jwkSelector.select(new JWKSet(rsaKey)));
+  @Bean
+  public JwtEncoder jwtEncoder()
+      throws UnrecoverableKeyException, CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException {
+    RSAKey rsaKey = loadRSAKey();
+    JWKSource<SecurityContext> jwkSource = ((jwkSelector, securityContext) -> jwkSelector.select(
+        new JWKSet(rsaKey)));
 
-        return new NimbusJwtEncoder(jwkSource);
-    }
+    return new NimbusJwtEncoder(jwkSource);
+  }
 
-    private RSAKey loadRSAKey() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException {
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-        keyStore.load(new ClassPathResource(keyStorePath).getInputStream(), keyStorePassword.toCharArray());
+  private RSAKey loadRSAKey()
+      throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException {
+    KeyStore keyStore = KeyStore.getInstance("JKS");
+    keyStore.load(new ClassPathResource(keyStorePath).getInputStream(),
+        keyStorePassword.toCharArray());
 
-        RSAPublicKey pubKey = (RSAPublicKey) keyStore.getCertificate("auth-server").getPublicKey();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyStore.getKey("auth-server", keyStorePassword.toCharArray());
+    RSAPublicKey pubKey = (RSAPublicKey) keyStore.getCertificate("auth-server").getPublicKey();
+    RSAPrivateKey privateKey = (RSAPrivateKey) keyStore.getKey("auth-server",
+        keyStorePassword.toCharArray());
 
-        return new RSAKey.Builder(pubKey).privateKey(privateKey).keyID("auth-server").build();
-    }
+    return new RSAKey.Builder(pubKey).privateKey(privateKey).keyID("auth-server").build();
+  }
 }

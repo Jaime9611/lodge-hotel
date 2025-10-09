@@ -30,3 +30,4 @@ server:
 keyStore:
   path: keystore.jks
   password: password
+  alias: auth-server

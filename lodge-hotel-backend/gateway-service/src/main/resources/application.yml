@@ -7,7 +7,7 @@ spring:
         - id: security-service
           uri: lb://security-service
           predicates:
-              - Path=/auth/**
+              - Path=/auth/**, /employee/**
         - id: lodge-hotel-restapi
           uri: lb://lodge-api
           predicates:

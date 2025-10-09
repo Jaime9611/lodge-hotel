@@ -2,8 +2,10 @@ package com.lodge.security_service.controller;
 
 import com.lodge.security_service.model.UserEntity;
 import com.lodge.security_service.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,11 +18,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserEntity user) {
         return ResponseEntity.ok(userService.registerUser(user));
-    }
-
-    @PostMapping("/register/employee")
-    public ResponseEntity<?> createEmployee(@RequestBody UserEntity user) {
-        return ResponseEntity.ok(userService.registerEmployee(user));
     }
 
     @PostMapping("/login")

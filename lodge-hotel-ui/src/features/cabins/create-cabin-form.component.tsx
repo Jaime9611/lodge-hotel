@@ -27,10 +27,11 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } =
-    useForm<CabinModelForm>({
-      defaultValues: isEditSession ? editValues : ({} as CabinModelFormResult),
-    });
+  const { register, handleSubmit, reset, getValues, formState } = useForm<
+    CabinModelForm | CabinModelFormResult
+  >({
+    defaultValues: isEditSession ? editValues : ({} as CabinModelFormResult),
+  });
 
   const { isCreating, createCabin } = useCreateCabin();
 
@@ -40,8 +41,7 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
 
   const { errors } = formState; // Form Errors
 
-  const onSubmit = (data: CabinModelForm) => {
-    console.log(data);
+  const onSubmit = (data: CabinModelForm | CabinModelFormResult) => {
     const image =
       typeof data.image === "string" ? data.image : (data.image[0] as File);
     if (isEditSession)
