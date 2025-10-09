@@ -2,24 +2,17 @@ import { type FC } from "react";
 
 import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
-import {
-  Button,
-  FileInput,
-  Form,
-  FormRowVertical,
-  Input,
-  Stack,
-  TextArea,
-} from "@ui/atoms";
-import type { CabinModelForm, CabinModelFormResult, UserModel } from "@models";
-import { useCreateEmployee } from "./use-create-employee";
+import { Button, Form, FormRowVertical, Input, Stack } from "@ui/atoms";
+import type { UserModel } from "@models";
+import { useCreateEmployee } from "./use-create-employee.hook";
+import { useEditEmployee } from "./use-edit-employee.hook";
 
-interface CreateuserFormProps {
+interface CreateUserFormProps {
   userToEdit?: UserModel;
   onCloseModal?: () => void;
 }
 
-const CreateuserForm: FC<CreateuserFormProps> = ({
+const CreateuserForm: FC<CreateUserFormProps> = ({
   userToEdit = {} as UserModel,
   onCloseModal,
 }) => {
@@ -33,27 +26,25 @@ const CreateuserForm: FC<CreateuserFormProps> = ({
   });
 
   const { isCreating, createEmployee } = useCreateEmployee();
+  const { isEditing, editEmployee } = useEditEmployee();
 
-  //   const { isEditing, editCabin } = useEditCabin();
-
-  //   const isWorking = isCreating || isEditing;
-  const isWorking = isCreating || false;
+  const isWorking = isCreating || isEditing;
 
   const password = watch("password");
 
   const { errors } = formState; // Form Errors
 
   const onSubmit = (data: UserModel) => {
-    if (isEditSession) console.log("editing...");
-    //   editUser(
-    //     { newCabinData: { ...data, image }, id: editId },
-    //     {
-    //       onSuccess: () => {
-    //         onCloseModal?.();
-    //         reset(); // If the mutation was successfull reset Form
-    //       },
-    //     }
-    //   );
+    if (isEditSession)
+      editEmployee(
+        { newUserData: { ...data }, id: editId },
+        {
+          onSuccess: () => {
+            onCloseModal?.();
+            reset(); // If the mutation was successfull reset Form
+          },
+        }
+      );
     else
       createEmployee(
         {

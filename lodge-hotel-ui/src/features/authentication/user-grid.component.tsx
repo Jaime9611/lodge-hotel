@@ -3,21 +3,14 @@ import { ConfirmDelete } from "@ui/molecules";
 import type { FC } from "react";
 import { HiOutlineTrash, HiPencil } from "react-icons/hi2";
 import { useEmployees } from "./use-employees.hook";
+import CreateuserForm from "./create-user-form.component";
+import { useDeleteEmployee } from "./use-delete-employee.hook";
 
 interface UserGridProps {}
 
-const fakeUsers = [
-  { userId: 1, fullName: "John Doe", email: "john@email.com" },
-  { userId: 1, fullName: "Jane Smith", email: "jane@email.com" },
-  {
-    userId: 1,
-    fullName: "Pedro Caminos",
-    email: "pedro@email.com",
-  },
-];
-
 const UserGrid: FC<UserGridProps> = ({}) => {
   const { isPending, users } = useEmployees();
+  const { isDeleting, deleteEmployee } = useDeleteEmployee();
 
   if (isPending) return <Spinner />;
 
@@ -38,13 +31,15 @@ const UserGrid: FC<UserGridProps> = ({}) => {
             <p className="font-bold">{user.username}</p>
             <div className="mt-2 mb-3"></div>
             <div className="flex gap-3">
-              <Button size="small" variation="secondary">
-                <div className="flex gap-2 items-center text-gray-500">
-                  <HiPencil />
-                  <span>Edit</span>
-                </div>
-              </Button>
               <Modal>
+                <Modal.Open opens="edit">
+                  <Button size="small" variation="secondary">
+                    <div className="flex gap-2 items-center text-gray-500">
+                      <HiPencil />
+                      <span>Edit</span>
+                    </div>
+                  </Button>
+                </Modal.Open>
                 <Modal.Open opens="delete">
                   <Button size="small" variation="secondary">
                     <div className="flex gap-2 items-center text-gray-500">
@@ -53,11 +48,14 @@ const UserGrid: FC<UserGridProps> = ({}) => {
                     </div>
                   </Button>
                 </Modal.Open>
+                <Modal.Window name="edit">
+                  <CreateuserForm userToEdit={user} />
+                </Modal.Window>
                 <Modal.Window name="delete">
                   <ConfirmDelete
-                    disabled={false}
+                    disabled={isDeleting}
                     resourceName="user"
-                    onConfirm={() => undefined}
+                    onConfirm={() => deleteEmployee(user.id)}
                   />
                 </Modal.Window>
               </Modal>

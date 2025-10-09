@@ -44,7 +44,20 @@ class UserApi extends ApiClient {
         );
     } catch (error) {
       console.error(error);
-      throw Error("User could not be created.");
+      throw Error("Employee could not be created.");
+    }
+
+    return true;
+  }
+
+  async deleteEmployee(id: number): Promise<boolean> {
+    try {
+      await this.delete(`${USER_PATH}/${id}`, {
+        headers: { Authorization: `Bearer ${this.getToken()}` },
+      });
+    } catch (error) {
+      console.error(error);
+      throw Error("Employee could not be deleted");
     }
 
     return true;

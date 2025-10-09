@@ -12,7 +12,7 @@ export interface Page<T> {
 // ---------------- AUTH MODELS ----------------
 
 export interface UserModel {
-  id: string;
+  id: number;
   username: string;
   password: string;
 }
