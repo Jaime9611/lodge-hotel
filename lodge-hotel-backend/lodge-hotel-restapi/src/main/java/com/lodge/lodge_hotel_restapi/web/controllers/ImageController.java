@@ -47,7 +47,7 @@ public class ImageController {
       byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
 
       // Respond with the image data and an OK status code
-      return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+      return ResponseEntity.ok().contentType(MediaType.parseMediaType("image/webp")).body(imageBytes);
     } catch (Exception e) {
       // Handle exceptions and provide appropriate error responses
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

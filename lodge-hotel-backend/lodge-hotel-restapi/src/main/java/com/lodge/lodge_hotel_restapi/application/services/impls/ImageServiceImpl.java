@@ -1,10 +1,16 @@
 package com.lodge.lodge_hotel_restapi.application.services.impls;
 
 import com.lodge.lodge_hotel_restapi.application.services.ImageService;
+import com.luciad.imageio.webp.WebPWriteParam;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,13 +26,28 @@ public class ImageServiceImpl implements ImageService {
       throws IOException {
 
     Path uploadPath = Path.of(uploadDirectory);
-    Path filePath = uploadPath.resolve(imageName);
+    Path filePath = uploadPath.resolve(imageName.replace(".jpg", ".webp"));
 
     if (!Files.exists(uploadPath)) {
       Files.createDirectories(uploadPath);
     }
 
-    Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+    BufferedImage image = ImageIO.read(imageFile.getInputStream());
+//    Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+    ImageWriter writer = ImageIO.getImageWritersByMIMEType("image/webp").next();
+    WebPWriteParam writeParam = new WebPWriteParam(writer.getLocale());
+    writeParam.setCompressionMode(WebPWriteParam.MODE_EXPLICIT);
+    writeParam.setCompressionType("Lossy");
+    writeParam.setCompressionQuality(0.8f); // Adjust quality as needed (0.0f to 1.0f)
+
+    File outputWebpFile = new File(filePath.toString());
+    try (FileImageOutputStream outputStream = new FileImageOutputStream(outputWebpFile)) {
+      writer.setOutput(outputStream);
+      writer.write(null, new IIOImage(image, null, null), writeParam);
+    } finally {
+      writer.dispose();
+    }
 
   }
 

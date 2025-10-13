@@ -47,7 +47,10 @@ class CabinsApi extends ApiClient {
 
       const imageName = `${Math.random()}-${
         (newCabin as CabinModelFormResult).image.name
-      }`.replace("/", "");
+      }`
+        .replace("/", "")
+        .replace(/\.[^/.]+$/, ".webp");
+      console.log(imageName);
       const imagePath = hasImagePath
         ? (newCabin as CabinModel).image
         : `${API_BASE_URL}/api/v1/storage/public/cabin/${imageName}`;
