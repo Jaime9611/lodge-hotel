@@ -83,14 +83,11 @@ const Footer: FC<FooterProps> = ({ children }) => {
 };
 
 // ------------ PARENT COMPONENT ------------
-
-// ***** THIS IS THE WAY OF DEFINING A REUSABLE TABLE IN TYPESCRIPT *****
 interface TableProps {
   columns: string;
   children: ReactNode;
 }
 
-// This will take care of any issue with the children components
 interface TableComponent<T> extends ReactElement, FC<TableProps> {
   Header: FC<HeaderProps>;
   Body: FC<BodyProps<T>>;
