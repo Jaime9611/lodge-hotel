@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC, type ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "./filter.module.css";

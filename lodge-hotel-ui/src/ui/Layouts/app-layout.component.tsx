@@ -3,9 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "@ui/molecules";
 import Sidebar from "./sidebar.component";
 
-type Props = {};
-
-const AppLayout = (props: Props) => {
+const AppLayout = () => {
   return (
     <div
       className="h-screen grid"

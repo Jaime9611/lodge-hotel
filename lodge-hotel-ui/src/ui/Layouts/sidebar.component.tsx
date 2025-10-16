@@ -22,10 +22,13 @@ const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children }) => (
 );
 
 const Sidebar = () => {
-  const { isAuthenticated, role } = useAuth();
+  const { role } = useAuth();
 
   return (
-    <aside className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11">
+    <aside
+      data-testid="sidebar-dashboard-view"
+      className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11"
+    >
       <div className="h-48 w-48 text-center">LOGO</div>
       <ul className="flex flex-col gap-3">
         <li>

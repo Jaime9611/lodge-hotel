@@ -4,7 +4,10 @@ import { HiOutlineUser } from "react-icons/hi2";
 import Logout from "@features/authentication/logout.component";
 
 const Header = () => (
-  <header className="bg-white-50 py-5 px-16 border-b border-solid border-gray-100 flex gap-9 items-center justify-end">
+  <header
+    data-testid="header-dashboard-view"
+    className="bg-white-50 py-5 px-16 border-b border-solid border-gray-100 flex gap-9 items-center justify-end"
+  >
     <HeaderMenu>
       <li>
         <ButtonIcon onClick={() => undefined}>

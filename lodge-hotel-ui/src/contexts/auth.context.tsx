@@ -7,13 +7,15 @@ import {
   type ReactNode,
 } from "react";
 
-interface AuthContextState {
+export interface AuthContextState {
   user: string;
   role: string;
   isAuthenticated: boolean;
   setAuth: (userData: LoginModel) => void;
 }
-const AuthContext = createContext<AuthContextState>({} as AuthContextState);
+export const AuthContext = createContext<AuthContextState>(
+  {} as AuthContextState
+);
 
 export const getSession = (): LoginModel => {
   const user = JSON.parse(
