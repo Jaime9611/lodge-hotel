@@ -1,5 +1,5 @@
 import { AddCabin, CabinTable } from "@features/cabins";
-import { Heading, Row } from "@ui/atoms";
+import { Button, Heading, Row } from "@ui/atoms";
 
 const Cabins = () => (
   <>

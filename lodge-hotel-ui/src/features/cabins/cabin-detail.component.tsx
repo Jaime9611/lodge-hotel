@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import {
   Button,
+  ButtonIcon,
   DataItem,
   Empty,
   Heading,
@@ -19,6 +20,8 @@ import { ButtonText } from "@ui/atoms/ButtonText";
 import { useDeleteCabin } from "./use-delete-cabin.hook";
 import { useCabin } from "./use-cabin.hook";
 import { HiOutlineCurrencyDollar, HiOutlineHomeModern } from "react-icons/hi2";
+import type { FC, ReactNode } from "react";
+import { useCart } from "@contexts";
 
 // ---------------- BOX COMPONENT ----------------
 
@@ -49,12 +52,15 @@ const DataHeader: FC<DataHeaderProps> = ({ children }) => (
 const CabinDetail = () => {
   const { cabin, isLoading } = useCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { cartItems, addToCart, removeFromCart } = useCart();
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
   if (!cabin) return <Empty resource="cabin" />;
+
+  const isCabinInCart = cartItems.find((item) => item.id === cabin.id);
 
   const { id, name, regularPrice, description, maxCapacity, image } =
     cabin as CabinModel;
@@ -84,6 +90,22 @@ const CabinDetail = () => {
           </DataItem>
         </DataHeader>
         <div className="pt-12 px-16 pb-5">
+          <div className="flex w-full justify-end">
+            {isCabinInCart ? (
+              <ButtonIcon onClick={() => removeFromCart({ id, name })}>
+                <div className="flex gap-3 justify-between outline-1 p-4 rounded-md bg-red-200">
+                  <HiOutlineHomeModern /> <span>&mdash;</span>
+                  <span> Remove from list</span>
+                </div>
+              </ButtonIcon>
+            ) : (
+              <ButtonIcon onClick={() => addToCart({ id, name })}>
+                <div className="flex gap-3 justify-between outline-1 p-4 rounded-md">
+                  <HiOutlineHomeModern /> <span>Add to Cart</span>
+                </div>
+              </ButtonIcon>
+            )}
+          </div>
           <img
             className="block w-md rounded-sm aspect-3/2 object-cover object-center scale-1.5 -translate-x-1.5"
             src={image}

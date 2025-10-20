@@ -25,6 +25,9 @@ import BookingCabinsSelect from "./booking-cabins-select.component";
 import { formatCurrency } from "@utils/helpers";
 import { useBookingQuotation } from "./use-booking-quotation";
 import type { CountryModel } from "@ui/atoms/CountrySelector/country-selector.component";
+import { useCart } from "@contexts";
+import { NavLink } from "react-router-dom";
+import { ROUTES } from "@utils/constants";
 
 // ------------ UI COMPONENT ------------
 
@@ -76,6 +79,8 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
 
   const { isCalculatingTotal, calculateTotalPrice, totalPrice } =
     useBookingQuotation();
+
+  const { cartItems } = useCart();
 
   const isWorking = isCreating || isEditing;
 
@@ -152,11 +157,27 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
     // Error Logic...
   };
 
+  const hasItemsOnCart = cartItems.length > 0;
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
       type={onCloseModal ? "modal" : "regular"}
     >
+      {!hasItemsOnCart && (
+        <div className="w-full bg-orange-400 text-white p-3">
+          You don't have cabins selected. You can add cabins in{" "}
+          <span>
+            <NavLink
+              to={`/${ROUTES.cabins}`}
+              replace={true}
+              className="underline font-bold"
+            >
+              this page.
+            </NavLink>
+          </span>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-4">
         <FormRowVertical
           label="Guest Name"
@@ -239,10 +260,13 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
         />
       </FormRowVertical>
       <DivRowSelect>
-        <BookingCabinsSelect
-          cabinsToEdit={getValues("cabins")}
-          onUpdateCabins={handleCabinChange}
-        />
+        <div>
+          <ul>
+            {cartItems.map((item) => (
+              <li>{item.name}</li>
+            ))}
+          </ul>
+        </div>
       </DivRowSelect>
       <DivRowSelect>
         {isCalculatingTotal ? (

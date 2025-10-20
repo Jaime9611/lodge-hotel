@@ -61,6 +61,8 @@ export interface CabinRequest {
   name: string;
 }
 
+export interface CabinCartItem extends Pick<CabinModel, "id" | "name"> {}
+
 //---------------- GUEST MODELS ----------------
 
 export interface GuestModel {
