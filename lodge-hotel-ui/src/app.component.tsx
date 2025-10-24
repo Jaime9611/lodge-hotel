@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import {
+  About,
   Bookings,
   Cabins,
   Checkin,
@@ -39,7 +40,7 @@ const App = () => (
             <Route path="/" element={<LandingLayout />}>
               <Route index element={<Landing />} />
               <Route path={ROUTES.user_cabins} element={<div>Cabins</div>} />
-              <Route path={ROUTES.about} element={<div>About</div>} />
+              <Route path={ROUTES.about} element={<About />} />
               <Route path={ROUTES.user_account} element={<div>Account</div>} />
             </Route>
             <Route
