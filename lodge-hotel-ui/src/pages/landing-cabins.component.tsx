@@ -1,12 +1,11 @@
 import { Suspense } from "react";
 import { Filter, Spinner } from "@ui/atoms";
+import { CabinList } from "@features/cabins";
 
 const LandingCabins = () => {
   return (
     <div>
-      <h1 className="text-4xl mb-5 text-accent-400 font-medium">
-        Our Luxury Cabins
-      </h1>
+      <h1 className="text-4xl mb-5 text-accent-400 font-medium">Our Cabins</h1>
       <p className="text-primary-200 text-lg mb-10">
         Cozy yet luxurious cabins, located right in the heart of the Italian
         Dolomites. Imagine waking up to beautiful mountain views, spending your
@@ -31,7 +30,7 @@ const LandingCabins = () => {
       <Suspense fallback={<Spinner />} key="cabins-filtered-list">
         {/* // <CabinList filter={filter} />
         // <ReservationReminder /> */}
-        <div>Cabin list</div>
+        <CabinList filter="medium" />
       </Suspense>
     </div>
   );
