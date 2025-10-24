@@ -1,6 +1,6 @@
 import { Button } from "@ui/atoms";
 import { ROUTES } from "@utils/constants";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
   const navigate = useNavigate();

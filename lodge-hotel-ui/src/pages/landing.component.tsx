@@ -7,12 +7,7 @@ const Landing = () => {
 
   return (
     <main className="mt-24">
-      <img
-        src=""
-        quality={80}
-        className="object-cover object-top"
-        alt="Great Cabins"
-      />
+      <img src="" className="object-cover object-top" alt="Great Cabins" />
 
       <div className="relative z-10 text-center">
         <h1 className="text-8xl text-primary-50 mb-10 tracking-tight font-normal">

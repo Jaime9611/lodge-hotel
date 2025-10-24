@@ -7,6 +7,7 @@ import {
   Checkin,
   Dashboard,
   Landing,
+  LandingCabins,
   Login,
   Settings,
   Users,
@@ -39,7 +40,7 @@ const App = () => (
             <Route path={ROUTES.login} element={<Login />} />
             <Route path="/" element={<LandingLayout />}>
               <Route index element={<Landing />} />
-              <Route path={ROUTES.user_cabins} element={<div>Cabins</div>} />
+              <Route path={ROUTES.user_cabins} element={<LandingCabins />} />
               <Route path={ROUTES.about} element={<About />} />
               <Route path={ROUTES.user_account} element={<div>Account</div>} />
             </Route>
