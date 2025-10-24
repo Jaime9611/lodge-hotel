@@ -4,6 +4,7 @@ import type { FC } from "react";
 
 import { Link } from "react-router-dom";
 import CheckoutButton from "./checkout-button.component";
+import { ROUTES } from "@utils/constants";
 
 interface TodayItemProps {
   activity: BookingModel;
@@ -24,7 +25,7 @@ const TodayItem: FC<TodayItemProps> = ({ activity }) => {
       {status === "UNCONFIRMED" && (
         <Link
           className="border-none rounded-md shadow-xs hover:cursor-pointer text-large px-1 py-2 font-semibold text-center text-gray-50 bg-primary hover:bg-primary-700"
-          to={`/checkin/${id}`}
+          to={`${ROUTES.booking_checkin_path}/${id}`}
         >
           Check in
         </Link>

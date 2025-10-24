@@ -5,6 +5,7 @@ import {
   Cabins,
   Checkin,
   Dashboard,
+  Landing,
   Login,
   Settings,
   Users,
@@ -17,6 +18,7 @@ import { AuthProvider, CartProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 import CabinDetail from "@features/cabins/cabin-detail.component";
+import LandingLayout from "@ui/layouts/landing-layout.component";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,18 +35,26 @@ const App = () => (
       <AuthProvider>
         <CartProvider>
           <Routes>
+            <Route path={ROUTES.login} element={<Login />} />
+            <Route path="/" element={<LandingLayout />}>
+              <Route index element={<Landing />} />
+              <Route path={ROUTES.user_cabins} element={<div>Cabins</div>} />
+              <Route path={ROUTES.about} element={<div>About</div>} />
+              <Route path={ROUTES.user_account} element={<div>Account</div>} />
+            </Route>
             <Route
               element={
                 <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
                   <AppLayout />
                 </ProtectedRoute>
               }
+              path={ROUTES.dashboard}
             >
-              <Route
+              {/* <Route
                 index
                 element={<Navigate replace to={ROUTES.dashboard} />}
-              />
-              <Route path={ROUTES.dashboard} element={<Dashboard />} />
+              /> */}
+              <Route index element={<Dashboard />} />
               <Route path={ROUTES.cabins} element={<Cabins />} />
               <Route path={ROUTES.cabinId_path} element={<CabinDetail />} />
               <Route path={ROUTES.bookings} element={<Bookings />} />
@@ -52,7 +62,6 @@ const App = () => (
               <Route path={ROUTES.booking_checkin} element={<Checkin />} />
               <Route path={ROUTES.users} element={<Users />} />
             </Route>
-            <Route path={ROUTES.login} element={<Login />} />
           </Routes>
         </CartProvider>
       </AuthProvider>
