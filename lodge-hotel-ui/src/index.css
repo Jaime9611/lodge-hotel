@@ -7,6 +7,7 @@
   --color-primary-600: var(--color-blue-600);
   --color-primary-500: var(--color-blue-500);
   --color-primary-700: var(--color-blue-700);
+  --color-primary-800: var(--color-blue-800);
 }
 
 body {
@@ -44,4 +45,11 @@ button:hover {
 
 &::-webkit-scrollbar {
   width: 0 !important;
+}
+
+.rdp {
+  --rdp-cell-size: 32px !important;
+  --rdp-accent-color: theme("colors.gray.500") !important;
+  --rdp-background-color: theme("colors.gray.600") !important;
+  margin: 0 !important;
 }
