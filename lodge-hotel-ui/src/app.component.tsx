@@ -20,6 +20,7 @@ import { AuthProvider, CartProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 import CabinDetail from "@features/cabins/cabin-detail.component";
+import { CabinUserDetail } from "@features/cabins";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,6 +41,10 @@ const App = () => (
             <Route path="/" element={<LandingLayout />}>
               <Route index element={<Landing />} />
               <Route path={ROUTES.user_cabins} element={<LandingCabins />} />
+              <Route
+                path={ROUTES.user_cabinId_path}
+                element={<CabinUserDetail />}
+              />
               <Route path={ROUTES.about} element={<About />} />
               <Route path={ROUTES.user_account} element={<AccountLayout />}>
                 <Route

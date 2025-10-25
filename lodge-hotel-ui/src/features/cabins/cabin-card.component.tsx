@@ -1,8 +1,9 @@
 import type { FC } from "react";
-import type { CabinModel } from "@models";
-import { HiUser } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
+import { HiUsers } from "react-icons/hi2";
+
 import { ROUTES } from "@utils/constants";
+import type { CabinModel } from "@models";
 
 interface CabinCardProps {
   cabin: CabinModel;
@@ -28,7 +29,7 @@ const CabinCard: FC<CabinCardProps> = ({ cabin }) => {
           </h3>
 
           <div className="flex gap-3 items-center mb-2">
-            <HiUser className="h-5 w-5 text-primary-600" />
+            <HiUsers className="h-5 w-5 text-primary-600" />
             <p className="text-lg text-black-200">
               For up to <span className="font-bold">{maxCapacity}</span> guests
             </p>

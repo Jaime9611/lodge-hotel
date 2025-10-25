@@ -1,6 +1,7 @@
 export class ROUTES {
   static readonly user_cabins = "cabins";
   static readonly user_cabins_path = `/${this.user_cabins}`;
+  static readonly user_cabinId_path = `/${this.user_cabins}/:cabinId`;
 
   static readonly about = "about";
   static readonly about_path = `/${this.about}`;

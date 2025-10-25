@@ -73,7 +73,7 @@ const About = () => {
               size="large"
               onClick={() => navigate(`${ROUTES.user_cabins_path}`)}
             >
-              Explore our luxury cabins
+              Explore our cabins
             </Button>
           </div>
         </div>

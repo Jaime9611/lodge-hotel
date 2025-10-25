@@ -18,7 +18,7 @@ const Landing = () => {
           variation="primary"
           onClick={() => navigate(`${ROUTES.user_cabins_path}`)}
         >
-          Explore luxury cabins
+          Explore cabins
         </Button>
       </div>
     </main>
