@@ -8,6 +8,12 @@ export class ROUTES {
   static readonly user_account = "account";
   static readonly user_account_path = `/${this.user_account}`;
 
+  static readonly user_profile = "profile";
+  static readonly user_profile_path = `/${this.user_account}/${this.user_profile}`;
+
+  static readonly user_reservations = "reservations";
+  static readonly user_reservations_path = `/${this.user_reservations}`;
+
   static readonly dashboard = "dashboard";
   static readonly dashboard_path = `/${this.dashboard}`;
 

@@ -16,7 +16,7 @@ interface CustomNavLinkProps {
   children: ReactNode;
 }
 const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children }) => (
-  <NavLink to={to} className="nav_link">
+  <NavLink to={to} className="nav_link" end>
     {children}
   </NavLink>
 );

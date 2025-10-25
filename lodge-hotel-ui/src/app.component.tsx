@@ -12,7 +12,7 @@ import {
   Settings,
   Users,
 } from "@pages";
-import { AppLayout } from "@ui/layouts";
+import { AppLayout, LandingLayout, AccountLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "@features/authentication";
@@ -20,7 +20,6 @@ import { AuthProvider, CartProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 import CabinDetail from "@features/cabins/cabin-detail.component";
-import LandingLayout from "@ui/layouts/landing-layout.component";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,7 +41,16 @@ const App = () => (
               <Route index element={<Landing />} />
               <Route path={ROUTES.user_cabins} element={<LandingCabins />} />
               <Route path={ROUTES.about} element={<About />} />
-              <Route path={ROUTES.user_account} element={<div>Account</div>} />
+              <Route path={ROUTES.user_account} element={<AccountLayout />}>
+                <Route
+                  path={ROUTES.user_profile}
+                  element={<h1>Your profile</h1>}
+                />
+                <Route
+                  path={ROUTES.user_reservations}
+                  element={<h1>Your reservations</h1>}
+                />
+              </Route>
             </Route>
             <Route
               element={
