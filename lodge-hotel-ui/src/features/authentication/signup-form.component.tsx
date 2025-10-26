@@ -14,6 +14,7 @@ import type { UserGuestModel } from "@models";
 import { useCreateEmployee } from "./use-create-employee.hook";
 import { useEditEmployee } from "./use-edit-employee.hook";
 import type { CountryModel } from "@ui/atoms/CountrySelector/country-selector.component";
+import { useCreateGuest } from "./use-create-guest.hook";
 
 interface CreateGuestFormProps {
   userToEdit?: UserGuestModel;
@@ -32,7 +33,7 @@ const CreateGuestForm: FC<CreateGuestFormProps> = ({
       defaultValues: isEditSession ? editValues : ({} as UserGuestModel),
     });
 
-  const { isCreating, createEmployee } = useCreateEmployee();
+  const { isCreating, createGuest } = useCreateGuest();
   const { isEditing, editEmployee } = useEditEmployee();
 
   const isWorking = isCreating || isEditing;
@@ -49,17 +50,18 @@ const CreateGuestForm: FC<CreateGuestFormProps> = ({
 
   const onSubmit = (data: UserGuestModel) => {
     if (isEditSession)
-      editEmployee(
-        { newUserData: { ...data }, id: editId },
-        {
-          onSuccess: () => {
-            onCloseModal?.();
-            reset();
-          },
-        }
-      );
+      //   editEmployee(
+      //     { newUserData: { ...data }, id: editId },
+      //     {
+      //       onSuccess: () => {
+      //         onCloseModal?.();
+      //         reset();
+      //       },
+      //     }
+      //   );
+      console.log("Editing called");
     else
-      createEmployee(
+      createGuest(
         {
           newUserData: {
             ...data,

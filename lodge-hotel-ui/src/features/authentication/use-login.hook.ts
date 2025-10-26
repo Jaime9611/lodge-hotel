@@ -13,7 +13,7 @@ export const useLogin = () => {
   const { setAuth } = useAuth();
 
   const { mutate: login, isPending: isLoading } = useMutation({
-    mutationFn: ({ username, password }: UserModel) =>
+    mutationFn: ({ username, password }: Omit<UserModel, "id">) =>
       apiAuth.login({ username, password }),
     onSuccess: (data) => {
       setAuth(data);

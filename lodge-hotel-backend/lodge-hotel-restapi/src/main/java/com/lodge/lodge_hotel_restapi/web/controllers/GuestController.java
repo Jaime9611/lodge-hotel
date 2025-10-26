@@ -1,17 +1,17 @@
 package com.lodge.lodge_hotel_restapi.web.controllers;
 
 import com.lodge.lodge_hotel_restapi.application.services.GuestService;
-import com.lodge.lodge_hotel_restapi.domain.Cabin;
+import com.lodge.lodge_hotel_restapi.domain.Guest;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
-import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -22,14 +22,13 @@ public class GuestController {
 
   private final GuestService guestService;
 
-  @GetMapping
+  @PostMapping
   @PreAuthorize(UserConstants.AUTH_ACCESS)
-  public ResponseEntity<PageResponse<Cabin>> getAll(
-      @RequestParam(required = false) String cabinName,
-      @RequestParam(required = false) Integer pageNumber,
-      @RequestParam(required = false) Integer pageSize) {
-    log.debug("GET - All Cabins in Controller");
+  public ResponseEntity<Long> createGuest(@RequestBody Guest guest) {
+    log.debug("POST - Create Cabin in Controller");
 
-    return ResponseEntity.ok(guestService.getAll(cabinName, pageNumber, pageSize));
+    Long savedGuestId = guestService.save(guest);
+
+    return new ResponseEntity<Long>(savedGuestId, HttpStatus.CREATED);
   }
 }

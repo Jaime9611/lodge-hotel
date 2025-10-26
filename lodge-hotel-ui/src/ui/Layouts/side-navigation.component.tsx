@@ -3,11 +3,11 @@ import { HiCalendarDays, HiHome, HiUser } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 
 const navLinks = [
-  {
-    name: "Home",
-    to: "/account",
-    icon: <HiHome className="h-5 w-5 text-primary-600" />,
-  },
+  // {
+  //   name: "Home",
+  //   to: "/account",
+  //   icon: <HiHome className="h-5 w-5 text-primary-600" />,
+  // },
   {
     name: "Reservations",
     to: "/account/reservations",

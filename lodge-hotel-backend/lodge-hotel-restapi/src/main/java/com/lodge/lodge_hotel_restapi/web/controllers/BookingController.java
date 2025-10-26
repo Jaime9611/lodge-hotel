@@ -37,7 +37,7 @@ public class BookingController {
   private final BookingService bookingService;
 
   @PostMapping(Endpoints.BOOKING_QUOTATION)
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<BigDecimal> getBookingQuotation(@RequestBody BookingQuotationDto booking) {
     log.debug("POST - booking quotation in Controller");
 
@@ -86,7 +86,7 @@ public class BookingController {
   }
 
   @GetMapping(Endpoints.BOOKING_RESERVATIONS)
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<List<Booking>> getBookedReservations(@PathVariable Long cabinId) {
     log.debug("GET - Get Booking by Id: {} in Controller", cabinId);
 
@@ -94,7 +94,7 @@ public class BookingController {
   }
 
   @PostMapping
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<Void> createBooking(@RequestBody BookingSimpleDto booking) {
     log.debug("POST - Create Booking in Controller");
 
@@ -107,7 +107,7 @@ public class BookingController {
   }
 
   @PutMapping(Endpoints.BOOKING_ID)
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<?> updateBookingById(@PathVariable Long bookingId,
       @RequestBody Booking booking) {
     log.debug("PUT - Update Booking by Id: {} in Controller", bookingId);

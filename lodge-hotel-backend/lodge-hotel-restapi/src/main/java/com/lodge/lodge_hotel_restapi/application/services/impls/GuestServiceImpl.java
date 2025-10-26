@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GuestServiceImpl implements GuestService {
 
-  private CreateGuestPort createGuestPort;
+  private final CreateGuestPort createGuestPort;
 
   @Override
   public Guest get(Long id) {

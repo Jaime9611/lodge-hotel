@@ -1,8 +1,10 @@
 import ApiClient from "./api-client.service";
-import type { UserModel } from "@models";
+import type { GuestModel, UserGuestModel, UserModel } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const USER_PATH = "/employee";
+const USER_PUBLIC_PATH = "/auth/register";
+const GUEST_PATH = "/api/v1/guest";
 
 class UserApi extends ApiClient {
   constructor() {
@@ -58,6 +60,49 @@ class UserApi extends ApiClient {
     } catch (error) {
       console.error(error);
       throw Error("Employee could not be deleted");
+    }
+
+    return true;
+  }
+
+  async createEditGuest(
+    newUser: Omit<UserGuestModel, "id">,
+    id?: number
+  ): Promise<boolean> {
+    const { username, password, guest } = newUser;
+
+    try {
+      const response = await this.post<GuestModel, number>(
+        `${GUEST_PATH}`,
+        guest,
+        {
+          headers: {
+            Authorization: `Bearer ${this.getToken()}`,
+            // TODO: REMOVE THIS TOKEN
+          },
+        }
+      );
+
+      if (!id)
+        await this.post<Omit<UserModel, "id">, object>(
+          `${USER_PUBLIC_PATH}`,
+          { username, password, guestId: response },
+          {
+            headers: { Authorization: `Bearer ${this.getToken()}` },
+          }
+        );
+
+      if (id)
+        await this.update<Omit<UserModel, "id">>(
+          `${USER_PUBLIC_PATH}/${id}`,
+          { username, password },
+          {
+            headers: { Authorization: `Bearer ${this.getToken()}` },
+          }
+        );
+    } catch (error) {
+      console.error(error);
+      throw Error("Account could not be created.");
     }
 
     return true;

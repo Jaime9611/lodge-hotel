@@ -10,7 +10,7 @@ class AuthApi extends ApiClient {
     super(API_BASE_URL);
   }
 
-  async login(user: UserModel): Promise<LoginModel> {
+  async login(user: Omit<UserModel, "id">): Promise<LoginModel> {
     try {
       const response = await this.post<string, LoginResponse>(
         `${LOGIN_PATH}?username=${user.username}&password=${user.password}`,
@@ -20,7 +20,11 @@ class AuthApi extends ApiClient {
       const decoded = jwtDecode(response.access_token);
 
       return {
-        user: { user: user.username, role: decoded.role[0] },
+        user: {
+          user: user.username,
+          role: decoded.role[0],
+          guestId: decoded.guestId,
+        },
         access_token: response.access_token,
       };
     } catch (error) {
