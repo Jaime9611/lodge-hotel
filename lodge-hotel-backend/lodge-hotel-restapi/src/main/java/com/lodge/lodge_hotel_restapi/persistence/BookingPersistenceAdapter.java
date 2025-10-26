@@ -9,6 +9,7 @@ import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.BookingMapper;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.BookingRepository;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -70,6 +71,13 @@ public class BookingPersistenceAdapter implements CreateBookingPort, ReadBooking
     Page<BookingEntity> foundBookings = bookingRepository.findAllStaysForToday(pageRequest);
 
     return foundBookings.map(bookingMapper::bookingEntityToBooking);
+  }
+
+  @Override
+  public List<Booking> getBookedReservations(Long cabinId) {
+    List<BookingEntity> foundBookings = bookingRepository.findAllBookedReservations(cabinId);
+
+    return foundBookings.stream().map(bookingMapper::bookingEntityToBooking).toList();
   }
 
   @Override

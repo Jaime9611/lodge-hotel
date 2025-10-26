@@ -10,6 +10,7 @@ import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -82,6 +83,14 @@ public class BookingController {
     log.debug("GET - Get Booking by Id: {} in Controller", bookingId);
 
     return ResponseEntity.ok(bookingService.get(bookingId));
+  }
+
+  @GetMapping(Endpoints.BOOKING_RESERVATIONS)
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  public ResponseEntity<List<Booking>> getBookedReservations(@PathVariable Long cabinId) {
+    log.debug("GET - Get Booking by Id: {} in Controller", cabinId);
+
+    return ResponseEntity.ok(bookingService.getBookedReservations(cabinId));
   }
 
   @PostMapping

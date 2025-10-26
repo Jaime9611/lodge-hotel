@@ -38,8 +38,6 @@ const DateSelector: FC<DateSelectorProps> = ({
 }) => {
   const { range, setRange, resetRange } = useReservation();
 
-  console.log(addYears(new Date(), 5));
-
   const displayRange = isAlreadyBooked(range, bookedDates)
     ? ({} as { from: Date; to: Date })
     : range;

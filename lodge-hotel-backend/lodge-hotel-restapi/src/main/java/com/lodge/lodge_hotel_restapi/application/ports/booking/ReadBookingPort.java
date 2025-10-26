@@ -2,6 +2,7 @@ package com.lodge.lodge_hotel_restapi.application.ports.booking;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,4 +18,6 @@ public interface ReadBookingPort {
   Page<Booking> getStaysAfterDate(LocalDate date, PageRequest pageRequest);
 
   Page<Booking> getTodayActivity(PageRequest pageRequest);
+
+  List<Booking> getBookedReservations(Long cabinId);
 }
