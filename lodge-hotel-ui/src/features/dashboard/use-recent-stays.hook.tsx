@@ -12,7 +12,7 @@ export const useRecentStays = () => {
   const queryDate = subDays(new Date(), numDays);
 
   const { isPending: isLoading, data: stays } = useQuery({
-    queryFn: () => apiBooking.getBookingsAfterDate(queryDate, true),
+    queryFn: () => apiBooking.getBookingsAfterDate(queryDate),
     queryKey: ["stays", `last-${numDays}`],
   });
 

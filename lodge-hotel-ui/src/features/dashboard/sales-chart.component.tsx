@@ -34,17 +34,11 @@ const SalesChart: FC<SalesChartProps> = ({ bookings, numDays }) => {
           isSameDay(date, new Date(booking?.createdAt ?? ""))
         )
         .reduce((acc, cur) => acc + cur.totalPrice, 0),
-      extrasSales: bookings
-        ?.filter((booking) =>
-          isSameDay(date, new Date(booking?.createdAt ?? ""))
-        )
-        .reduce((acc, _) => acc, 0),
     };
   });
 
   const colors = {
     totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-    extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
     text: "#374151",
     background: "#fff",
   };
@@ -77,15 +71,6 @@ const SalesChart: FC<SalesChartProps> = ({ bookings, numDays }) => {
             fill={colors.totalSales.fill}
             strokeWidth={2}
             name="Total sales"
-            unit="$"
-          />
-          <Area
-            dataKey="extrasSales"
-            type="monotone"
-            stroke={colors.extrasSales.stroke}
-            fill={colors.extrasSales.fill}
-            strokeWidth={2}
-            name="Extras sales"
             unit="$"
           />
         </AreaChart>

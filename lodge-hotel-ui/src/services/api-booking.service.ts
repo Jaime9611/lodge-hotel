@@ -124,7 +124,7 @@ class BookingsApi extends ApiClient {
   async getTodayStays(): Promise<BookingModelPage> {
     const dateOnlyStr = new Date().toISOString().split("T")[0];
 
-    return await this.get<BookingModelPage>(`${BOOKING_PATH}/after`, {
+    return await this.get<BookingModelPage>(`${BOOKING_PATH}/today-activity`, {
       headers: { Authorization: `Bearer ${this.getToken()}` },
       params: { date: dateOnlyStr },
     });
