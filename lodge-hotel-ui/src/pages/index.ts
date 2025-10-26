@@ -8,3 +8,4 @@ export { default as Checkin } from "./checkin.component";
 export { default as Landing } from "./landing.component";
 export { default as About } from "./about.component";
 export { default as LandingCabins } from "./landing-cabins.component";
+export { default as SignUp } from "./signup.component";

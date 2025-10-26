@@ -10,6 +10,7 @@ import {
   LandingCabins,
   Login,
   Settings,
+  SignUp,
   Users,
 } from "@pages";
 import { AppLayout, LandingLayout, AccountLayout } from "@ui/layouts";
@@ -39,6 +40,7 @@ const App = () => (
           <ReservationProvider>
             <Routes>
               <Route path={ROUTES.login} element={<Login />} />
+              <Route path={ROUTES.signup} element={<SignUp />} />
               <Route path="/" element={<LandingLayout />}>
                 <Route index element={<Landing />} />
                 <Route path={ROUTES.user_cabins} element={<LandingCabins />} />

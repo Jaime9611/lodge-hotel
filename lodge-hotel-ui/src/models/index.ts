@@ -16,6 +16,12 @@ export interface UserModel {
   username: string;
   password: string;
 }
+export interface UserGuestModel {
+  id: number;
+  username: string;
+  password: string;
+  guest: GuestModel;
+}
 
 export interface AuthUserModel {
   user: string;

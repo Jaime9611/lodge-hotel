@@ -12,7 +12,7 @@ interface CreateUserFormProps {
   onCloseModal?: () => void;
 }
 
-const CreateuserForm: FC<CreateUserFormProps> = ({
+const CreateUserForm: FC<CreateUserFormProps> = ({
   userToEdit = {} as UserModel,
   onCloseModal,
 }) => {
@@ -124,4 +124,4 @@ const CreateuserForm: FC<CreateUserFormProps> = ({
   );
 };
 
-export default CreateuserForm;
+export default CreateUserForm;

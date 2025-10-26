@@ -5,10 +5,12 @@ public class Endpoints {
   public static final String BASE_URL = "/api/v1";
 
   // CABINS
-
   public static final String CABIN = BASE_URL + "/cabin";
   public static final String CABIN_ID = "/{cabinId}";
 
+  // GUEST
+  public static final String GUEST = BASE_URL + "/guest";
+  public static final String GUEST_ID = "/{guestId}";
 
   // BOOKINGS
   public static final String BOOKING = BASE_URL + "/booking";

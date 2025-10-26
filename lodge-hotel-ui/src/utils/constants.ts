@@ -21,6 +21,9 @@ export class ROUTES {
   static readonly login = "login";
   static readonly login_path = `/${this.login}`;
 
+  static readonly signup = "signup";
+  static readonly signup_path = `/${this.signup}`;
+
   static readonly cabins = "cabins";
   static readonly cabins_path = `/${this.dashboard}/${this.cabins}`;
   static readonly cabinId_path = `/${this.dashboard}/${this.cabins}/:cabinId`;
