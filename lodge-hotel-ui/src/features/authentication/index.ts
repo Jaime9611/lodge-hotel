@@ -3,5 +3,4 @@ export { default as ProtectedRoute } from "./protected-route.component";
 export { default as UserGrid } from "./user-grid.component";
 export { default as AddUser } from "./add-user.component";
 export { default as SignOutButton } from "./signout-button.component";
-export { default as SignUpForm } from "./signup-form.component";
 export * from "./use-login.hook";

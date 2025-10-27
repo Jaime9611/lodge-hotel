@@ -1,19 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import {
-  About,
   Bookings,
   Cabins,
   Checkin,
   Dashboard,
-  Landing,
-  LandingCabins,
   Login,
   Settings,
-  SignUp,
   Users,
 } from "@pages";
-import { AppLayout, LandingLayout, AccountLayout } from "@ui/layouts";
+import { AppLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "@features/authentication";
@@ -21,7 +17,6 @@ import { AuthProvider, CartProvider, ReservationProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 import CabinDetail from "@features/cabins/cabin-detail.component";
-import { CabinUserDetail } from "@features/cabins";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,39 +35,16 @@ const App = () => (
           <ReservationProvider>
             <Routes>
               <Route path={ROUTES.login} element={<Login />} />
-              <Route path={ROUTES.signup} element={<SignUp />} />
-              <Route path="/" element={<LandingLayout />}>
-                <Route index element={<Landing />} />
-                <Route path={ROUTES.user_cabins} element={<LandingCabins />} />
-                <Route
-                  path={ROUTES.user_cabinId_path}
-                  element={<CabinUserDetail />}
-                />
-                <Route path={ROUTES.about} element={<About />} />
-                <Route path={ROUTES.user_account} element={<AccountLayout />}>
-                  <Route
-                    path={ROUTES.user_profile}
-                    element={<h1>Your profile</h1>}
-                  />
-                  <Route
-                    path={ROUTES.user_reservations}
-                    element={<h1>Your reservations</h1>}
-                  />
-                </Route>
-              </Route>
               <Route
                 element={
                   <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
                     <AppLayout />
                   </ProtectedRoute>
                 }
-                path={ROUTES.dashboard}
+                path="/"
               >
-                {/* <Route
-                index
-                element={<Navigate replace to={ROUTES.dashboard} />}
-                /> */}
-                <Route index element={<Dashboard />} />
+                <Route index element={<Navigate to={ROUTES.dashboard} />} />
+                <Route path={ROUTES.dashboard} element={<Dashboard />} />
                 <Route path={ROUTES.cabins} element={<Cabins />} />
                 <Route path={ROUTES.cabinId_path} element={<CabinDetail />} />
                 <Route path={ROUTES.bookings} element={<Bookings />} />

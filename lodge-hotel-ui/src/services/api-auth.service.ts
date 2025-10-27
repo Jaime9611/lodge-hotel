@@ -23,7 +23,6 @@ class AuthApi extends ApiClient {
         user: {
           user: user.username,
           role: decoded.role[0],
-          guestId: decoded.guestId,
         },
         access_token: response.access_token,
       };

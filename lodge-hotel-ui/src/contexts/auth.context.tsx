@@ -10,7 +10,6 @@ import {
 export interface AuthContextState {
   user: string;
   role: string;
-  guestId: number;
   isAuthenticated: boolean;
   setAuth: (userData: LoginModel) => void;
 }
@@ -50,16 +49,14 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const {
-    user: { user, role, guestId },
+    user: { user, role },
     access_token,
   } = session;
 
   const isAuthenticated = role !== "" && access_token !== "";
 
   return (
-    <AuthContext.Provider
-      value={{ user, guestId, role, isAuthenticated, setAuth }}
-    >
+    <AuthContext.Provider value={{ user, role, isAuthenticated, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

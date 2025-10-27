@@ -109,7 +109,6 @@ public class UserService {
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toSet()))
         .claim("user", userEntity.getUsername())
-        .claim("guestId", userEntity.getGuestId() == null ? 0 : userEntity.getGuestId())
         .build();
 
     return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();

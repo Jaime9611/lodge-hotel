@@ -15,19 +15,11 @@ export interface UserModel {
   id: number;
   username: string;
   password: string;
-  guestId?: number;
-}
-export interface UserGuestModel {
-  id: number;
-  username: string;
-  password: string;
-  guest: GuestModel;
 }
 
 export interface AuthUserModel {
   user: string;
   role: string;
-  guestId: number;
 }
 
 export interface LoginModel {

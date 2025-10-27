@@ -64,49 +64,6 @@ class UserApi extends ApiClient {
 
     return true;
   }
-
-  async createEditGuest(
-    newUser: Omit<UserGuestModel, "id">,
-    id?: number
-  ): Promise<boolean> {
-    const { username, password, guest } = newUser;
-
-    try {
-      const response = await this.post<GuestModel, number>(
-        `${GUEST_PATH}`,
-        guest,
-        {
-          headers: {
-            Authorization: `Bearer ${this.getToken()}`,
-            // TODO: REMOVE THIS TOKEN
-          },
-        }
-      );
-
-      if (!id)
-        await this.post<Omit<UserModel, "id">, object>(
-          `${USER_PUBLIC_PATH}`,
-          { username, password, guestId: response },
-          {
-            headers: { Authorization: `Bearer ${this.getToken()}` },
-          }
-        );
-
-      if (id)
-        await this.update<Omit<UserModel, "id">>(
-          `${USER_PUBLIC_PATH}/${id}`,
-          { username, password },
-          {
-            headers: { Authorization: `Bearer ${this.getToken()}` },
-          }
-        );
-    } catch (error) {
-      console.error(error);
-      throw Error("Account could not be created.");
-    }
-
-    return true;
-  }
 }
 
 export default new UserApi();
