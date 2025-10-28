@@ -16,9 +16,9 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 
   Page<BookingEntity> findAllByStartDateGreaterThanEqual(LocalDateTime date, Pageable pageable);
 
-  @Query(value = "SELECT e FROM BookingEntity e  WHERE (e.status = 'UNCONFIRMED' AND DATE(e.startDate) = CURRENT_DATE) OR (e.status = 'CHECKED_IN' AND DATE(e.endDate) = CURRENT_DATE)")
+  @Query(value = "SELECT * FROM booking b WHERE (b.status = 'UNCONFIRMED' AND DATE(b.start_date) = CURRENT_DATE()) OR (b.status = 'CHECKED_IN' AND DATE(b.end_date) = CURRENT_DATE())", nativeQuery = true)
   Page<BookingEntity> findAllStaysForToday(Pageable pageable);
 
-  @Query(value = "SELECT e FROM BookingEntity e JOIN e.cabins c WHERE c.id = :cabinId AND (e.status = 'CHECKED_IN' OR DATE(e.startDate) >= CURRENT_DATE())")
+  @Query(value = "SELECT * FROM booking b JOIN booking_cabin AS bc ON bc.booking_id = b.id WHERE bc.cabin_id = :cabinId AND (b.status = 'CHECKED_IN' OR DATE(b.start_date) >= CURRENT_DATE())", nativeQuery = true)
   List<BookingEntity> findAllBookedReservations(@Param("cabinId") Long cabinId);
 }
