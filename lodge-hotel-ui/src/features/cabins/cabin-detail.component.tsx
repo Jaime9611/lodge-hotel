@@ -1,69 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import { Suspense, type FC } from "react";
 
-import {
-  Button,
-  ButtonIcon,
-  DataItem,
-  Empty,
-  Heading,
-  Modal,
-  Row,
-  Spinner,
-} from "@ui/atoms";
-import type { BookingModel, CabinModel } from "@models";
-import { Tag } from "@ui/atoms/Tag";
-import { formatCurrency, statusToTagName } from "@utils/helpers";
-import { ConfirmDelete } from "@ui/molecules";
-import { useMoveBack } from "@hooks";
-
-import { ButtonText } from "@ui/atoms/ButtonText";
-import { useDeleteCabin } from "./use-delete-cabin.hook";
+import { HiEyeSlash, HiMapPin, HiUsers } from "react-icons/hi2";
 import { useCabin } from "./use-cabin.hook";
-import { HiOutlineCurrencyDollar, HiOutlineHomeModern } from "react-icons/hi2";
-import type { FC, ReactNode } from "react";
-import { useCart } from "@contexts";
+import { Button, Empty, Heading, Modal, Row, Spinner } from "@ui/atoms";
+import { Reservation } from "@features/bookings";
+import { useDeleteCabin } from "./use-delete-cabin.hook";
+import { useMoveBack } from "@hooks";
+import { useNavigate } from "react-router-dom";
+import { ButtonText } from "@ui/atoms/ButtonText";
+import { ConfirmDelete } from "@ui/molecules";
 
-// ---------------- BOX COMPONENT ----------------
+interface CabinUserDetailProps {}
 
-interface DataBoxProps {
-  children: ReactNode;
-}
-
-const DataBox: FC<DataBoxProps> = ({ children }) => (
-  <div className="bg-white border border-solid border-gray-100 rounded-md ">
-    {children}
-  </div>
-);
-
-// ---------------- HEADER COMPONENT ----------------
-
-interface DataHeaderProps {
-  children: ReactNode;
-}
-
-const DataHeader: FC<DataHeaderProps> = ({ children }) => (
-  <div className="bg-primary-500 py-8 px-16 text-[#e0e7ff] text-2xl font-medium flex items-center justify-between [&_svg]:h-12 [&_svg]:w-12 [&_div:first-child]:flex [&_div:first-child]:items-center [&_div:first-child]:gap-6 [&_div:first-child]:font-semibold [&_div:first-child]:text-2xl [&_span]:text-3xl [&_span]:ml-1">
-    {children}
-  </div>
-);
-
-// ---------------- MAIN COMPONENT ----------------
-
-const CabinDetail = () => {
+const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
   const { cabin, isLoading } = useCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { cartItems, addToCart, removeFromCart } = useCart();
 
-  const moveBack = useMoveBack();
   const navigate = useNavigate();
+  const moveBack = useMoveBack();
 
   if (isLoading) return <Spinner />;
   if (!cabin) return <Empty resource="cabin" />;
 
-  const isCabinInCart = cartItems.find((item) => item.id === cabin.id);
-
-  const { id, name, regularPrice, description, maxCapacity, image } =
-    cabin as CabinModel;
+  const { name, maxCapacity, image, description, id } = cabin;
 
   return (
     <>
@@ -73,58 +32,58 @@ const CabinDetail = () => {
         </div>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
+      <div>
+        <div className="grid grid-cols-[3fr_4fr] gap-20 border border-gray-300 mb-24 rounded-lg">
+          <div className="relative">
+            <img
+              src={image}
+              className="object-cover rounded-tl-lg rounded-bl-lg "
+              alt={`${name}`}
+            />
+          </div>
 
-      <DataBox>
-        <DataHeader>
           <div>
-            <HiOutlineHomeModern />
-            <p>
-              <span>{name}</span>
-            </p>
-          </div>
-          <DataItem
-            icon={<HiOutlineCurrencyDollar style={{ color: "#e0e7ff" }} />}
-            label=""
-          >
-            {formatCurrency(regularPrice)}
-          </DataItem>
-        </DataHeader>
-        <div className="pt-12 px-16 pb-5">
-          <div className="flex w-full justify-end">
-            {isCabinInCart ? (
-              <ButtonIcon onClick={() => removeFromCart({ id, name })}>
-                <div className="flex gap-3 justify-between outline-1 p-4 rounded-md bg-red-200">
-                  <HiOutlineHomeModern /> <span>&mdash;</span>
-                  <span> Remove from list</span>
-                </div>
-              </ButtonIcon>
-            ) : (
-              <ButtonIcon onClick={() => addToCart({ id, name })}>
-                <div className="flex gap-3 justify-between outline-1 p-4 rounded-md">
-                  <HiOutlineHomeModern /> <span>Add to Cart</span>
-                </div>
-              </ButtonIcon>
-            )}
-          </div>
-          <img
-            className="block w-md rounded-sm aspect-3/2 object-cover object-center scale-1.5 -translate-x-1.5"
-            src={image}
-          />
+            <h3 className="text-accent-100 font-black text-6xl mb-5  bg-primary-950 py-6 pb-1 w-[150%]">
+              {name}
+            </h3>
 
-          <div className="mt-3 text-xl">
-            <p>
-              Max capacity:{" "}
-              <span className="font-medium">{maxCapacity} people</span>
+            <p className="text-lg text-primary-300 mb-10">
+              <div>{description}</div>
             </p>
-            {description && (
-              <div className="mt-4">
-                <h5 className="font-semibold">Description</h5>
-                <p className="text-lg">{description}</p>
-              </div>
-            )}
+
+            <ul className="flex flex-col gap-4 mb-7">
+              <li className="flex gap-3 items-center">
+                <HiUsers className="h-5 w-5 text-primary-600" />
+                <span className="text-lg">
+                  For up to <span className="font-bold">{maxCapacity}</span>{" "}
+                  guests
+                </span>
+              </li>
+              <li className="flex gap-3 items-center">
+                <HiMapPin className="h-5 w-5 text-primary-600" />
+                <span className="text-lg">
+                  Located in the heart of the{" "}
+                  <span className="font-bold">Dolomites</span> (Italy)
+                </span>
+              </li>
+              <li className="flex gap-3 items-center">
+                <HiEyeSlash className="h-5 w-5 text-primary-600" />
+                <span className="text-lg">
+                  Privacy <span className="font-bold">100%</span> guaranteed
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
-      </DataBox>
+        <div>
+          <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
+            Reserve <em className="text-primary-500">{cabin.name}</em> today.
+            Pay on arrival.
+          </h2>
+
+          <Reservation cabin={cabin} />
+        </div>
+      </div>
 
       <div className="flex gap-5 justify-end">
         <Modal>
@@ -149,4 +108,5 @@ const CabinDetail = () => {
     </>
   );
 };
-export default CabinDetail;
+
+export default CabinUserDetail;

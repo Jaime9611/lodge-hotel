@@ -25,7 +25,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
         bookings={bookings}
         confirmedStays={confirmedStays}
         cabinCount={cabins?.length}
-        numDays={10}
+        numDays={numDays}
       />
       <TodayActivity />
       <DurationChart confirmedStays={confirmedStays} />

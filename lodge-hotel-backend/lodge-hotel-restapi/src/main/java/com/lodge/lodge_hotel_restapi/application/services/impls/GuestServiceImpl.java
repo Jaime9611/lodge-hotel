@@ -1,5 +1,6 @@
 package com.lodge.lodge_hotel_restapi.application.services.impls;
 
+import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.GuestService;
 import com.lodge.lodge_hotel_restapi.domain.Guest;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class GuestServiceImpl implements GuestService {
+
+  private final CreateGuestPort createGuestPort;
 
   @Override
   public Guest get(Long id) {
@@ -28,6 +31,11 @@ public class GuestServiceImpl implements GuestService {
 
   @Override
   public Long save(Guest guest) {
-    return 0L;
+    log.debug("{} - Save was called with {}", GuestService.class.getSimpleName(),
+        guest.getFullName());
+
+    Guest savedGuest = createGuestPort.save(guest);
+
+    return savedGuest.getId();
   }
 }

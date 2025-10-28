@@ -1,8 +1,10 @@
 import ApiClient from "./api-client.service";
-import type { UserModel } from "@models";
+import type { GuestModel, UserGuestModel, UserModel } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const USER_PATH = "/employee";
+const USER_PUBLIC_PATH = "/auth/register";
+const GUEST_PATH = "/api/v1/guest";
 
 class UserApi extends ApiClient {
   constructor() {

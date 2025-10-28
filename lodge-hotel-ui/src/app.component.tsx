@@ -13,10 +13,10 @@ import { AppLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "@features/authentication";
-import { AuthProvider, CartProvider } from "@contexts";
+import { AuthProvider, CartProvider, ReservationProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
-import CabinDetail from "@features/cabins/cabin-detail.component";
+import { CabinDetail } from "@features/cabins";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,30 +31,33 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <AuthProvider>
-        <CartProvider>
-          <Routes>
+        <Routes>
+          <Route path={ROUTES.login} element={<Login />} />
+          <Route
+            element={
+              <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+            path="/"
+          >
+            <Route index element={<Navigate to={ROUTES.dashboard} />} />
+            <Route path={ROUTES.dashboard} element={<Dashboard />} />
+            <Route path={ROUTES.cabins} element={<Cabins />} />
             <Route
+              path={ROUTES.cabinId_path}
               element={
-                <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
-                  <AppLayout />
-                </ProtectedRoute>
+                <ReservationProvider>
+                  <CabinDetail />
+                </ReservationProvider>
               }
-            >
-              <Route
-                index
-                element={<Navigate replace to={ROUTES.dashboard} />}
-              />
-              <Route path={ROUTES.dashboard} element={<Dashboard />} />
-              <Route path={ROUTES.cabins} element={<Cabins />} />
-              <Route path={ROUTES.cabinId_path} element={<CabinDetail />} />
-              <Route path={ROUTES.bookings} element={<Bookings />} />
-              <Route path={ROUTES.bookingId_path} element={<Booking />} />
-              <Route path={ROUTES.booking_checkin} element={<Checkin />} />
-              <Route path={ROUTES.users} element={<Users />} />
-            </Route>
-            <Route path={ROUTES.login} element={<Login />} />
-          </Routes>
-        </CartProvider>
+            />
+            <Route path={ROUTES.bookings} element={<Bookings />} />
+            <Route path={ROUTES.bookingId_path} element={<Booking />} />
+            <Route path={ROUTES.booking_checkin} element={<Checkin />} />
+            <Route path={ROUTES.users} element={<Users />} />
+          </Route>
+        </Routes>
       </AuthProvider>
     </BrowserRouter>
     <Toaster

@@ -5,16 +5,20 @@ export class ROUTES {
   static readonly login = "login";
   static readonly login_path = `/${this.login}`;
 
+  static readonly signup = "signup";
+  static readonly signup_path = `/${this.signup}`;
+
   static readonly cabins = "cabins";
   static readonly cabins_path = `/${this.cabins}`;
   static readonly cabinId_path = `/${this.cabins}/:cabinId`;
 
   static readonly bookings = "bookings";
   static readonly bookings_path = `/${this.bookings}`;
-  static readonly bookingId_path = `${this.bookings}/:bookingId`;
+  static readonly bookingId_path = `/${this.bookings}/:bookingId`;
 
   static readonly checkin = "checkin";
   static readonly booking_checkin = `${this.checkin}/:bookingId`;
+  static readonly booking_checkin_path = `/${this.checkin}`;
 
   static readonly users = "users";
   static readonly users_path = `/${this.users}`;

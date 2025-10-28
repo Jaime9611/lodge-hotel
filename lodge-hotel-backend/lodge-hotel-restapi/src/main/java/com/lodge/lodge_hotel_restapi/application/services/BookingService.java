@@ -7,6 +7,7 @@ import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public interface BookingService {
 
@@ -17,6 +18,8 @@ public interface BookingService {
   PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date, Integer pageNumber, Integer pageSize);
 
   PageResponse<Booking> getTodaysActivity(Integer pageNumber, Integer pageSize);
+
+  List<Booking> getBookedReservations(Long cabinId);
 
   Booking get(Long id);
 

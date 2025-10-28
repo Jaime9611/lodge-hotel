@@ -12,11 +12,12 @@ export const useRecentBookings = () => {
   const queryDate = subDays(new Date(), numDays);
 
   const { isPending: isLoading, data } = useQuery({
-    queryFn: () => apiBooking.getBookingsAfterDate(queryDate),
+    queryFn: () => apiBooking.getBookingsAfterDate(queryDate, true),
     queryKey: ["bookings", `last-${numDays}`],
   });
 
   const bookings = data?.content ?? [];
+  console.log(bookings);
 
   return { bookings, isLoading };
 };

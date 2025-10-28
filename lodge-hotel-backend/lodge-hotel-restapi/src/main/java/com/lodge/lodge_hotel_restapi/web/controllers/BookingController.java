@@ -10,6 +10,7 @@ import com.lodge.lodge_hotel_restapi.web.dtos.BookingSimpleDto;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +37,7 @@ public class BookingController {
   private final BookingService bookingService;
 
   @PostMapping(Endpoints.BOOKING_QUOTATION)
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<BigDecimal> getBookingQuotation(@RequestBody BookingQuotationDto booking) {
     log.debug("POST - booking quotation in Controller");
 
@@ -84,8 +85,16 @@ public class BookingController {
     return ResponseEntity.ok(bookingService.get(bookingId));
   }
 
+  @GetMapping(Endpoints.BOOKING_RESERVATIONS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
+  public ResponseEntity<List<Booking>> getBookedReservations(@PathVariable Long cabinId) {
+    log.debug("GET - Get Booking by Id: {} in Controller", cabinId);
+
+    return ResponseEntity.ok(bookingService.getBookedReservations(cabinId));
+  }
+
   @PostMapping
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<Void> createBooking(@RequestBody BookingSimpleDto booking) {
     log.debug("POST - Create Booking in Controller");
 
@@ -98,7 +107,7 @@ public class BookingController {
   }
 
   @PutMapping(Endpoints.BOOKING_ID)
-  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
+  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<?> updateBookingById(@PathVariable Long bookingId,
       @RequestBody Booking booking) {
     log.debug("PUT - Update Booking by Id: {} in Controller", bookingId);

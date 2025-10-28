@@ -110,6 +110,14 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
+  public List<Booking> getBookedReservations(Long cabinId) {
+    log.debug("{} - Get todays activity bookings was called.",
+        BookingService.class.getSimpleName());
+
+    return readBookingPort.getBookedReservations(cabinId);
+  }
+
+  @Override
   public Booking get(Long id) {
     log.debug("{} - Get by id was called with {}", BookingService.class.getSimpleName(),
         String.valueOf(id));
