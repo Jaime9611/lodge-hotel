@@ -6,10 +6,18 @@ import type {
   BookingModelForm,
   BookingModelFormResult,
   CabinModel,
+  GuestModel,
 } from "@models";
-import { Button, Form } from "@ui/atoms";
+import {
+  Button,
+  CountrySelector,
+  Form,
+  FormRowVertical,
+  Input,
+} from "@ui/atoms";
 import { useCreateBooking } from "./use-create-booking.hook";
 import { useForm, type SubmitErrorHandler } from "react-hook-form";
+import type { CountryModel } from "@ui/atoms/CountrySelector/country-selector.component";
 
 interface ReservationFormProps {
   cabin: CabinModel;
@@ -29,24 +37,23 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin, user }) => {
     endDate: endDate?.toISOString(),
     cabins: [cabin],
     numGuests: 0,
-    guest: {
-      fullName: user,
-      email: "test@email.com",
-      country: "Colombia",
-      countryFlag: "https://flagcdn.com/co.svg",
-      nationalId: "12324325235",
-    }, // TODO: ADD GUESTS
+    guest: {} as GuestModel,
   };
 
-  const { register, handleSubmit, formState, reset } =
+  const { register, handleSubmit, formState, reset, setValue, trigger } =
     useForm<BookingModelForm>({
       defaultValues: bookingData,
     });
 
+  const handleCountryChange = (country: CountryModel) => {
+    setValue("guest.country", country.label);
+    setValue("guest.countryFlag", country.image);
+    trigger("guest.country");
+  };
+
   const { errors } = formState; // Form Errors
 
   const OnSubmit = (data: BookingModelForm) => {
-    console.log(startDate);
     createBooking(
       {
         newBookingData: {
@@ -69,58 +76,95 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin, user }) => {
 
   return (
     <Form onSubmit={handleSubmit(OnSubmit, onError)} type="regular">
-      <div className="bg-primary-800 text-primary-300 text-white px-16 py-2 flex justify-between items-center">
-        <p>Logged in as</p>
-
-        <div className="flex gap-4 items-center">
-          <img
-            // Important to display google profile images
-            referrerPolicy="no-referrer"
-            className="h-8 rounded-full"
-            src="default-user.jpg"
-            alt={user}
+      <div className="grid grid-cols-2 gap-4">
+        <FormRowVertical
+          label="Guest Name"
+          error={errors?.guest?.fullName?.message}
+        >
+          <Input
+            type="text"
+            id="guest.fullName"
+            disabled={isCreating}
+            register={{
+              ...register("guest.fullName", {
+                required: "This field is required",
+              }),
+            }}
           />
-          <p>{user}</p>
-        </div>
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest Email"
+          error={errors?.guest?.email?.message}
+        >
+          <Input
+            type="text"
+            id="email"
+            disabled={isCreating}
+            register={{
+              ...register("guest.email", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest Country"
+          error={errors?.guest?.country?.message}
+        >
+          <CountrySelector onUpdate={handleCountryChange} />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Guest NationalID"
+          error={errors?.guest?.nationalId?.message}
+        >
+          <Input
+            type="text"
+            id="nationalID"
+            disabled={isCreating}
+            register={{
+              ...register("guest.nationalId", {
+                required: "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
       </div>
 
-      <div className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
-        <div className="space-y-2">
-          <label htmlFor="numGuests">How many guests?</label>
-          <select
-            id="numGuests"
-            className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-            {...register("numGuests", {
-              required: "This field is required",
-            })}
-          >
-            <option value="" key="">
-              Select number of guests...
+      <FormRowVertical
+        label="How many Guests?"
+        error={errors?.guest?.nationalId?.message}
+      >
+        <select
+          id="numGuests"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
+          {...register("numGuests", {
+            required: "This field is required",
+          })}
+        >
+          <option value="" key="">
+            Select number of guests...
+          </option>
+          {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
+            <option value={x} key={x}>
+              {x} {x === 1 ? "guest" : "guests"}
             </option>
-            {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
-              <option value={x} key={x}>
-                {x} {x === 1 ? "guest" : "guests"}
-              </option>
-            ))}
-          </select>
-        </div>
+          ))}
+        </select>
+      </FormRowVertical>
 
-        <div className="flex justify-end items-center gap-6">
-          {!(startDate && endDate) ? (
-            <p className="text-primary-300 text-base">
-              Start by selecting dates
-            </p>
-          ) : (
-            <Button
-              type="submit"
-              size="large"
-              variation="primary"
-              disabled={isCreating}
-            >
-              Reserve now
-            </Button>
-          )}
-        </div>
+      <div className="flex justify-end items-center gap-6">
+        {!(startDate && endDate) ? (
+          <p className="text-primary-300 text-base">Start by selecting dates</p>
+        ) : (
+          <Button
+            type="submit"
+            size="large"
+            variation="primary"
+            disabled={isCreating}
+          >
+            Reserve now
+          </Button>
+        )}
       </div>
     </Form>
   );

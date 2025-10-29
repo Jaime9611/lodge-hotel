@@ -37,7 +37,7 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
           <div className="relative">
             <img
               src={image}
-              className="object-cover rounded-tl-lg rounded-bl-lg "
+              className="object-cover rounded-tl-lg rounded-bl-lg h-[500px] w-full"
               alt={`${name}`}
             />
           </div>
@@ -47,9 +47,7 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
               {name}
             </h3>
 
-            <p className="text-lg text-primary-300 mb-10">
-              <div>{description}</div>
-            </p>
+            <p className="text-lg text-primary-300 mb-10">{description}</p>
 
             <ul className="flex flex-col gap-4 mb-7">
               <li className="flex gap-3 items-center">

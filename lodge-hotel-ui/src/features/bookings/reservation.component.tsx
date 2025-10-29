@@ -20,9 +20,8 @@ const Reservation: FC<ReservationProps> = ({ cabin }) => {
   console.log(bookedDates);
 
   return (
-    <div className="grid grid-cols-[2fr_1fr] border border-primary-500 min-h-[400px]">
+    <div className="grid grid-cols-[1fr_1fr] border border-primary-500 min-h-[400px]">
       <DateSelector
-        // settings={settings}
         // TODO: SETTING FROM BACKEND
         settings={{ minBookingLength: 1, maxBookingLength: 4 }}
         bookedDates={bookedDates}

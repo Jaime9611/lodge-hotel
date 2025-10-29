@@ -1,6 +1,8 @@
-import { type FC } from "react";
-import ReactSelect from "react-select";
+import { useCallback, useEffect, useState, type FC } from "react";
+// import ReactSelect from "react-select/async";
+import ReactFlagsSelect from "react-flags-select";
 import Flag from "../Flag/flag.component";
+import axios from "axios";
 
 export interface CountryModel {
   value: string;
@@ -41,23 +43,37 @@ interface CountrySelectorProps {
 }
 
 const CountrySelector: FC<CountrySelectorProps> = ({ onUpdate }) => {
-  const handleChange = (selectedItem, event) => {
-    if (selectedItem !== null) {
-      const selected = countries?.filter(
-        (country) => country.label == selectedItem.label
-      )[0];
-      if (selected) {
-        onUpdate(selected);
-      }
+  const [selectedCode, setSelectedCode] = useState("");
+
+  useEffect(() => {
+    const fetchCountry = async (code: string) => {
+      await axios
+        .get(`https://restcountries.com/v3.1/alpha/${code}`)
+        .then((response) => {
+          const countryData: CountryModel = {
+            label: response.data[0].name.common,
+            image: `https://flagcdn.com/${code.toLowerCase()}.svg`,
+            value: code,
+          };
+          console.log(countryData);
+          onUpdate(countryData);
+        })
+        .catch((error) => {
+          console.error("Error fetching the country data:", error);
+        });
+    };
+
+    if (selectedCode) {
+      fetchCountry(selectedCode);
     }
-  };
+  }, [selectedCode]);
 
   return (
-    <ReactSelect
-      options={countries}
-      onChange={handleChange}
-      components={{ SingleValue: customSingleValue, Option: customOption }}
-      placeholder="Select a country"
+    <ReactFlagsSelect
+      selected={selectedCode}
+      onSelect={(code) => setSelectedCode(code)}
+      searchable
+      searchPlaceholder="Search for a Country..."
     />
   );
 };
