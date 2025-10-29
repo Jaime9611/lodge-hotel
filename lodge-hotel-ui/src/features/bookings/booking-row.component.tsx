@@ -33,7 +33,6 @@ const BookingRow: FC<BookingRowProps> = ({
     id: bookingId,
     startDate,
     endDate,
-    numGuests,
     totalPrice,
     status,
     guest: { fullName: guestName, email },
@@ -75,7 +74,9 @@ const BookingRow: FC<BookingRowProps> = ({
             {status === "UNCONFIRMED" && (
               <IconStackMenu.Button
                 icon={<HiArrowDownOnSquare />}
-                onClick={() => navigate(`/checkin/${bookingId}`)}
+                onClick={() =>
+                  navigate(`${ROUTES.booking_checkin_path}/${bookingId}`)
+                }
                 displayText="Check in"
               />
             )}
@@ -84,6 +85,7 @@ const BookingRow: FC<BookingRowProps> = ({
                 icon={<HiArrowUpOnSquare />}
                 onClick={() => checkout(bookingId)}
                 displayText="Check out"
+                disabled={isCheckingOut}
               />
             )}
 
