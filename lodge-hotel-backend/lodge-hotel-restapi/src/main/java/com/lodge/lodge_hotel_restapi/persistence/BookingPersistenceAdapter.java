@@ -5,6 +5,7 @@ import com.lodge.lodge_hotel_restapi.application.ports.booking.DeleteBookingPort
 import com.lodge.lodge_hotel_restapi.application.ports.booking.ReadBookingPort;
 import com.lodge.lodge_hotel_restapi.application.ports.booking.UpdateBookingPort;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.BookingMapper;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.BookingRepository;
@@ -46,6 +47,13 @@ public class BookingPersistenceAdapter implements CreateBookingPort, ReadBooking
   @Override
   public Page<Booking> getAll(PageRequest pageRequest) {
     Page<BookingEntity> foundBookings = bookingRepository.findAll(pageRequest);
+
+    return foundBookings.map(bookingMapper::bookingEntityToBooking);
+  }
+
+  @Override
+  public Page<Booking> getAllByStatus(BookingStatus status, PageRequest pageRequest) {
+    Page<BookingEntity> foundBookings = bookingRepository.findAllByStatus(status, pageRequest);
 
     return foundBookings.map(bookingMapper::bookingEntityToBooking);
   }

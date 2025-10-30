@@ -1,6 +1,5 @@
 import type { FC } from "react";
 
-import { differenceInDays } from "date-fns";
 import { useReservation } from "@contexts";
 import type {
   BookingModelForm,
@@ -14,6 +13,7 @@ import {
   Form,
   FormRowVertical,
   Input,
+  Select,
 } from "@ui/atoms";
 import { useCreateBooking } from "./use-create-booking.hook";
 import { useForm, type SubmitErrorHandler } from "react-hook-form";
@@ -134,22 +134,18 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin, user }) => {
         label="How many Guests?"
         error={errors?.guest?.nationalId?.message}
       >
-        <select
+        <Select
           id="numGuests"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-          {...register("numGuests", {
+          register={register("numGuests", {
             required: "This field is required",
           })}
-        >
-          <option value="" key="">
-            Select number of guests...
-          </option>
-          {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
-            <option value={x} key={x}>
-              {x} {x === 1 ? "guest" : "guests"}
-            </option>
-          ))}
-        </select>
+          options={Array.from({ length: maxCapacity }, (_, i) => i + 1).map(
+            (x) => ({
+              value: x,
+              label: `${x} ${x === 1 ? "guest" : "guests"}`,
+            })
+          )}
+        />
       </FormRowVertical>
 
       <div className="flex justify-end items-center gap-6">

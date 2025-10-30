@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -48,6 +49,8 @@ public class BookingServiceImpl implements BookingService {
   private static final int DEFAULT_PAGE = 0;
   private static final int DEFAULT_PAGE_SIZE = 25;
   private static final int PAGE_MAX_SIZE = 500;
+  private static final String DEFAULT_SORT_BY = "id";
+  private static final String DEFAULT_SORT_DIRECTION = "asc";
 
   @Override
   public BigDecimal getBookingQuotation(BookingQuotationDto booking) {
@@ -57,16 +60,20 @@ public class BookingServiceImpl implements BookingService {
   }
 
   @Override
-  public PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize) {
+  public PageResponse<Booking> getAll(BookingStatus status, String sortBy, String direction,
+      Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all bookings was called.", BookingService.class.getSimpleName());
 
-    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+    PageRequest pageRequest = buildPageRequest(sortBy, direction, pageNumber, pageSize);
 
     PageResponse<Booking> bookingPageResponse;
 
-    Page<Booking> bookingPage = readBookingPort.getAll(pageRequest);
-    bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
-
+    if (status != null) {
+      bookingPageResponse = listBookingsByStatus(status, pageRequest);
+    } else {
+      Page<Booking> bookingPage = readBookingPort.getAll(pageRequest);
+      bookingPageResponse = pageMapper.pagetoPageResponse(bookingPage);
+    }
     return bookingPageResponse;
   }
 
@@ -75,7 +82,8 @@ public class BookingServiceImpl implements BookingService {
       Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all bookings after date was called.", BookingService.class.getSimpleName());
 
-    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+    PageRequest pageRequest = buildPageRequest(DEFAULT_SORT_BY, DEFAULT_SORT_DIRECTION, pageNumber,
+        pageSize);
 
     PageResponse<Booking> bookingPageResponse;
 
@@ -96,10 +104,11 @@ public class BookingServiceImpl implements BookingService {
 
   @Override
   public PageResponse<Booking> getTodaysActivity(Integer pageNumber, Integer pageSize) {
-    log.debug("{} - Get todays activity bookings was called.",
+    log.debug("{} - Get today activity bookings was called.",
         BookingService.class.getSimpleName());
 
-    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+    PageRequest pageRequest = buildPageRequest(DEFAULT_SORT_BY, DEFAULT_SORT_DIRECTION, pageNumber,
+        pageSize);
 
     PageResponse<Booking> bookingPageResponse;
 
@@ -111,7 +120,7 @@ public class BookingServiceImpl implements BookingService {
 
   @Override
   public List<Booking> getBookedReservations(Long cabinId) {
-    log.debug("{} - Get todays activity bookings was called.",
+    log.debug("{} - Get booked reservations was called.",
         BookingService.class.getSimpleName());
 
     return readBookingPort.getBookedReservations(cabinId);
@@ -120,7 +129,7 @@ public class BookingServiceImpl implements BookingService {
   @Override
   public Booking get(Long id) {
     log.debug("{} - Get by id was called with {}", BookingService.class.getSimpleName(),
-        String.valueOf(id));
+        id);
 
     return findByBookingId(id);
   }
@@ -128,7 +137,7 @@ public class BookingServiceImpl implements BookingService {
   @Override
   public void delete(Long id) {
     log.debug("{} - Delete by id was called with {}", BookingService.class.getSimpleName(),
-        String.valueOf(id));
+        id);
 
     Booking foundBooking = findByBookingId(id);
 
@@ -214,7 +223,8 @@ public class BookingServiceImpl implements BookingService {
     return total.multiply(BigDecimal.valueOf(daysBetween));
   }
 
-  private PageRequest buildPageRequest(Integer pageNumber, Integer pageSize) {
+  private PageRequest buildPageRequest(String sortBy, String direction, Integer pageNumber,
+      Integer pageSize) {
     int queryPageNumber;
     int queryPageSize;
 
@@ -234,8 +244,19 @@ public class BookingServiceImpl implements BookingService {
       }
     }
 
-    Sort sort = Sort.by(Sort.Order.asc("id"));
+    Sort sort = direction.equalsIgnoreCase(Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+        : Sort.by(sortBy).descending();
 
     return PageRequest.of(queryPageNumber, queryPageSize, sort);
+  }
+
+  private PageResponse<Booking> listBookingsByStatus(BookingStatus status,
+      PageRequest pageRequest) {
+    log.debug("{} - get By Status was called with: {}", BookingService.class.getSimpleName(),
+        status.toString());
+
+    Page<Booking> bookingPage = readBookingPort.getAllByStatus(status, pageRequest);
+
+    return pageMapper.pagetoPageResponse(bookingPage);
   }
 }

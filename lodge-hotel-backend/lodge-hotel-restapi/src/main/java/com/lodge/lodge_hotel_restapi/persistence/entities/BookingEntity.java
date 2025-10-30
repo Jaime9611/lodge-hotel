@@ -47,6 +47,8 @@ public class BookingEntity {
   private LocalDateTime endDate;
   private int numGuests;
 
+  private BigDecimal totalPrice;
+
   @Enumerated(EnumType.STRING)
   private BookingStatus status;
 

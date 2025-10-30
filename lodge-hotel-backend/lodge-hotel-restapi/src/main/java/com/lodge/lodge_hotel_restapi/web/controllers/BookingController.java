@@ -47,12 +47,14 @@ public class BookingController {
   @GetMapping
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<PageResponse<Booking>> getAll(
-      @RequestParam(required = false) String bookingName,
+      @RequestParam(required = false) BookingStatus status,
+      @RequestParam(defaultValue = "id") String sortBy,
+      @RequestParam(defaultValue = "asc") String direction,
       @RequestParam(required = false) Integer pageNumber,
       @RequestParam(required = false) Integer pageSize) {
     log.debug("GET - All Bookings in Controller");
 
-    return ResponseEntity.ok(bookingService.getAll(bookingName, pageNumber, pageSize));
+    return ResponseEntity.ok(bookingService.getAll(status, sortBy, direction, pageNumber, pageSize));
   }
 
   @GetMapping(Endpoints.BOOKING_AFTER)

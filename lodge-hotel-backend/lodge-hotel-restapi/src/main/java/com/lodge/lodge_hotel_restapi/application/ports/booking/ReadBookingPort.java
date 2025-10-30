@@ -1,6 +1,7 @@
 package com.lodge.lodge_hotel_restapi.application.ports.booking;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,8 @@ public interface ReadBookingPort {
   Optional<Booking> get(Long id);
 
   Page<Booking> getAll(PageRequest pageRequest);
+
+  Page<Booking> getAllByStatus(BookingStatus status, PageRequest pageRequest);
 
   Page<Booking> getAfterDate(LocalDate start, LocalDate end, PageRequest pageRequest);
 

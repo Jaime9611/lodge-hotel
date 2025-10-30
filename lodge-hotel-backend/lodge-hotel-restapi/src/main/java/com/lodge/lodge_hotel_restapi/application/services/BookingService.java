@@ -13,7 +13,7 @@ public interface BookingService {
 
   BigDecimal getBookingQuotation(BookingQuotationDto booking);
 
-  PageResponse<Booking> getAll(String cabinName, Integer pageNumber, Integer pageSize);
+  PageResponse<Booking> getAll(BookingStatus status, String sortBy, String direction, Integer pageNumber, Integer pageSize);
 
   PageResponse<Booking> getAllAfterDate(boolean fromCreation, LocalDate date, Integer pageNumber, Integer pageSize);
 

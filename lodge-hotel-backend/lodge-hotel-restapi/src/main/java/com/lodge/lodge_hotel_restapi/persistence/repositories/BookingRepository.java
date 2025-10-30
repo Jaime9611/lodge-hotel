@@ -1,5 +1,6 @@
 package com.lodge.lodge_hotel_restapi.persistence.repositories;
 
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,6 +16,8 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
       Pageable pageable);
 
   Page<BookingEntity> findAllByStartDateGreaterThanEqual(LocalDateTime date, Pageable pageable);
+
+  Page<BookingEntity> findAllByStatus(BookingStatus status, Pageable pageable);
 
   @Query(value = "SELECT * FROM booking b WHERE (b.status = 'UNCONFIRMED' AND DATE(b.start_date) = CURRENT_DATE()) OR (b.status = 'CHECKED_IN' AND DATE(b.end_date) = CURRENT_DATE())", nativeQuery = true)
   Page<BookingEntity> findAllStaysForToday(Pageable pageable);

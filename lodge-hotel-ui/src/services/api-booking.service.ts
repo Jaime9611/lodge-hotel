@@ -10,20 +10,45 @@ import type {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const BOOKING_PATH = "/api/v1/booking";
 
+export type FilterOptions = {
+  field: string;
+  value: string;
+};
+export type SortOptions = {
+  field: string;
+  direction: string;
+};
+
 class BookingsApi extends ApiClient {
   constructor() {
     super(API_BASE_URL);
   }
 
-  async getAll(pageNumber?: number): Promise<BookingModelPage> {
+  async getAll(
+    filter?: FilterOptions,
+    sortBy?: SortOptions,
+    pageNumber?: number
+  ): Promise<BookingModelPage> {
     let url = `${BOOKING_PATH}`;
 
-    if (pageNumber)
-      url =
-        url + "?" + `pageNumber=${pageNumber}` + "&" + `pageSize=${PAGE_SIZE}`;
+    let params: { [key: string]: string | number } = { pageSize: PAGE_SIZE };
+
+    // FILTER
+    if (filter) {
+      params[filter.field] = filter.value;
+    }
+
+    // SORT
+    if (sortBy) {
+      params["sortBy"] = sortBy.field;
+      params["direction"] = sortBy.direction;
+    }
+
+    if (pageNumber) params["pageNumber"] = pageNumber;
 
     return await this.get<BookingModelPage>(url, {
       headers: { Authorization: `Bearer ${this.getToken()}` },
+      params,
     });
   }
 

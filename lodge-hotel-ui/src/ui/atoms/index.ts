@@ -21,3 +21,5 @@ export * from "./CheckBox";
 export * from "./Tag";
 export * from "./Flag";
 export * from "./LoginMessage";
+export * from "./SortBy";
+export * from "./Select";
