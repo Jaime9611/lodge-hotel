@@ -51,22 +51,21 @@ const Sidebar = () => {
         </li>
 
         {role === ROLE.MANAGER && (
-          <li>
-            <CustomNavLink to={ROUTES.users_path}>
-              <HiOutlineUser />
-              <span>Users</span>
-            </CustomNavLink>
-          </li>
+          <>
+            <li>
+              <CustomNavLink to={ROUTES.users_path}>
+                <HiOutlineUser />
+                <span>Users</span>
+              </CustomNavLink>
+            </li>
+            <li>
+              <CustomNavLink to={ROUTES.settings_path}>
+                <HiOutlineCog6Tooth />
+                <span>Settings</span>
+              </CustomNavLink>
+            </li>
+          </>
         )}
-
-        {/* {role === ROLE.MANAGER && (
-          <li>
-            <CustomNavLink to={ROUTES.settings_path}>
-              <HiOutlineCog6Tooth />
-              <span>Settings</span>
-            </CustomNavLink>
-          </li>
-        )} */}
       </ul>
     </aside>
   );

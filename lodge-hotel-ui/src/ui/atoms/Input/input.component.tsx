@@ -7,6 +7,7 @@ interface InputProps {
   value?: string;
   defaultValue?: string | number;
   onChange?: (() => void) | ((e: React.ChangeEvent<HTMLInputElement>) => void);
+  onBlur?: (() => void) | ((e: React.FocusEvent<HTMLInputElement>) => void);
   disabled?: boolean;
   readOnly?: boolean;
 }
@@ -20,6 +21,7 @@ const Input: FC<InputProps> = ({
   defaultValue,
   register,
   readOnly,
+  onBlur,
 }) => (
   <input
     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -28,6 +30,7 @@ const Input: FC<InputProps> = ({
     defaultValue={defaultValue}
     value={value}
     onChange={onChange}
+    onBlur={onBlur}
     disabled={disabled}
     readOnly={readOnly}
     {...register}

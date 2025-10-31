@@ -9,6 +9,14 @@ export interface Page<T> {
   number: number;
 }
 
+// ---------------- SETTINGS MODELS ----------------
+
+export interface SettingsModel {
+  minBookingLength: number;
+  maxBookingLength: number;
+  logo: string;
+}
+
 // ---------------- AUTH MODELS ----------------
 
 export interface UserModel {

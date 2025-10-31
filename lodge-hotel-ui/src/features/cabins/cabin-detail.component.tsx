@@ -74,12 +74,10 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
           </div>
         </div>
         <div>
-          <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
-            Reserve <em className="text-primary-500">{cabin.name}</em> today.
-            Pay on arrival.
-          </h2>
-
-          <Reservation cabin={cabin} />
+          <Heading as="h1">Reservation</Heading>
+          <div className="mt-10">
+            <Reservation cabin={cabin} />
+          </div>
         </div>
       </div>
 

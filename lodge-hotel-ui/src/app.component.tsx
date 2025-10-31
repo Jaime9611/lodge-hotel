@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import {
+  Account,
   Bookings,
   Cabins,
   Checkin,
   Dashboard,
   Login,
+  PageNotFound,
   Settings,
   Users,
 } from "@pages";
@@ -13,7 +15,7 @@ import { AppLayout } from "@ui/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "@features/authentication";
-import { AuthProvider, CartProvider, ReservationProvider } from "@contexts";
+import { AuthProvider, ReservationProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 import { CabinDetail } from "@features/cabins";
@@ -39,7 +41,6 @@ const App = () => (
                 <AppLayout />
               </ProtectedRoute>
             }
-            path="/"
           >
             <Route index element={<Navigate to={ROUTES.dashboard} />} />
             <Route path={ROUTES.dashboard} element={<Dashboard />} />
@@ -56,7 +57,10 @@ const App = () => (
             <Route path={ROUTES.bookingId_path} element={<Booking />} />
             <Route path={ROUTES.booking_checkin} element={<Checkin />} />
             <Route path={ROUTES.users} element={<Users />} />
+            <Route path={ROUTES.account} element={<Account />} />
+            <Route path={ROUTES.settings} element={<Settings />} />
           </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

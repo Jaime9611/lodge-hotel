@@ -25,6 +25,9 @@ export class ROUTES {
 
   static readonly settings = "settings";
   static readonly settings_path = `/${this.settings}`;
+
+  static readonly account = "account";
+  static readonly account_path = `/${this.account}`;
 }
 
 export const PAGE_SIZE = 5;

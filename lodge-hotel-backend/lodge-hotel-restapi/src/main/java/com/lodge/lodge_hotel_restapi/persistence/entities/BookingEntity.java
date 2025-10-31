@@ -64,9 +64,6 @@ public class BookingEntity {
   )
   private Set<CabinEntity> cabins = new HashSet<>();
 
-  //  private BigDecimal cabinPrice;
-//  private BigDecimal extrasPrice;
-//  private boolean hasBreakfast;
   private boolean isPaid;
 
   @Transient

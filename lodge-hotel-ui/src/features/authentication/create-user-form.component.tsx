@@ -117,7 +117,7 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
           Cancel
         </Button>
         <Button type="submit" variation="primary" disabled={isWorking}>
-          {isEditSession ? "Edit employee" : "Create new employee"}
+          {isEditSession ? "Edit account" : "Create account"}
         </Button>
       </Stack>
     </Form>

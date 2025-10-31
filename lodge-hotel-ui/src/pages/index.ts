@@ -6,3 +6,5 @@ export { default as Users } from "./users.component";
 export { default as Settings } from "./settings.component";
 export { default as Checkin } from "./checkin.component";
 export { default as About } from "./about.component";
+export { default as Account } from "./account.component";
+export { default as PageNotFound } from "./page-not-found.component";
