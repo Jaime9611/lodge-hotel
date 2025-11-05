@@ -10,7 +10,7 @@ import {
 
 import { DayPicker } from "react-day-picker";
 
-import type { CabinModel } from "@models";
+import type { CabinModel, SettingsModel } from "@models";
 import { useReservation } from "@contexts";
 
 import "react-day-picker/style.css";
@@ -26,7 +26,7 @@ const isAlreadyBooked = (range, datesArr) => {
 };
 
 interface DateSelectorProps {
-  settings: { minBookingLength: number; maxBookingLength: number };
+  settings: SettingsModel;
   cabin: CabinModel;
   bookedDates: Date[];
 }
@@ -55,7 +55,7 @@ const DateSelector: FC<DateSelectorProps> = ({
         mode="range"
         onSelect={setRange}
         selected={displayRange}
-        min={minBookingLength + 1}
+        min={minBookingLength}
         max={maxBookingLength}
         startMonth={new Date()}
         hidden={{ before: new Date() }}

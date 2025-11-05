@@ -24,9 +24,9 @@ interface ReservationFormProps {
   user: string;
 }
 
-const ReservationForm: FC<ReservationFormProps> = ({ cabin, user }) => {
+const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
   const { range, resetRange } = useReservation();
-  const { maxCapacity, id, name } = cabin;
+  const { maxCapacity } = cabin;
   const { createBooking, isCreating } = useCreateBooking();
 
   const startDate = range.from;

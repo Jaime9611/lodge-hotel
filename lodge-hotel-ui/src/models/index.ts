@@ -14,7 +14,7 @@ export interface Page<T> {
 export interface SettingsModel {
   minBookingLength: number;
   maxBookingLength: number;
-  logo: string;
+  logoImage: string;
 }
 
 // ---------------- AUTH MODELS ----------------
