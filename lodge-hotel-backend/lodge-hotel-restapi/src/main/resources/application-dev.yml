@@ -27,6 +27,9 @@ eureka:
     instance:
       hostname: lodge-api
 
+settings:
+  file-path: src/main/resources/settings.json
+
 keyStore:
   path: keystore.jks
   password: password

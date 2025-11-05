@@ -4,6 +4,9 @@ public class Endpoints {
 
   public static final String BASE_URL = "/api/v1";
 
+  // SETTINGS
+  public static final String SETTINGS = BASE_URL + "/settings";
+
   // CABINS
   public static final String CABIN = BASE_URL + "/cabin";
   public static final String CABIN_ID = "/{cabinId}";

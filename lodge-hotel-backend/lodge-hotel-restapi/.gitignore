@@ -1,4 +1,5 @@
 src/main/resources/static/images/cabin-images
+src/main/resources/settings.json
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
