@@ -11,11 +11,13 @@ const variations = {
   secondary:
     "text-gray-600 bg-white border border-solid border-gray-200 hover:bg-gray-50",
   danger: "text-red-100 bg-red-600 hover:bg-red-700",
+  action:
+    "text-gray-600 bg-white border border-solid border-gray-200 hover:bg-primary-600 hover:text-white",
 };
 
 type ButtonProps = {
   type?: "button" | "submit" | "reset";
-  variation?: "primary" | "secondary" | "danger";
+  variation?: "primary" | "secondary" | "danger" | "action";
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   children: ReactNode;

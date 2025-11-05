@@ -6,9 +6,9 @@ const Users = () => (
   <>
     <Row>
       <Heading as="h1">Users</Heading>
+      <AddUser />
     </Row>
     <Row type="vertical">
-      <AddUser />
       <UserGrid />
     </Row>
   </>

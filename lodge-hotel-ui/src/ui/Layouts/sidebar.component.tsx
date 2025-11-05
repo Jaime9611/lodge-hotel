@@ -29,7 +29,9 @@ const Sidebar = () => {
       data-testid="sidebar-dashboard-view"
       className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11"
     >
-      <div className="h-48 w-48 text-center">LOGO</div>
+      <div className="flex justify-center">
+        <img className="h-36 w-auto text-center" src="default-logo.png" />
+      </div>
       <ul className="flex flex-col gap-3">
         <li>
           <CustomNavLink to={ROUTES.dashboard_path}>

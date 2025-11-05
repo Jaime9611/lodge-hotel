@@ -9,7 +9,9 @@ const AddUser: FC<AddUserProps> = () => {
   return (
     <Modal>
       <Modal.Open opens="user-form">
-        <Button>Add new employee</Button>
+        <div className="self-end">
+          <Button size="medium"> Add new employee</Button>
+        </div>
       </Modal.Open>
       <Modal.Window name="user-form">
         <CreateuserForm />
