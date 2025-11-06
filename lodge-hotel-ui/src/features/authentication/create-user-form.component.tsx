@@ -70,7 +70,40 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
       onSubmit={handleSubmit(onSubmit, onError)}
       type={onCloseModal ? "modal" : "regular"}
     >
-      <FormRowVertical label="Username" error={errors?.username?.message}>
+      <FormRowVertical label="Full Name" error={errors?.username?.message}>
+        <Input
+          type="text"
+          id="fullName"
+          disabled={isWorking}
+          register={{
+            ...register("fullName", { required: "This field is required" }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical label="Email" error={errors?.username?.message}>
+        <Input
+          type="text"
+          id="email"
+          disabled={isWorking}
+          register={{
+            ...register("email", { required: "This field is required" }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical label="Phone Number" error={errors?.username?.message}>
+        <Input
+          type="text"
+          id="phone"
+          disabled={isWorking}
+          register={{
+            ...register("phone", { required: "This field is required" }),
+          }}
+        />
+      </FormRowVertical>
+      <FormRowVertical
+        label="Username (This will be used for login)"
+        error={errors?.username?.message}
+      >
         <Input
           type="text"
           id="username"

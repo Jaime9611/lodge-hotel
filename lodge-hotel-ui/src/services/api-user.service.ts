@@ -1,14 +1,23 @@
 import ApiClient from "./api-client.service";
-import type { GuestModel, UserGuestModel, UserModel } from "@models";
+import type { UserModel } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const USER_PATH = "/employee";
-const USER_PUBLIC_PATH = "/auth/register";
-const GUEST_PATH = "/api/v1/guest";
 
 class UserApi extends ApiClient {
   constructor() {
     super(API_BASE_URL);
+  }
+
+  async getData(): Promise<UserModel> {
+    try {
+      return await this.get<UserModel>(`${USER_PATH}/data`, {
+        headers: { Authorization: `Bearer ${this.getToken()}` },
+      });
+    } catch (error) {
+      console.error(error);
+      throw Error("Error getting user data.");
+    }
   }
 
   async getEmployees(): Promise<UserModel[]> {

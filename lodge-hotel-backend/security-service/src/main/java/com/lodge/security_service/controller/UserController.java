@@ -13,11 +13,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserEntity user) {
-        return ResponseEntity.ok(userService.registerUser(user));
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         return ResponseEntity.ok(userService.login(username, password));

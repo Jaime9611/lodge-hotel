@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,6 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
 
   private final UserService userService;
+
+  @GetMapping("/data")
+  @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_STAFF')")
+  public ResponseEntity<?> getEmployee(@RequestHeader("Authorization") String authorizationHeader) {
+
+    UserEntity user = userService.getEmployee(authorizationHeader);
+
+    if(user == null) {
+      return new ResponseEntity<String>("Error trying to access different user.", HttpStatus.UNAUTHORIZED);
+    }
+
+    return ResponseEntity.ok(user);
+  }
 
   @GetMapping()
   @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
@@ -36,7 +51,7 @@ public class EmployeeController {
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
+  @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_STAFF')") // TODO: ADD SPECIFIC ONE FOR STAFF
   public ResponseEntity<?> updateEmployee(@PathVariable Long id, @RequestBody UserEntity user) {
 
     userService.updateEmployee(id, user);

@@ -3,9 +3,15 @@ package com.lodge.security_service.service;
 import com.lodge.security_service.model.UserEntity;
 import com.lodge.security_service.repository.UserRepository;
 import com.lodge.security_service.utils.Constants;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import jakarta.ws.rs.NotFoundException;
+import java.security.KeyStore;
+import java.security.PublicKey;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +37,11 @@ public class UserService {
   private final JwtEncoder jwtEncoder;
   private final AuthenticationManager authenticationManager;
 
+  @Value("${keyStore.alias}")
+  private String keyStoreAlias;
+
+  private final KeyStore keyStore;
+
   private static final int EXPIRATION_TIME_SEC = 3600;
 
   public void deleteEmployee(Long id) {
@@ -48,23 +59,40 @@ public class UserService {
     userRepository.save(foundUser);
   }
 
-  public List<UserEntity> getEmployees() {
-    return userRepository.findAllByRole("ROLE_STAFF").stream()
-        .map(user -> UserEntity.builder().id(user.getId()).username(user.getUsername()).build())
-        .toList();
-  }
+  public UserEntity getEmployee(String authHeader) {
+    String token = authHeader.substring(7);
 
-  public String registerUser(UserEntity user) {
-    Optional<UserEntity> userEntity = userRepository.findByUsername(user.getUsername());
-    if (userEntity.isPresent()) {
-      return "Username already taken";
+    try {
+      PublicKey publicKey = keyStore.getCertificate(keyStoreAlias).getPublicKey();
+
+      Claims claims = Jwts.parserBuilder()
+          .setSigningKey(publicKey)
+          .build()
+          .parseClaimsJws(token)
+          .getBody();
+
+      Long userId = claims.get("userId", Long.class);
+
+      Optional<UserEntity> user = userRepository.findById(userId);
+
+      if (!user.isPresent()) {
+        throw new NotFoundException();
+      }
+
+      UserEntity userEntity = user.get();
+      userEntity.setPassword(null);
+
+      return userEntity;
+
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
 
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
-    user.setRole(Constants.ROLE_USER);
-    userRepository.save(user);
 
-    return "User Registered successfully.";
+  }
+
+  public List<UserEntity> getEmployees() {
+    return userRepository.findAllByRole("ROLE_STAFF");
   }
 
   public String registerEmployee(UserEntity user) {
@@ -74,6 +102,9 @@ public class UserService {
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setFullName(user.getFullName());
+    user.setEmail(user.getEmail());
+    user.setPhone(user.getPhone());
     user.setRole(Constants.ROLE_STAFF);
     userRepository.save(user);
 
@@ -109,6 +140,7 @@ public class UserService {
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toSet()))
         .claim("user", userEntity.getUsername())
+        .claim("userId", userEntity.getId())
         .build();
 
     return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();

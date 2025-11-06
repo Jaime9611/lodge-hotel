@@ -23,6 +23,9 @@ export interface UserModel {
   id: number;
   username: string;
   password: string;
+  fullName: string;
+  email: string;
+  phone: string;
 }
 
 export interface AuthUserModel {
