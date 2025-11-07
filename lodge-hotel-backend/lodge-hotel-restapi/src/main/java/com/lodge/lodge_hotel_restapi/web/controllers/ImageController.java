@@ -29,7 +29,7 @@ public class ImageController {
       @RequestParam("imageName") String imageName,
       @RequestParam("images") MultipartFile[] images
   ) throws IOException {
-    String uploadDirectory = "src/main/resources/static/images/cabin-images";
+    String uploadDirectory = "src/main/resources/static/images";
 
     for (MultipartFile imageFile : images) {
       imageService.saveImageToStorage(uploadDirectory, imageFile, imageName);
@@ -41,7 +41,7 @@ public class ImageController {
   @GetMapping("public/cabin/{imageName}")
   public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
     try {
-      String imageDirectory = "src/main/resources/static/images/cabin-images";
+      String imageDirectory = "src/main/resources/static/images";
 
       // Fetch image data as byte arrays
       byte[] imageBytes = imageService.getImage(imageDirectory, imageName);

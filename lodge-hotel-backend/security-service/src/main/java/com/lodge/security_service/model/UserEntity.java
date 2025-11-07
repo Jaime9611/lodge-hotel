@@ -29,5 +29,7 @@ public class UserEntity {
 
   private String phone;
 
+  private String image;
+
   private String role;
 }

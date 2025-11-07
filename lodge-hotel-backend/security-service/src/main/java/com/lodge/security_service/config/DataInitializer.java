@@ -16,10 +16,10 @@ public class DataInitializer {
     return args -> {
       userRepository.save(
           new UserEntity(null, "manager@test.com", passwordEncoder.encode("pwd123"), "John Doe",
-              "manager@test.com", "1334556332", Constants.ROLE_MANAGER));
+              "manager@test.com", "1334556332", "", Constants.ROLE_MANAGER));
       userRepository.save(
           new UserEntity(null, "staff@test.com", passwordEncoder.encode("pwd123"), "William Smith",
-              "staff@test.com", "1334556332", Constants.ROLE_STAFF));
+              "staff@test.com", "1334556332", "", Constants.ROLE_STAFF));
     };
   }
 }

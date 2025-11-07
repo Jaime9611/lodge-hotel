@@ -26,6 +26,12 @@ export interface UserModel {
   fullName: string;
   email: string;
   phone: string;
+  image: string;
+}
+
+export interface UserModelFormResult extends Omit<UserModel, "image" | "id"> {
+  image: File | string;
+  id?: number;
 }
 
 export interface AuthUserModel {

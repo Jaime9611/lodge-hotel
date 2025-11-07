@@ -54,7 +54,18 @@ public class UserService {
     UserEntity foundUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
 
     foundUser.setUsername(user.getUsername());
-    foundUser.setPassword(passwordEncoder.encode(user.getPassword()));
+    foundUser.setFullName(user.getFullName());
+    foundUser.setPhone(user.getPhone());
+    foundUser.setEmail(user.getEmail());
+
+    if(user.getImage() != null && !user.getImage().isBlank()) {
+      foundUser.setImage(user.getImage());
+
+    }
+
+    if(user.getPassword() != null && !user.getPassword().isBlank()) {
+      foundUser.setPassword(passwordEncoder.encode(user.getPassword()));
+    }
 
     userRepository.save(foundUser);
   }
@@ -92,7 +103,9 @@ public class UserService {
   }
 
   public List<UserEntity> getEmployees() {
-    return userRepository.findAllByRole("ROLE_STAFF");
+    return userRepository.findAllByRole("ROLE_STAFF").stream().map(
+        user -> UserEntity.builder().id(user.getId()).email(user.getEmail()).phone(user.getPhone())
+            .image(user.getImage()).password(null).fullName(user.getFullName()).username(user.getUsername()).build()).toList();
   }
 
   public String registerEmployee(UserEntity user) {

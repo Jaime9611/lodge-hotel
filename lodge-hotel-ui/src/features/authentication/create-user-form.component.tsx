@@ -2,27 +2,34 @@ import { type FC } from "react";
 
 import { type SubmitErrorHandler, useForm } from "react-hook-form";
 
-import { Button, Form, FormRowVertical, Input, Stack } from "@ui/atoms";
-import type { UserModel } from "@models";
+import {
+  Button,
+  FileInput,
+  Form,
+  FormRowVertical,
+  Input,
+  Stack,
+} from "@ui/atoms";
+import type { UserModel, UserModelFormResult } from "@models";
 import { useCreateEmployee } from "./use-create-employee.hook";
 import { useEditEmployee } from "./use-edit-employee.hook";
 
 interface CreateUserFormProps {
-  userToEdit?: UserModel;
+  userToEdit?: UserModelFormResult;
   onCloseModal?: () => void;
 }
 
 const CreateUserForm: FC<CreateUserFormProps> = ({
-  userToEdit = {} as UserModel,
+  userToEdit = {} as UserModelFormResult,
   onCloseModal,
 }) => {
   const { id: editId, ...editValues } = userToEdit;
   const isEditSession = Boolean(editId);
 
   const { register, handleSubmit, reset, watch, formState } = useForm<
-    UserModel & { confirmPassword: string }
+    UserModelFormResult & { confirmPassword: string }
   >({
-    defaultValues: isEditSession ? editValues : ({} as UserModel),
+    defaultValues: isEditSession ? editValues : ({} as UserModelFormResult),
   });
 
   const { isCreating, createEmployee } = useCreateEmployee();
@@ -34,10 +41,23 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
 
   const { errors } = formState; // Form Errors
 
-  const onSubmit = (data: UserModel) => {
+  const onSubmit = (data: UserModelFormResult) => {
+    const image =
+      typeof data.image === "string" ? data.image : (data.image[0] as File);
+
     if (isEditSession)
       editEmployee(
-        { newUserData: { ...data }, id: editId },
+        {
+          newUserData: {
+            username: data.username,
+            email: data.email,
+            fullName: data.fullName,
+            password: data.password,
+            phone: data.phone,
+            image,
+          },
+          id: editId,
+        },
         {
           onSuccess: () => {
             onCloseModal?.();
@@ -49,8 +69,13 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
       createEmployee(
         {
           newUserData: {
-            ...data,
-          },
+            username: data.username,
+            email: data.email,
+            fullName: data.fullName,
+            password: data.password,
+            phone: data.phone,
+            image,
+          } as UserModelFormResult,
         },
         {
           onSuccess: () => {
@@ -70,36 +95,49 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
       onSubmit={handleSubmit(onSubmit, onError)}
       type={onCloseModal ? "modal" : "regular"}
     >
-      <FormRowVertical label="Full Name" error={errors?.username?.message}>
-        <Input
-          type="text"
-          id="fullName"
-          disabled={isWorking}
-          register={{
-            ...register("fullName", { required: "This field is required" }),
-          }}
-        />
-      </FormRowVertical>
-      <FormRowVertical label="Email" error={errors?.username?.message}>
-        <Input
-          type="text"
-          id="email"
-          disabled={isWorking}
-          register={{
-            ...register("email", { required: "This field is required" }),
-          }}
-        />
-      </FormRowVertical>
-      <FormRowVertical label="Phone Number" error={errors?.username?.message}>
-        <Input
-          type="text"
-          id="phone"
-          disabled={isWorking}
-          register={{
-            ...register("phone", { required: "This field is required" }),
-          }}
-        />
-      </FormRowVertical>
+      <div className="grid grid-cols-2 gap-4">
+        <FormRowVertical label="Full Name" error={errors?.fullName?.message}>
+          <Input
+            type="text"
+            id="fullName"
+            disabled={isWorking}
+            register={{
+              ...register("fullName", { required: "This field is required" }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical label="Email" error={errors?.email?.message}>
+          <Input
+            type="text"
+            id="email"
+            disabled={isWorking}
+            register={{
+              ...register("email", { required: "This field is required" }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical label="Phone Number" error={errors?.phone?.message}>
+          <Input
+            type="text"
+            id="phone"
+            disabled={isWorking}
+            register={{
+              ...register("phone", { required: "This field is required" }),
+            }}
+          />
+        </FormRowVertical>
+        <FormRowVertical label="Photo" error={errors?.image?.message}>
+          <FileInput
+            id="image"
+            accept="image/*"
+            register={{
+              ...register("image", {
+                required: isEditSession ? false : "This field is required",
+              }),
+            }}
+          />
+        </FormRowVertical>
+      </div>
       <FormRowVertical
         label="Username (This will be used for login)"
         error={errors?.username?.message}
@@ -119,7 +157,9 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
           id="password"
           disabled={isWorking}
           register={{
-            ...register("password", { required: "This field is required" }),
+            ...register("password", {
+              required: isEditSession ? false : "This field is required",
+            }),
           }}
         />
       </FormRowVertical>
@@ -130,12 +170,13 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
         <Input
           type="password"
           id="confirmPassword"
-          disabled={isWorking}
+          disabled={isWorking || password === null}
           register={{
             ...register("confirmPassword", {
-              required: "Please confirm your password.",
+              required: isEditSession ? false : "This field is required",
               validate: (value) =>
                 value === password || "Passwords do not match",
+              disabled: password === null,
             }),
           }}
         />

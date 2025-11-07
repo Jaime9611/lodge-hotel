@@ -18,9 +18,9 @@ const UserCard: FC<UserCardProps> = ({ onDelete, user, isDeleting }) => {
         <div className="flex py-6 items-center justify-center relative">
           <div className="bg-gray-200 absolute z-0 w-30 h-full left-0"></div>
           <img
-            src="default-user.jpg"
+            src={user.image ?? "default-user.jpg"}
             alt=""
-            className="w-30 z-1 rounded-full object-cover"
+            className="w-40 h-40 z-1 rounded-full object-cover"
           />
         </div>
         <div className="flex flex-col">

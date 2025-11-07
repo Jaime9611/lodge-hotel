@@ -1,10 +1,10 @@
-import type { UserModel } from "@models";
+import type { UserModelFormResult } from "@models";
 import { apiUser } from "@services";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 interface UserEditData {
-  newUserData: Omit<UserModel, "id">;
+  newUserData: UserModelFormResult;
   id?: number;
 }
 

@@ -50,7 +50,7 @@ class CabinsApi extends ApiClient {
       }`
         .replace("/", "")
         .replace(/\.[^/.]+$/, ".webp");
-      console.log(imageName);
+
       const imagePath = hasImagePath
         ? (newCabin as CabinModel).image
         : `${API_BASE_URL}/api/v1/storage/public/cabin/${imageName}`;
@@ -95,7 +95,6 @@ class CabinsApi extends ApiClient {
         })
         .catch((error) => {
           console.error("Error uploading file:", error);
-          console.log(cabinResponse);
         });
     } catch (error) {
       console.error(error);

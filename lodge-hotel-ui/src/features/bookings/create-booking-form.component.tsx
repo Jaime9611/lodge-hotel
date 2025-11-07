@@ -106,12 +106,6 @@ const CreateBookingForm: FC<CreateBookingFormProps> = ({
     }
   };
 
-  const handleCabinChange = (cabins: CabinModel[]) => {
-    setValue("cabins", cabins);
-    trigger("cabins");
-    handlePricesChange();
-  };
-
   const handleDateChange = (dateRange: { startDate: Date; endDate: Date }) => {
     setValue("startDate", dateRange.startDate.toISOString());
     setValue("endDate", dateRange.endDate.toISOString());

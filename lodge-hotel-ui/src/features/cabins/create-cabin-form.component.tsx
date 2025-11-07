@@ -151,7 +151,7 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
       <FormRowVertical label="Cabin photo" error={errors?.image?.message}>
         <FileInput
           id="image"
-          accept="image/*"
+          accept="image/jpg"
           register={{
             ...register("image", {
               required: isEditSession ? false : "This field is required",

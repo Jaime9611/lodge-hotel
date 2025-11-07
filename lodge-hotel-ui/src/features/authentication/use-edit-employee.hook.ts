@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import type { UserModel } from "@models";
+import type { UserModel, UserModelFormResult } from "@models";
 import { apiUser } from "@services";
 
 interface UserEditData {
-  newUserData: Omit<UserModel, "id">;
+  newUserData: UserModelFormResult;
   id?: number;
 }
 
@@ -17,6 +17,7 @@ export const useEditEmployee = () => {
     onSuccess: () => {
       toast.success("Employee succesfully edited.");
       queryClient.invalidateQueries({ queryKey: ["employees"] });
+      queryClient.invalidateQueries({ queryKey: ["user_data"] });
     },
     onError: (err) => toast.error(err.message),
   });
