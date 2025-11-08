@@ -8,9 +8,7 @@ const Settings = () => (
       <Heading as="h1">Settings</Heading>
     </Row>
     <Row type="vertical">
-      <div className="max-w-lg">
-        <UpdateSettingsForm />
-      </div>
+      <UpdateSettingsForm />
     </Row>
   </>
 );

@@ -16,7 +16,9 @@ type FormProps = {
 const Form: FC<FormProps> = ({ onSubmit, children, type }) => {
   return (
     <form
-      className={`px-8 py-14 ${type === "regular" ? "w-auto" : "w-2xl"} ${
+      className={` ${
+        type === "regular" ? "w-auto px-8 py-6" : "w-2xl px-8 py-14"
+      } ${
         type === "regular" ? "bg-white" : "bg-gray-50"
       }  bg-gray-50 border-2 border-solid border-gray-100 rounded-md`}
       onSubmit={onSubmit}

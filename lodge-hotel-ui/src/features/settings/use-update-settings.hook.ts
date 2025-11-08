@@ -2,13 +2,13 @@ import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { apiSettings } from "@services";
-import type { SettingsModel } from "@models";
+import type { SettingsModel, SettingsModelFormResult } from "@models";
 
 export const useUpdateSetting = () => {
   const queryClient = useQueryClient();
 
   const { mutate: updateSettings, isPending: isUpdating } = useMutation({
-    mutationFn: (settings: SettingsModel) =>
+    mutationFn: (settings: SettingsModelFormResult) =>
       apiSettings.updateSettings(settings),
     onSuccess: () => {
       toast.success("Setting succesfully updated.");

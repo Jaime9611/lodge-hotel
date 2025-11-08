@@ -1,8 +1,8 @@
 import { useAuth } from "@contexts";
+import { useSettings } from "@features/settings";
 import { ROLE, ROUTES } from "@utils/constants";
 import type { FC, ReactNode } from "react";
 import {
-  HiOutlineBeaker,
   HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
   HiOutlineHome,
@@ -23,6 +23,7 @@ const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children }) => (
 
 const Sidebar = () => {
   const { role } = useAuth();
+  const { settings } = useSettings();
 
   return (
     <aside
@@ -30,7 +31,7 @@ const Sidebar = () => {
       className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11"
     >
       <div className="flex justify-center">
-        <img className="h-36 w-auto text-center" src="default-logo.png" />
+        <img className="h-36 w-auto text-center" src={settings.logoImage} />
       </div>
       <ul className="flex flex-col gap-3">
         <li>

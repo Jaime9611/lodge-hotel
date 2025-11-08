@@ -50,7 +50,7 @@ public class ImageController {
       return ResponseEntity.ok().contentType(MediaType.parseMediaType("image/webp")).body(imageBytes);
     } catch (Exception e) {
       // Handle exceptions and provide appropriate error responses
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
   }
 }

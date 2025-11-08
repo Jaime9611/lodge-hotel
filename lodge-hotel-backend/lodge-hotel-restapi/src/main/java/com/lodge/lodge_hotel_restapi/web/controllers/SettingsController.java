@@ -25,7 +25,6 @@ public class SettingsController {
   private final SettingsPersistenceAdapter settingsPersistence;
 
   @GetMapping
-  @PreAuthorize(UserConstants.MANAGER_ACCESS)
   public ResponseEntity<Settings> getSettings() {
     Settings response = settingsPersistence.getSettings().orElseThrow(ItemNotFoundException::new);
 

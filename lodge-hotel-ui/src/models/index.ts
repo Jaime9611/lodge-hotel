@@ -17,6 +17,18 @@ export interface SettingsModel {
   logoImage: string;
 }
 
+export interface SettingsModelFormResult
+  extends Omit<SettingsModel, "logoImage" | "id"> {
+  logoImage: File | string;
+  id?: number;
+}
+
+export interface SettingsModelForm
+  extends Omit<SettingsModel, "logoImage" | "id"> {
+  logoImage: File[];
+  id?: number;
+}
+
 // ---------------- AUTH MODELS ----------------
 
 export interface UserModel {
