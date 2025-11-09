@@ -5,9 +5,9 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BookingFactory {
@@ -19,7 +19,7 @@ public class BookingFactory {
 
     return Booking.builder()
         .id(customId)
-        .cabins(Arrays.asList(newCabin))
+        .cabins(Collections.singletonList(newCabin))
         .createdAt(LocalDateTime.now())
         .startDate(LocalDateTime.now())
         .endDate(LocalDateTime.now())
@@ -39,7 +39,7 @@ public class BookingFactory {
 
     return BookingEntity.builder()
         .id(customId)
-        .cabins(Arrays.asList(newCabin).stream().collect(Collectors.toSet()))
+        .cabins(new HashSet<>(Collections.singletonList(newCabin)))
         .createdAt(LocalDateTime.now())
         .startDate(LocalDateTime.now())
         .endDate(LocalDateTime.now())

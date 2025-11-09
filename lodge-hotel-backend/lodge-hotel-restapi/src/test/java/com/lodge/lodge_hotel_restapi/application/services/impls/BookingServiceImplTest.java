@@ -213,7 +213,7 @@ class BookingServiceImplTest {
         pageResponse.content(testCabinList).build());
 
     // Act
-    PageResponse<Booking> foundCabins = service.getAll("test", 1, 5);
+    PageResponse<Booking> foundCabins = service.getAll(null, "id", "asc", 1, 5);
 
     // Assert
     assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabinList.get(0).getId());

@@ -16,3 +16,6 @@ keyStore:
   path: keystore.jks
   password: password
   alias: auth-server
+
+settings:
+  file-path: src/test/resources/settings.json

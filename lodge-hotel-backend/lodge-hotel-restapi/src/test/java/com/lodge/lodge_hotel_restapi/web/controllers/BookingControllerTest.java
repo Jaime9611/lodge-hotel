@@ -22,6 +22,7 @@ import com.lodge.lodge_hotel_restapi.application.services.impls.BookingServiceIm
 import com.lodge.lodge_hotel_restapi.config.KeyStoreConfig;
 import com.lodge.lodge_hotel_restapi.config.SecurityConfig;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
@@ -102,11 +103,11 @@ class BookingControllerTest {
     long totalElements = 2;
     PageResponse.PageResponseBuilder<Booking> pageResponse = PageResponse.builder();
 
-    given(bookingService.getAll(null, null, null)).willReturn(
+    given(bookingService.getAll(BookingStatus.UNCONFIRMED, "id", "asc", null, null)).willReturn(
         pageResponse.content(testBookings).totalElements(totalElements).build());
 
     // Assert
-    mockMvc.perform(get(Endpoints.BOOKING).accept(MediaType.APPLICATION_JSON))
+    mockMvc.perform(get(Endpoints.BOOKING).accept(MediaType.APPLICATION_JSON).param("status", "UNCONFIRMED"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isArray())
         .andExpect(jsonPath("$.totalElements").value(2));

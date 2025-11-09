@@ -1,5 +1,6 @@
 src/main/resources/static/images
 src/main/resources/settings.json
+src/test/resources/settings.json
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
