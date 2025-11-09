@@ -37,7 +37,7 @@ public class BookingController {
   private final BookingService bookingService;
 
   @PostMapping(Endpoints.BOOKING_QUOTATION)
-  @PreAuthorize(UserConstants.AUTH_ACCESS)
+  @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<BigDecimal> getBookingQuotation(@RequestBody BookingQuotationDto booking) {
     log.debug("POST - booking quotation in Controller");
 

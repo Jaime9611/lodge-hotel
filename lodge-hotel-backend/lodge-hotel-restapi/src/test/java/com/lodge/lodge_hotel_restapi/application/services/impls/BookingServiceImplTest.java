@@ -98,7 +98,7 @@ class BookingServiceImplTest {
         Optional.ofNullable(CabinFactory.createSingleCabin()));
 
     BookingQuotationDto dto = BookingQuotationDto.builder().cabins(testBooking.getCabins().stream()
-        .map(cabin -> CabinSimpleDto.builder().id(1L).build())
+        .map(cabin -> CabinFactory.createSingleCabinSimpleDto())
         .toList()).startDate(testingStartDate).endDate(testingEndDate).build();
 
     // Act
@@ -123,7 +123,7 @@ class BookingServiceImplTest {
         Optional.empty());
 
     BookingQuotationDto dto = BookingQuotationDto.builder().cabins(testBooking.getCabins().stream()
-        .map(cabin -> CabinSimpleDto.builder().id(CabinFactory.TEST_ID).build())
+        .map(cabin -> CabinFactory.createSingleCabinSimpleDto())
         .toList()).startDate(testingStartDate).endDate(testingEndDate).build();
 
     ItemNotFoundException exception = assertThrows(ItemNotFoundException.class, () -> {
