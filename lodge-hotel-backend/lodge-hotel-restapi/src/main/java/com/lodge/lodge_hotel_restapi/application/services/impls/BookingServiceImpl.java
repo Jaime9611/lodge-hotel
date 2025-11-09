@@ -180,18 +180,18 @@ public class BookingServiceImpl implements BookingService {
     newBooking.setEndDate(booking.getEndDate());
     newBooking.setPaid(booking.isPaid());
 
-    Guest savedGuest = createGuestPort.save(booking.getGuest());
-    newBooking.setGuest(savedGuest);
-
     List<Cabin> foundCabins = new ArrayList<>();
     for (CabinSimpleDto cabin : booking.getCabins()) {
       Cabin foundCabin = readCabinPort.get(cabin.getId())
           .orElseThrow(() -> new ItemNotFoundException(
-              "Cabin with provide ID" + cabin.getId() + " not found.",
+              "Cabin with provided ID: " + cabin.getId() + " not found.",
               httpServletRequest.getRequestURI()));
       foundCabins.add(foundCabin);
     }
     newBooking.setCabins(foundCabins);
+
+    Guest savedGuest = createGuestPort.save(booking.getGuest());
+    newBooking.setGuest(savedGuest);
 
     Booking savedBooking = createBookingPort.save(newBooking);
 

@@ -17,6 +17,7 @@ import com.lodge.lodge_hotel_restapi.application.ports.cabin.ReadCabinPort;
 import com.lodge.lodge_hotel_restapi.application.ports.guest.CreateGuestPort;
 import com.lodge.lodge_hotel_restapi.application.services.BookingService;
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
@@ -27,7 +28,9 @@ import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -200,31 +203,171 @@ class BookingServiceImplTest {
   }
 
   @Test
-  void testGetBookingList() {
+  void testGetBookingListNoStatus() {
     // Arrange
-    List<Booking> testCabinList = BookingFactory.createBookingList(2);
+    List<Booking> testBookingList = BookingFactory.createBookingList(2);
     Pageable pageable = PageRequest.of(0, 1);
     long totalElements = 2;
-    Page<Booking> testPage = new PageImpl<>(testCabinList, pageable, totalElements);
+    Page<Booking> testPage = new PageImpl<>(testBookingList, pageable, totalElements);
     PageResponse.PageResponseBuilder<Booking> pageResponse = PageResponse.builder();
 
     given(readPort.getAll(any(PageRequest.class))).willReturn(testPage);
     given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(
-        pageResponse.content(testCabinList).build());
+        pageResponse.content(testBookingList).build());
 
     // Act
     PageResponse<Booking> foundCabins = service.getAll(null, "id", "asc", 1, 5);
 
     // Assert
-    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabinList.get(0).getId());
-    assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testCabinList.get(0).isPaid());
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testBookingList.get(0).isPaid());
     assertThat(foundCabins.getContent().get(0).getStatus()).isEqualTo(
-        testCabinList.get(0).getStatus());
-    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testCabinList.get(0).getId());
-    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testCabinList.get(1).getId());
-    assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testCabinList.get(1).isPaid());
+        testBookingList.get(0).getStatus());
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testBookingList.get(1).getId());
+    assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testBookingList.get(1).isPaid());
     assertThat(foundCabins.getContent().get(1).getStatus()).isEqualTo(
-        testCabinList.get(1).getStatus());
+        testBookingList.get(1).getStatus());
+  }
+
+  @Test
+  void testGetBookingListWithStatus() {
+    // Arrange
+    List<Booking> testBookingList = BookingFactory.createBookingList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<Booking> testPage = new PageImpl<>(testBookingList, pageable, totalElements);
+    PageResponse.PageResponseBuilder<Booking> pageResponse = PageResponse.builder();
+
+    given(readPort.getAllByStatus(any(BookingStatus.class), any(PageRequest.class))).willReturn(
+        testPage);
+    given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(
+        pageResponse.content(testBookingList).build());
+
+    // Act
+    PageResponse<Booking> foundCabins = service.getAll(BookingStatus.UNCONFIRMED, "id", "asc", 1,
+        5);
+
+    // Assert
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testBookingList.get(0).isPaid());
+    assertThat(foundCabins.getContent().get(0).getStatus()).isEqualTo(
+        testBookingList.get(0).getStatus());
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testBookingList.get(1).getId());
+    assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testBookingList.get(1).isPaid());
+    assertThat(foundCabins.getContent().get(1).getStatus()).isEqualTo(
+        testBookingList.get(1).getStatus());
+  }
+
+  @Test
+  void testGetBookingsAfterDate() {
+    // Arrange
+    List<Booking> testBookingList = BookingFactory.createBookingList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<Booking> testPage = new PageImpl<>(testBookingList, pageable, totalElements);
+    PageResponse.PageResponseBuilder<Booking> pageResponse = PageResponse.builder();
+
+    given(readPort.getAfterDate(any(LocalDate.class), any(LocalDate.class),
+        any(PageRequest.class))).willReturn(testPage);
+    given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(
+        pageResponse.content(testBookingList).build());
+
+    // Act
+    PageResponse<Booking> foundCabins = service.getAllAfterDate(true, LocalDate.now().plusDays(1L),
+        1, 600);
+
+    // Assert
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testBookingList.get(0).isPaid());
+    assertThat(foundCabins.getContent().get(0).getStatus()).isEqualTo(
+        testBookingList.get(0).getStatus());
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testBookingList.get(1).getId());
+    assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testBookingList.get(1).isPaid());
+    assertThat(foundCabins.getContent().get(1).getStatus()).isEqualTo(
+        testBookingList.get(1).getStatus());
+  }
+
+  @Test
+  void testGetBookingsGetStaysAfterDate() {
+    // Arrange
+    List<Booking> testBookingList = BookingFactory.createBookingList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<Booking> testPage = new PageImpl<>(testBookingList, pageable, totalElements);
+    PageResponse.PageResponseBuilder<Booking> pageResponse = PageResponse.builder();
+
+    given(readPort.getStaysAfterDate(any(LocalDate.class), any(PageRequest.class))).willReturn(
+        testPage);
+    given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(
+        pageResponse.content(testBookingList).build());
+
+    // Act
+    PageResponse<Booking> foundCabins = service.getAllAfterDate(false, LocalDate.now().plusDays(1L),
+        1, 5);
+
+    // Assert
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testBookingList.get(0).isPaid());
+    assertThat(foundCabins.getContent().get(0).getStatus()).isEqualTo(
+        testBookingList.get(0).getStatus());
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testBookingList.get(1).getId());
+    assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testBookingList.get(1).isPaid());
+    assertThat(foundCabins.getContent().get(1).getStatus()).isEqualTo(
+        testBookingList.get(1).getStatus());
+  }
+
+  @Test
+  void testGetTodayBookingActivity() {
+    // Arrange
+    List<Booking> testBookingList = BookingFactory.createBookingList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<Booking> testPage = new PageImpl<>(testBookingList, pageable, totalElements);
+    PageResponse.PageResponseBuilder<Booking> pageResponse = PageResponse.builder();
+
+    given(readPort.getTodayActivity(any(PageRequest.class))).willReturn(testPage);
+    given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(
+        pageResponse.content(testBookingList).build());
+
+    // Act
+    PageResponse<Booking> foundCabins = service.getTodaysActivity(null, null);
+
+    // Assert
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(0).isPaid()).isEqualTo(testBookingList.get(0).isPaid());
+    assertThat(foundCabins.getContent().get(0).getStatus()).isEqualTo(
+        testBookingList.get(0).getStatus());
+    assertThat(foundCabins.getContent().get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.getContent().get(1).getId()).isEqualTo(testBookingList.get(1).getId());
+    assertThat(foundCabins.getContent().get(1).isPaid()).isEqualTo(testBookingList.get(1).isPaid());
+    assertThat(foundCabins.getContent().get(1).getStatus()).isEqualTo(
+        testBookingList.get(1).getStatus());
+  }
+
+  @Test
+  void testGetBookedReservations() {
+    // Arrange
+    List<Booking> testBookingList = BookingFactory.createBookingList(2);
+
+    given(readPort.getBookedReservations(anyLong())).willReturn(testBookingList);
+
+    // Act
+    List<Booking> foundCabins = service.getBookedReservations(1L);
+
+    // Assert
+    assertThat(foundCabins.get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.get(0).isPaid()).isEqualTo(testBookingList.get(0).isPaid());
+    assertThat(foundCabins.get(0).getStatus()).isEqualTo(
+        testBookingList.get(0).getStatus());
+    assertThat(foundCabins.get(0).getId()).isEqualTo(testBookingList.get(0).getId());
+    assertThat(foundCabins.get(1).getId()).isEqualTo(testBookingList.get(1).getId());
+    assertThat(foundCabins.get(1).isPaid()).isEqualTo(testBookingList.get(1).isPaid());
+    assertThat(foundCabins.get(1).getStatus()).isEqualTo(
+        testBookingList.get(1).getStatus());
   }
 
   @Test
@@ -283,4 +426,48 @@ class BookingServiceImplTest {
     assertThat(savedBookingId).isEqualTo(testBooking.getId());
   }
 
+  @Test
+  void testSaveBookingCabinNotFound() {
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+    BookingSimpleDto.BookingSimpleDtoBuilder testDto = BookingSimpleDto.builder();
+
+    CabinSimpleDto.CabinSimpleDtoBuilder cabinDto = CabinSimpleDto.builder();
+    cabinDto.id(testBooking.getCabins().get(0).getId());
+    cabinDto.name(testBooking.getCabins().get(0).getName());
+
+    testDto.id(testBooking.getId());
+    testDto.cabins(Collections.singletonList(cabinDto.build()));
+
+
+    given(readCabinPort.get(anyLong())).willReturn(
+        Optional.empty());
+
+    // Act
+    ItemNotFoundException exception = assertThrows(ItemNotFoundException.class, () -> {
+      Long savedBooking = service.save(testDto.build());
+    });
+
+    // Assert
+    assertEquals("Cabin with provided ID: " + testBooking.getCabins().get(0).getId() + " not found.",
+        exception.getMessage());
+  }
+
+  @Test
+  void testUpdateBookingStatus() {
+
+    // Arrange
+    Booking testBooking = BookingFactory.createSingleBooking();
+
+    given(readPort.get(testBooking.getId())).willReturn(Optional.of(testBooking));
+
+    // Act
+    service.updateBookingStatus(BookingFactory.TEST_ID, BookingStatus.CHECKED_OUT);
+
+    // Assert
+    verify(readPort, times(1)).get(idArgumentCaptor.capture());
+    verify(updatePort).update(bookingArgumentCaptor.capture());
+    assertThat(idArgumentCaptor.getValue()).isEqualTo(BookingFactory.TEST_ID);
+    assertThat(bookingArgumentCaptor.getValue().getStatus()).isEqualTo(BookingStatus.CHECKED_OUT);
+  }
 }
