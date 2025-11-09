@@ -1,0 +1,5 @@
+{
+  "minBookingLength" : 1,
+  "maxBookingLength" : 4,
+  "logoImage" : ""
+}

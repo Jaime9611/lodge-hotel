@@ -1,7 +1,8 @@
 package com.lodge.lodge_hotel_restapi.web.controllers;
 
+import com.lodge.lodge_hotel_restapi.application.ports.settings.ReadSettingsPort;
+import com.lodge.lodge_hotel_restapi.application.ports.settings.UpdateSettingPort;
 import com.lodge.lodge_hotel_restapi.domain.Settings;
-import com.lodge.lodge_hotel_restapi.persistence.SettingsPersistenceAdapter;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
@@ -22,11 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(Endpoints.SETTINGS)
 public class SettingsController {
 
-  private final SettingsPersistenceAdapter settingsPersistence;
+  private final ReadSettingsPort readSettingsPort;
+  private final UpdateSettingPort updateSettings;
 
   @GetMapping
   public ResponseEntity<Settings> getSettings() {
-    Settings response = settingsPersistence.getSettings().orElseThrow(ItemNotFoundException::new);
+    Settings response = readSettingsPort.getSettings().orElseThrow(ItemNotFoundException::new);
 
     return ResponseEntity.ok(response);
   }
@@ -34,7 +36,7 @@ public class SettingsController {
   @PutMapping
   @PreAuthorize(UserConstants.MANAGER_ACCESS)
   public ResponseEntity updateSettings(@RequestBody Settings settings) {
-    boolean success = settingsPersistence.updateSettings(settings);
+    boolean success = updateSettings.updateSettings(settings);
     if(!success) {
       return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
