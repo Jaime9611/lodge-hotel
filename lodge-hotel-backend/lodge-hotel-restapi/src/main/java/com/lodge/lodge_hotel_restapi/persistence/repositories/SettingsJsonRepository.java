@@ -30,7 +30,6 @@ public class SettingsJsonRepository {
     }
   }
 
-  // Method to read JSON file and map it to a Java object
   public Optional<Settings> readJsonFile(File file) {
     try {
       log.info(file.getPath());
