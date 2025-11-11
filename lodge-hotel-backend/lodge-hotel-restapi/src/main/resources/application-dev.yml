@@ -34,6 +34,10 @@ eureka:
 settings:
   file-path: src/main/resources/settings.json
 
+static:
+  images:
+    path: src/main/resources/static/images
+
 keyStore:
   path: keystore.jks
   password: password

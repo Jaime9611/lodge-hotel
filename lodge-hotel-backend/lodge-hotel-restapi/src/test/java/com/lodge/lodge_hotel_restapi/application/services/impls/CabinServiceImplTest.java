@@ -114,6 +114,26 @@ class CabinServiceImplTest {
   }
 
   @Test
+  void testGetCabinListWithDefaults() {
+    // Arrange
+    List<Cabin> testCabinList = CabinFactory.createCabinList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<Cabin> testPage = new PageImpl<>(testCabinList, pageable, totalElements );
+    PageResponse.PageResponseBuilder<Cabin> pageResponse = PageResponse.builder();
+
+    given(readPort.getAll(any(PageRequest.class))).willReturn(testPage);
+    given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(pageResponse.content(testCabinList).build());
+
+    // Act
+    PageResponse<Cabin> foundCabins = service.getAll("test", null, null);
+
+    // Assert
+    assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabinList.get(0).getName());
+    assertThat(foundCabins.getContent().get(1).getName()).isEqualTo(testCabinList.get(1).getName());
+  }
+
+  @Test
   void testGetCabin() {
     // Arrange
     Cabin testCabin = CabinFactory.createSingleCabin();

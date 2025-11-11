@@ -23,6 +23,12 @@ public class Endpoints {
   public static final String BOOKING_QUOTATION = "/quotation";
   public static final String BOOKING_RESERVATIONS = "/reservations/{cabinId}";
 
+  // IMAGES
+  public static final String STORAGE = BASE_URL + "/storage";
+  public static final String IMAGES = "cabin-images";
+  public static final String GET_IMAGE = "public/cabin/{imageName}";
+
+
   // Private constructor to prevent instantiation
   private Endpoints() {
     throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");

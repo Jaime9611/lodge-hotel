@@ -19,3 +19,7 @@ keyStore:
 
 settings:
   file-path: src/test/resources/settings.json
+
+static:
+  images:
+    path: src/main/resources/static/images

@@ -2,11 +2,13 @@ package com.lodge.lodge_hotel_restapi.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.lodge.lodge_hotel_restapi.domain.Booking;
+import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.factories.BookingFactory;
 import com.lodge.lodge_hotel_restapi.factories.CabinFactory;
 import com.lodge.lodge_hotel_restapi.persistence.entities.BookingEntity;
@@ -14,6 +16,8 @@ import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.BookingM
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.CabinMapperImpl;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.impls.GuestMapperImpl;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.BookingRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,6 +109,101 @@ class BookingPersistenceAdapterTest {
 
     // Assert
     assertThat(foundBookings.getTotalElements()).isEqualTo(2);
+  }
+
+  @Test
+  void testGetBookingsByStatus() {
+    // Arrange
+    List<BookingEntity> testBookings = BookingFactory.createBookingEntityList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<BookingEntity> testPage = new PageImpl<>(testBookings, pageable, totalElements);
+
+    given(bookingRepository.findAllByStatus(any(BookingStatus.class),
+        any(PageRequest.class))).willReturn(testPage);
+
+    // Act
+    Page<Booking> foundBookings = persistenceAdapter.getAllByStatus(BookingStatus.CHECKED_IN,
+        PageRequest.of(0, 1));
+
+    // Assert
+    assertThat(foundBookings.getTotalElements()).isEqualTo(2);
+  }
+
+  @Test
+  void testGetBookingsAfterDate() {
+    // Arrange
+    List<BookingEntity> testBookings = BookingFactory.createBookingEntityList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<BookingEntity> testPage = new PageImpl<>(testBookings, pageable, totalElements);
+
+    given(bookingRepository.findAllByCreatedAtBetween(any(LocalDateTime.class),
+        any(LocalDateTime.class),
+        any(PageRequest.class))).willReturn(testPage);
+
+    // Act
+    Page<Booking> foundBookings = persistenceAdapter.getAfterDate(LocalDate.now(),
+        LocalDate.now().plusDays(2L),
+        PageRequest.of(0, 1));
+
+    // Assert
+    assertThat(foundBookings.getTotalElements()).isEqualTo(2);
+  }
+
+  @Test
+  void testGetStaysAfterDate() {
+    // Arrange
+    List<BookingEntity> testBookings = BookingFactory.createBookingEntityList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<BookingEntity> testPage = new PageImpl<>(testBookings, pageable, totalElements);
+
+    given(bookingRepository.findAllByStartDateGreaterThanEqual(
+        any(LocalDateTime.class),
+        any(PageRequest.class))).willReturn(testPage);
+
+    // Act
+    Page<Booking> foundBookings = persistenceAdapter.getStaysAfterDate(
+        LocalDate.now().plusDays(2L),
+        PageRequest.of(0, 1));
+
+    // Assert
+    assertThat(foundBookings.getTotalElements()).isEqualTo(2);
+  }
+
+  @Test
+  void testGetTodayActivity() {
+    // Arrange
+    List<BookingEntity> testBookings = BookingFactory.createBookingEntityList(2);
+    Pageable pageable = PageRequest.of(0, 1);
+    long totalElements = 2;
+    Page<BookingEntity> testPage = new PageImpl<>(testBookings, pageable, totalElements);
+
+    given(bookingRepository.findAllStaysForToday(
+        any(PageRequest.class))).willReturn(testPage);
+
+    // Act
+    Page<Booking> foundBookings = persistenceAdapter.getTodayActivity(
+        PageRequest.of(0, 1));
+
+    // Assert
+    assertThat(foundBookings.getTotalElements()).isEqualTo(2);
+  }
+
+  @Test
+  void testGetBookedReservations() {
+    // Arrange
+    List<BookingEntity> testBookings = BookingFactory.createBookingEntityList(2);
+
+    given(bookingRepository.findAllBookedReservations(
+        anyLong())).willReturn(testBookings);
+
+    // Act
+    List<Booking> foundBookings = persistenceAdapter.getBookedReservations(1L);
+
+    // Assert
+    assertThat(foundBookings.size()).isEqualTo(2);
   }
 
   @Test
