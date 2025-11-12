@@ -29,8 +29,6 @@ class BookingsApi extends ApiClient {
     sortBy?: SortOptions,
     pageNumber?: number
   ): Promise<BookingModelPage> {
-    let url = `${BOOKING_PATH}`;
-
     let params: { [key: string]: string | number } = { pageSize: PAGE_SIZE };
 
     // FILTER
@@ -46,7 +44,7 @@ class BookingsApi extends ApiClient {
 
     if (pageNumber) params["pageNumber"] = pageNumber;
 
-    return await this.get<BookingModelPage>(url, {
+    return await this.get<BookingModelPage>(BOOKING_PATH, {
       headers: { Authorization: `Bearer ${this.getToken()}` },
       params,
     });

@@ -13,7 +13,7 @@ const AppLayout = () => {
       <Sidebar />
       <main className="bg-gray-50 pt-14 px-16 pb-24 overflow-scroll">
         <div
-          className="my-0 mx-auto flex flex-col gap-12"
+          className="my-0 mx-auto flex flex-col gap-6"
           style={{ maxWidth: "120rem" }}
         >
           <Outlet />

@@ -6,20 +6,33 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CABIN_PATH = "/api/v1/cabin";
 const IMAGE_PATH = "/api/v1/storage/cabin-images";
 
+export type SortOptions = {
+  field: string;
+  direction: string;
+};
+
 class CabinsApi extends ApiClient {
   constructor() {
     super(API_BASE_URL);
   }
 
-  async getAll(pageNumber?: number): Promise<CabinModelPage> {
-    let url = `${CABIN_PATH}`;
+  async getAll(
+    sortBy?: SortOptions,
+    pageNumber?: number
+  ): Promise<CabinModelPage> {
+    let params: { [key: string]: string | number } = { pageSize: PAGE_SIZE };
 
-    if (pageNumber)
-      url =
-        url + "?" + `pageNumber=${pageNumber}` + "&" + `pageSize=${PAGE_SIZE}`;
+    // SORT
+    if (sortBy) {
+      params["sortBy"] = sortBy.field;
+      params["direction"] = sortBy.direction;
+    }
 
-    return await this.get<CabinModelPage>(url, {
+    if (pageNumber) params["pageNumber"] = pageNumber;
+
+    return await this.get<CabinModelPage>(CABIN_PATH, {
       headers: { Authorization: `Bearer ${this.getToken()}` },
+      params,
     });
   }
 
