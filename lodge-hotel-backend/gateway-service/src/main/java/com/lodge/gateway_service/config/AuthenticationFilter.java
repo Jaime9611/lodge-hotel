@@ -127,9 +127,18 @@ public class AuthenticationFilter extends
 
   private boolean isExcluded(String path) {
     Predicate<String> isImagePath = url -> path.matches("/api/v1/storage/public/cabin/.*");
+    Predicate<String> isCabinInfo = url -> path.matches("/api/v1/cabin/capacity");
     Predicate<String> isSettingsPath = url -> path.matches("/api/v1/settings");
+    return excludedUrls.stream().anyMatch(isSettingsPath) || excludedUrls.stream().anyMatch(isImagePath) || excludedUrls.stream().anyMatch(isCabinInfo);
 
-    return excludedUrls.stream().anyMatch(isImagePath) || excludedUrls.stream().anyMatch(isSettingsPath);
+//    for (String regex : regexPatterns) {
+//            Pattern pattern = Pattern.compile(regex); // Compile the regex pattern
+//            Matcher matcher = pattern.matcher(url); // Create a matcher for the URL
+//            if (matcher.matches()) { // Check if the entire URL matches the pattern
+//                return true; // Return true as soon as a match is found
+//            }
+//        }
+//        return false; // No match found after checking all patterns
   }
 
   private Mono<Void> handleAuthError(ServerWebExchange exchange, String message,
