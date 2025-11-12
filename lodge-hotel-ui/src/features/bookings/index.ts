@@ -4,3 +4,4 @@ export { default as BookingDetail } from "./booking-detail.component";
 export { default as BookingDataBox } from "./booking-data-box.component";
 export { default as Reservation } from "./reservation.component";
 export * from "./use-bookings.hook";
+export * from "./use-booked-reservations.hook";

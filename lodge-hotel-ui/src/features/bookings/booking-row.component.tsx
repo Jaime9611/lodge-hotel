@@ -3,6 +3,7 @@ import {
   HiArrowDownOnSquare,
   HiArrowUpOnSquare,
   HiEye,
+  HiPencil,
   HiTrash,
 } from "react-icons/hi2";
 import { Table } from "@ui/molecules";
@@ -28,19 +29,19 @@ type BookingRowProps = {
   booking: BookingModel;
 };
 
-const BookingRow: FC<BookingRowProps> = ({
-  booking: {
+const BookingRow: FC<BookingRowProps> = ({ booking }) => {
+  const navigate = useNavigate();
+  const { isDeleting, deleteBooking } = useDeleteBooking();
+  const { checkout, isCheckingOut } = useCheckout();
+
+  const {
     id: bookingId,
     startDate,
     endDate,
     totalPrice,
     status,
     guest: { fullName: guestName, email },
-  },
-}) => {
-  const navigate = useNavigate();
-  const { isDeleting, deleteBooking } = useDeleteBooking();
-  const { checkout, isCheckingOut } = useCheckout();
+  } = booking;
 
   return (
     <Table.Row>
@@ -88,13 +89,11 @@ const BookingRow: FC<BookingRowProps> = ({
                 disabled={isCheckingOut}
               />
             )}
-
             <Modal.Open opens="delete">
               <IconStackMenu.Button icon={<HiTrash />} displayText="Delete" />
             </Modal.Open>
           </IconStackMenu.List>
         </IconStackMenu>
-
         <Modal.Window name="delete">
           <ConfirmDelete
             resourceName="booking"

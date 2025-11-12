@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { HiEye, HiHomeModern, HiPencil, HiTrash } from "react-icons/hi2";
+import { HiEye, HiPencil, HiTrash } from "react-icons/hi2";
 import { Table } from "@ui/molecules";
 import { Modal } from "@ui/atoms/Modal";
 import { ConfirmDelete } from "@ui/molecules";

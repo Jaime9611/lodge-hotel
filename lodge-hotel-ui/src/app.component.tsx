@@ -19,6 +19,11 @@ import { AuthProvider, ReservationProvider } from "@contexts";
 import { ROLE, ROUTES } from "@utils/constants";
 import Booking from "./pages/booking.component";
 import { CabinDetail } from "@features/cabins";
+import {
+  BookedCabinDetail,
+  CabinsPage,
+  LandingLayout,
+} from "@features/landing";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,35 +38,34 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path={ROUTES.login} element={<Login />} />
-          <Route
-            element={
-              <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Navigate to={ROUTES.dashboard} />} />
-            <Route path={ROUTES.dashboard} element={<Dashboard />} />
-            <Route path={ROUTES.cabins} element={<Cabins />} />
+        <ReservationProvider>
+          <Routes>
+            <Route path={ROUTES.login} element={<Login />} />
+            <Route path="landing" element={<LandingLayout />}>
+              <Route index element={<CabinsPage />} />
+              <Route path=":cabinId" element={<BookedCabinDetail />} />
+            </Route>
             <Route
-              path={ROUTES.cabinId_path}
               element={
-                <ReservationProvider>
-                  <CabinDetail />
-                </ReservationProvider>
+                <ProtectedRoute matchRole={[ROLE.MANAGER, ROLE.STAFF]}>
+                  <AppLayout />
+                </ProtectedRoute>
               }
-            />
-            <Route path={ROUTES.bookings} element={<Bookings />} />
-            <Route path={ROUTES.bookingId_path} element={<Booking />} />
-            <Route path={ROUTES.booking_checkin} element={<Checkin />} />
-            <Route path={ROUTES.users} element={<Users />} />
-            <Route path={ROUTES.account} element={<Account />} />
-            <Route path={ROUTES.settings} element={<Settings />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
+            >
+              <Route index element={<Navigate to={ROUTES.dashboard} />} />
+              <Route path={ROUTES.dashboard} element={<Dashboard />} />
+              <Route path={ROUTES.cabins} element={<Cabins />} />
+              <Route path={ROUTES.cabinId_path} element={<CabinDetail />} />
+              <Route path={ROUTES.bookings} element={<Bookings />} />
+              <Route path={ROUTES.bookingId_path} element={<Booking />} />
+              <Route path={ROUTES.booking_checkin} element={<Checkin />} />
+              <Route path={ROUTES.users} element={<Users />} />
+              <Route path={ROUTES.account} element={<Account />} />
+              <Route path={ROUTES.settings} element={<Settings />} />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </ReservationProvider>
       </AuthProvider>
     </BrowserRouter>
     <Toaster

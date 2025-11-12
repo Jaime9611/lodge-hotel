@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import CabinCard from "./cabin-card.component";
-import { useCabins } from "./use-cabins.hook";
+import { useCabins } from "../cabins/use-cabins.hook";
 import { Empty, Spinner } from "@ui/atoms";
 
 interface CabinListProps {

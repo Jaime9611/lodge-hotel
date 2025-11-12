@@ -2,7 +2,6 @@ import type { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { HiUsers } from "react-icons/hi2";
 
-import { ROUTES } from "@utils/constants";
 import type { CabinModel } from "@models";
 
 interface CabinCardProps {
@@ -18,17 +17,17 @@ const CabinCard: FC<CabinCardProps> = ({ cabin }) => {
         <img
           src={image}
           alt={`Cabin ${name}`}
-          className="object-cover border-r border-gray-800"
+          className="object-cover border-r border-gray-800 h-[250px] w-full"
         />
       </div>
 
-      <div className="flex-grow">
+      <div className="flex flex-col flex-2">
         <div className="pt-5 pb-4 px-7 bg-gray-50">
           <h3 className="text-accent-500 font-semibold text-2xl mb-3">
             Cabin {name}
           </h3>
 
-          <div className="flex gap-3 items-center mb-2">
+          <div className="flex gap-3 items-center mb-12">
             <HiUsers className="h-5 w-5 text-primary-600" />
             <p className="text-lg text-black-200">
               For up to <span className="font-bold">{maxCapacity}</span> guests
@@ -52,10 +51,10 @@ const CabinCard: FC<CabinCardProps> = ({ cabin }) => {
           </p>
         </div>
 
-        <div className="bg-gray-50 border-t border-t-gray-800 text-right ">
+        <div className="bg-gray-50 flex align-bottom justify-end">
           <NavLink
-            to={`${ROUTES.user_cabins_path}/${id}`}
-            className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-gray-900"
+            to={`/landing/${id}`}
+            className=" border-l border-primary-800 border-t text-primary-700 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-gray-900"
           >
             Details & reservation &rarr;
           </NavLink>
