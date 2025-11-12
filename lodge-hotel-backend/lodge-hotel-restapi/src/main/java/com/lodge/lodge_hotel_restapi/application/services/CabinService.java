@@ -5,7 +5,7 @@ import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 
 public interface CabinService {
 
-  public PageResponse<Cabin> getAll(String cabinName, Integer pageNumber, Integer pageSize);
+  public PageResponse<Cabin> getAll(String sortBy, String direction, Integer pageNumber, Integer pageSize);
 
   Cabin get(Long id);
 

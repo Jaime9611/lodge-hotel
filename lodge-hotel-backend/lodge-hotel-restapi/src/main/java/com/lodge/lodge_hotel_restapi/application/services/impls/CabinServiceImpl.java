@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -33,10 +34,10 @@ public class CabinServiceImpl implements CabinService {
 
 
   @Override
-  public PageResponse<Cabin> getAll(String cabinName, Integer pageNumber, Integer pageSize) {
+  public PageResponse<Cabin> getAll(String sortBy, String direction , Integer pageNumber, Integer pageSize) {
     log.debug("{} - Get all cabins was called.", CabinService.class.getSimpleName());
 
-    PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+    PageRequest pageRequest = buildPageRequest(sortBy, direction, pageNumber, pageSize);
 
     PageResponse<Cabin> cabinPageResponse;
 
@@ -99,7 +100,7 @@ public class CabinServiceImpl implements CabinService {
         .orElseThrow(() -> new ItemNotFoundException("Cabin with provided ID not found."));
   }
 
-  private PageRequest buildPageRequest(Integer pageNumber, Integer pageSize) {
+  private PageRequest buildPageRequest(String sortBy, String direction, Integer pageNumber, Integer pageSize) {
     int queryPageNumber;
     int queryPageSize;
 
@@ -119,7 +120,8 @@ public class CabinServiceImpl implements CabinService {
       }
     }
 
-    Sort sort = Sort.by(Sort.Order.asc("id"));
+    Sort sort = direction.equalsIgnoreCase(Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+        : Sort.by(sortBy).descending();
 
     return PageRequest.of(queryPageNumber, queryPageSize, sort);
   }

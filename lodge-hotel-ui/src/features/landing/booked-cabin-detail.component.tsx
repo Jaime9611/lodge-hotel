@@ -19,7 +19,7 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
   if (isLoading) return <Spinner />;
   if (!cabin) return <Empty resource="cabin" />;
 
-  const { name, maxCapacity, image, description, id } = cabin;
+  const { name, maxCapacity, image, description } = cabin;
 
   return (
     <>

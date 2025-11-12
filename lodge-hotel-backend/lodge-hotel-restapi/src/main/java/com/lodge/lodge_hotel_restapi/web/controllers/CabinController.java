@@ -32,12 +32,13 @@ public class CabinController {
   @GetMapping
   @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<PageResponse<Cabin>> getAll(
-      @RequestParam(required = false) String cabinName,
+      @RequestParam(defaultValue = "id") String sortBy,
+      @RequestParam(defaultValue = "asc") String direction,
       @RequestParam(required = false) Integer pageNumber,
       @RequestParam(required = false) Integer pageSize) {
     log.debug("GET - All Cabins in Controller");
 
-    return ResponseEntity.ok(cabinService.getAll(cabinName, pageNumber, pageSize));
+    return ResponseEntity.ok(cabinService.getAll(sortBy, direction, pageNumber, pageSize));
   }
 
   @GetMapping(Endpoints.CABIN_ID)
