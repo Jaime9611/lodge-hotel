@@ -9,6 +9,7 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.PageMapper;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
 import com.lodge.lodge_hotel_restapi.web.validations.exceptions.ItemNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,6 +46,11 @@ public class CabinServiceImpl implements CabinService {
     cabinPageResponse = pageMapper.pagetoPageResponse(cabinPage);
 
     return cabinPageResponse;
+  }
+
+  @Override
+  public List<Cabin> getByCapacityBetween(int minValue, int maxValue) {
+    return readCabinPort.getByCapacityBetween(minValue, maxValue);
   }
 
   @Override

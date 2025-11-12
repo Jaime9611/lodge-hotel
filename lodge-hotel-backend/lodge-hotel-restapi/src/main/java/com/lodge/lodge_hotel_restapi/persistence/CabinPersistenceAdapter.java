@@ -8,6 +8,7 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.persistence.entities.CabinEntity;
 import com.lodge.lodge_hotel_restapi.persistence.entities.mappers.CabinMapper;
 import com.lodge.lodge_hotel_restapi.persistence.repositories.CabinRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,13 @@ public class CabinPersistenceAdapter implements CreateCabinPort, ReadCabinPort, 
     Page<CabinEntity> foundCabins = cabinRepository.findAll(pageRequest);
 
     return foundCabins.map(cabinMapper::cabinEntityToCabin);
+  }
+
+  @Override
+  public List<Cabin> getByCapacityBetween(int min, int max) {
+    List<CabinEntity> foundCabins = cabinRepository.findAllByMaxCapacityBetween(min, max);
+
+    return foundCabins.stream().map(cabinMapper::cabinEntityToCabin).toList();
   }
 
   @Override

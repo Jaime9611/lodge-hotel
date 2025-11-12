@@ -5,6 +5,7 @@ import com.lodge.lodge_hotel_restapi.domain.Cabin;
 import com.lodge.lodge_hotel_restapi.utils.constants.Endpoints;
 import com.lodge.lodge_hotel_restapi.utils.constants.UserConstants;
 import com.lodge.lodge_hotel_restapi.web.dtos.PageResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class CabinController {
 
   private final CabinService cabinService;
+
+  @GetMapping(Endpoints.CABINS_BY_CAPACITY)
+  public ResponseEntity<List<Cabin>> getByCapacity(
+      @RequestParam(required = true) Integer min,
+      @RequestParam(required = true) Integer max) {
+    log.debug("GET - All Cabins by Capacity in Controller");
+
+    return ResponseEntity.ok(cabinService.getByCapacityBetween(min, max));
+  }
 
   @GetMapping
   @PreAuthorize(UserConstants.AUTH_ACCESS)
