@@ -17,7 +17,7 @@ const Cabins = () => {
 
       <div className="flex justify-end mb-8">
         <Filter
-          filterField="last"
+          filterField="capacity"
           options={[
             { value: "all", label: "All cabins" },
             { value: "small", label: "2-3 guests" },

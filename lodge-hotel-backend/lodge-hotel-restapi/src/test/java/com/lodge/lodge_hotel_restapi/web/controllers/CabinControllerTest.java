@@ -94,7 +94,7 @@ class CabinControllerTest {
     long totalElements = 2;
     PageResponse.PageResponseBuilder<Cabin> pageResponse = PageResponse.builder();
 
-    given(cabinService.getAll(null, null, null)).willReturn(
+    given(cabinService.getAll("id", "asc", null, null)).willReturn(
         pageResponse.content(testCabins).totalElements(totalElements).build());
 
     // Assert

@@ -106,7 +106,7 @@ class CabinServiceImplTest {
     given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(pageResponse.content(testCabinList).build());
 
     // Act
-    PageResponse<Cabin> foundCabins = service.getAll("test", 1, 5);
+    PageResponse<Cabin> foundCabins = service.getAll("id","asc", 1, 5);
 
     // Assert
     assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabinList.get(0).getName());
@@ -126,7 +126,7 @@ class CabinServiceImplTest {
     given(pageMapper.pagetoPageResponse(any(Page.class))).willReturn(pageResponse.content(testCabinList).build());
 
     // Act
-    PageResponse<Cabin> foundCabins = service.getAll("test", null, null);
+    PageResponse<Cabin> foundCabins = service.getAll("id", "asc", null, null);
 
     // Assert
     assertThat(foundCabins.getContent().get(0).getName()).isEqualTo(testCabinList.get(0).getName());

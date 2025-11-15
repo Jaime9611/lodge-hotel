@@ -17,7 +17,6 @@ export const useRecentBookings = () => {
   });
 
   const bookings = data?.content ?? [];
-  console.log(bookings);
 
   return { bookings, isLoading };
 };

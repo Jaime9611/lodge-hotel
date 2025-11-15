@@ -36,6 +36,17 @@ class CabinsApi extends ApiClient {
     });
   }
 
+  async getAllByCapacity(
+    minCapacity: number,
+    maxCapacity: number
+  ): Promise<CabinModel[]> {
+    let params = { min: minCapacity, max: maxCapacity };
+
+    return await this.get<CabinModel[]>(`${CABIN_PATH}/capacity`, {
+      params,
+    });
+  }
+
   async getCabin(cabinId: number): Promise<CabinModel> {
     try {
       const response = await this.get<CabinModel>(`${CABIN_PATH}/${cabinId}`, {

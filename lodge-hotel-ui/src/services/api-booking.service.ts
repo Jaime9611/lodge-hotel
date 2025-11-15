@@ -155,10 +155,7 @@ class BookingsApi extends ApiClient {
 
   async getBookedReservations(cabinId: number): Promise<BookingModel[]> {
     return await this.get<BookingModel[]>(
-      `${BOOKING_PATH}/reservations/${cabinId}`,
-      {
-        headers: { Authorization: `Bearer ${this.getToken()}` },
-      }
+      `${BOOKING_PATH}/reservations/${cabinId}`
     );
   }
 }

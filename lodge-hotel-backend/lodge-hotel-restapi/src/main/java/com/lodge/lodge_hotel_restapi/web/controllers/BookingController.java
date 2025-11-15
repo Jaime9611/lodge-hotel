@@ -88,7 +88,6 @@ public class BookingController {
   }
 
   @GetMapping(Endpoints.BOOKING_RESERVATIONS)
-  @PreAuthorize(UserConstants.AUTH_ACCESS)
   public ResponseEntity<List<Booking>> getBookedReservations(@PathVariable Long cabinId) {
     log.debug("GET - Get Booking by Id: {} in Controller", cabinId);
 

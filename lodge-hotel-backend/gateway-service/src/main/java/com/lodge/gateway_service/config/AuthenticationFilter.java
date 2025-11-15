@@ -4,20 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -32,6 +18,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 @Component
 public class AuthenticationFilter extends
@@ -129,16 +128,11 @@ public class AuthenticationFilter extends
     Predicate<String> isImagePath = url -> path.matches("/api/v1/storage/public/cabin/.*");
     Predicate<String> isCabinInfo = url -> path.matches("/api/v1/cabin/capacity");
     Predicate<String> isSettingsPath = url -> path.matches("/api/v1/settings");
-    return excludedUrls.stream().anyMatch(isSettingsPath) || excludedUrls.stream().anyMatch(isImagePath) || excludedUrls.stream().anyMatch(isCabinInfo);
+    Predicate<String> isReservations = url -> path.matches("/api/v1/booking/reservations/.*");
 
-//    for (String regex : regexPatterns) {
-//            Pattern pattern = Pattern.compile(regex); // Compile the regex pattern
-//            Matcher matcher = pattern.matcher(url); // Create a matcher for the URL
-//            if (matcher.matches()) { // Check if the entire URL matches the pattern
-//                return true; // Return true as soon as a match is found
-//            }
-//        }
-//        return false; // No match found after checking all patterns
+    return excludedUrls.stream().anyMatch(isSettingsPath) || excludedUrls.stream()
+        .anyMatch(isImagePath) || excludedUrls.stream().anyMatch(isCabinInfo)
+        || excludedUrls.stream().anyMatch(isReservations);
   }
 
   private Mono<Void> handleAuthError(ServerWebExchange exchange, String message,
