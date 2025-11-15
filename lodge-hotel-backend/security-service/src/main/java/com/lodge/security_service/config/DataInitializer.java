@@ -19,7 +19,9 @@ public class DataInitializer {
               "manager@test.com", "1334556332", "", Constants.ROLE_MANAGER));
       userRepository.save(
           new UserEntity(null, "staff@test.com", passwordEncoder.encode("pwd123"), "William Smith",
-              "staff@test.com", "1334556332", "", Constants.ROLE_STAFF));
+              "staff@test.com", "1334556332",
+              "http://localhost:8080/api/v1/storage/public/cabin/0.18017638977683215-profile-pic.webp",
+              Constants.ROLE_STAFF));
     };
   }
 }

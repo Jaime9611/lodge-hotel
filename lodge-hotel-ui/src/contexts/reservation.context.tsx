@@ -1,3 +1,4 @@
+import { addDays } from "date-fns";
 import {
   createContext,
   useContext,
@@ -8,7 +9,7 @@ import {
 
 interface ReservationState {
   range: { from: Date; to: Date };
-  setRange: React.Dispatch<
+  setDates: React.Dispatch<
     React.SetStateAction<{
       from: Date | undefined;
       to: Date | undefined;

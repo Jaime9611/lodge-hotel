@@ -29,8 +29,8 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
   const { maxCapacity } = cabin;
   const { createBooking, isCreating } = useCreateBooking();
 
-  const startDate = range.from;
-  const endDate = range.to;
+  const startDate = range?.from;
+  const endDate = range?.to;
 
   const bookingData: BookingModelFormResult = {
     startDate: startDate?.toISOString(),

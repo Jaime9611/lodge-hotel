@@ -22,7 +22,7 @@ const Cabins = () => {
             { value: "all", label: "All cabins" },
             { value: "small", label: "2-3 guests" },
             { value: "medium", label: "4-6 guests" },
-            { value: "large", label: "6-8 guests" },
+            { value: "large", label: "7-8 guests" },
           ]}
         />
       </div>
