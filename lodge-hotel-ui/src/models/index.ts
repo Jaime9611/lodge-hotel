@@ -31,6 +31,11 @@ export interface SettingsModelForm
 
 // ---------------- AUTH MODELS ----------------
 
+export interface UserLoginModel {
+  username: string;
+  password: string;
+}
+
 export interface UserModel {
   id: number;
   username: string;

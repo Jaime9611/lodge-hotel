@@ -1,16 +1,16 @@
 import { jwtDecode } from "jwt-decode";
 import ApiClient from "./api-client.service";
-import type { LoginModel, LoginResponse, UserModel } from "@models";
+import type { LoginModel, LoginResponse, UserLoginModel } from "@models";
+import { LOGIN_PATH } from "@utils/constants";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const LOGIN_PATH = "/auth/login";
 
 class AuthApi extends ApiClient {
   constructor() {
     super(API_BASE_URL);
   }
 
-  async login(user: Omit<UserModel, "id">): Promise<LoginModel> {
+  async login(user: UserLoginModel): Promise<LoginModel> {
     try {
       const response = await this.post<string, LoginResponse>(
         `${LOGIN_PATH}?username=${user.username}&password=${user.password}`,

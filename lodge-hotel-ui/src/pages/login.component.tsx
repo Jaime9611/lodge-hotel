@@ -6,9 +6,7 @@ import { useRef } from "react";
 
 const Login = () => {
   const { settings } = useSettings();
-  const imgRef = useRef("");
-
-  console.log(imgRef);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   return (
     <LoginLayout>
@@ -17,9 +15,6 @@ const Login = () => {
           ref={imgRef}
           className="h-36 w-auto text-center"
           src={settings.logoImage}
-          onLoad={() => {
-            console.log(imgRef);
-          }}
         />
       </div>
       <Heading as="h4">Log in to your account</Heading>

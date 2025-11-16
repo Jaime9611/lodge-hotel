@@ -17,7 +17,8 @@
       "@contexts": ["src/contexts"],
       "@utils/*": ["src/utils/*"],
       "@hooks": ["src/hooks"],
-      "@models": ["src/models"]
+      "@models": ["src/models"],
+      "@mocks/*": ["src/mocks/*"]
     },
 
     /* Bundler mode */

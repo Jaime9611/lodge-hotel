@@ -1,9 +1,8 @@
+import { IMAGE_PATH, SETTINGS_PATH } from "@utils/constants";
 import ApiClient from "./api-client.service";
 import type { SettingsModel, SettingsModelFormResult } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const SETTINGS_PATH = "/api/v1/settings";
-const IMAGE_PATH = "/api/v1/storage/cabin-images";
 
 class SettingsApi extends ApiClient {
   constructor() {

@@ -37,3 +37,8 @@ export const ROLE = {
   STAFF: "ROLE_STAFF",
   MANAGER: "ROLE_MANAGER",
 };
+
+// SERVICE PATHS
+export const LOGIN_PATH = "/auth/login";
+export const SETTINGS_PATH = "/api/v1/settings";
+export const IMAGE_PATH = "/api/v1/storage/cabin-images";
