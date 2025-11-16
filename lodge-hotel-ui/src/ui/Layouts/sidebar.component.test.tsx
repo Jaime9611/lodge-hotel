@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 import { ROLE, ROUTES } from "@utils/constants";
 import { AuthContext, type AuthContextState } from "@contexts";
 import type { ReactNode } from "react";
+import { useSettings } from "@features/settings";
 
 // Helper to render component with a specific auth context
 const renderWithAuth = (component: ReactNode, authValue: AuthContextState) => {
@@ -13,9 +14,24 @@ const renderWithAuth = (component: ReactNode, authValue: AuthContextState) => {
   );
 };
 
+// import "../../features/settings/useSettings";
+
 describe("Sidebar Component ", {}, () => {
   describe("Sidebar for Manager view", {}, () => {
+    vi.mock("../../features/settings", () => ({
+      useSettings: () => ({
+        isLoading: false,
+        error: null,
+        settings: {
+          minBookingLength: 2,
+          maxBookingLength: 3,
+          logoImage: "test.jpg",
+        },
+      }),
+    }));
+
     beforeEach(() => {
+      vi.clearAllMocks();
       renderWithAuth(
         <MemoryRouter>
           <Sidebar />
@@ -30,7 +46,7 @@ describe("Sidebar Component ", {}, () => {
     });
 
     it("renders all links", () => {
-      expect(screen.getAllByRole("link")).toHaveLength(4);
+      expect(screen.getAllByRole("link")).toHaveLength(5);
     });
 
     it.each([
@@ -38,6 +54,7 @@ describe("Sidebar Component ", {}, () => {
       { name: "cabins", srcLink: ROUTES.cabins_path },
       { name: "bookings", srcLink: ROUTES.bookings_path },
       { name: "users", srcLink: ROUTES.users_path },
+      { name: "settings", srcLink: ROUTES.settings_path },
     ] as const)("renders $as link with route", ({ name, srcLink }) => {
       const linkBtn = screen.getByRole("link", {
         name: new RegExp(name, "i"),
@@ -49,7 +66,21 @@ describe("Sidebar Component ", {}, () => {
   });
 
   describe("Sidebar for Staff view", {}, () => {
+    vi.mock("../../features/settings", () => ({
+      useSettings: () => ({
+        isLoading: false,
+        error: null,
+        settings: {
+          minBookingLength: 2,
+          maxBookingLength: 3,
+          logoImage: "test.jpg",
+        },
+      }),
+    }));
+
     beforeEach(() => {
+      vi.clearAllMocks();
+
       renderWithAuth(
         <MemoryRouter>
           <Sidebar />

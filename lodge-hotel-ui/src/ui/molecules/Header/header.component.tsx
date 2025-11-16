@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { HiOutlineHomeModern, HiOutlineUser } from "react-icons/hi2";
+import { HiOutlineUser } from "react-icons/hi2";
 
 import HeaderMenu from "./header-menu.component";
 import Logout from "@features/authentication/logout.component";
 import { ButtonIcon } from "@ui/atoms";
-import { useCart } from "@contexts";
 import { ROUTES } from "@utils/constants";
 
 const Header = () => {

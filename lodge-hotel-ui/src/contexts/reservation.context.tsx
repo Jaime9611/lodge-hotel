@@ -9,7 +9,7 @@ import {
 
 interface ReservationState {
   range: { from: Date; to: Date };
-  setDates: React.Dispatch<
+  setRange: React.Dispatch<
     React.SetStateAction<{
       from: Date | undefined;
       to: Date | undefined;

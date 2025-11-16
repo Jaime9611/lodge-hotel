@@ -5,7 +5,7 @@ export const formatCurrency = (value: number) =>
     value
   );
 
-export const formatDistanceFromNow = (dateStr) =>
+export const formatDistanceFromNow = (dateStr: string) =>
   formatDistance(parseISO(dateStr), new Date(), {
     addSuffix: true,
   })
