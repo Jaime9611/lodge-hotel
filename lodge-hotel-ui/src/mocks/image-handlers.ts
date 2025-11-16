@@ -11,8 +11,9 @@ export const handlers = [
     if (!authHeader?.startsWith("Bearer"))
       return new HttpResponse({}, { status: 404 });
 
-    if (multipartHeader !== "multipart/form-data")
+    if (!multipartHeader?.startsWith("multipart/form-data")) {
       return new HttpResponse({}, { status: 404 });
+    }
 
     return HttpResponse.json(true);
   }),

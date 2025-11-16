@@ -16,19 +16,26 @@ import type {
   SettingsModelFormResult,
 } from "@models";
 import { useForm, type SubmitErrorHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@utils/constants";
 
 const UpdateSettingsForm = () => {
   const { isLoading, settings } = useSettings();
+  const navigate = useNavigate();
 
   const { isUpdating, updateSettings } = useUpdateSetting();
 
-  const { register, handleSubmit, reset } = useForm<
+  const { register, handleSubmit, reset, watch, formState } = useForm<
     SettingsModel | SettingsModelFormResult
   >({
     defaultValues: settings ?? ({} as SettingsModelFormResult),
   });
 
   if (isLoading) return <Spinner />;
+
+  const minValue = watch("minBookingLength");
+
+  const { errors } = formState;
 
   const onSubmit = (data: SettingsModel | SettingsModelFormResult) => {
     const image =
@@ -41,6 +48,7 @@ const UpdateSettingsForm = () => {
       {
         onSuccess: () => {
           reset();
+          navigate(ROUTES.dashboard_path);
         },
       }
     );
@@ -55,19 +63,36 @@ const UpdateSettingsForm = () => {
       <Form onSubmit={handleSubmit(onSubmit, onError)} type="regular">
         <div className="grid grid-cols-2 gap-20">
           <div>
-            <FormRowVertical label="Minimum nights/booking">
+            <FormRowVertical
+              label="Minimum nights/booking"
+              error={errors?.minBookingLength?.message}
+            >
               <Input
                 type="number"
                 id="minBookingLength"
-                register={{ ...register("minBookingLength") }}
+                register={{
+                  ...register("minBookingLength", {
+                    validate: (value) =>
+                      value >= 1 || "Min value has to be at least 1",
+                  }),
+                }}
               />
             </FormRowVertical>
-            <FormRowVertical label="Maximum nights/booking">
+            <FormRowVertical
+              label="Maximum nights/booking"
+              error={errors?.maxBookingLength?.message}
+            >
               <Input
                 type="number"
                 id="maxBookingLength"
                 disabled={isUpdating}
-                register={{ ...register("maxBookingLength") }}
+                register={{
+                  ...register("maxBookingLength", {
+                    validate: (value) =>
+                      value > minValue ||
+                      "Max value has to be greather than min value",
+                  }),
+                }}
               />
             </FormRowVertical>
           </div>

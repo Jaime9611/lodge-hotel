@@ -19,7 +19,7 @@ const UserCard: FC<UserCardProps> = ({ onDelete, user, isDeleting }) => {
           <div className="bg-gray-200 absolute z-0 w-30 h-full left-0"></div>
           <img
             src={user.image ?? "default-user.jpg"}
-            alt=""
+            alt="user-image"
             className="w-40 h-40 z-1 rounded-full object-cover"
           />
         </div>

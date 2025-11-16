@@ -26,7 +26,7 @@ const LoginForm = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRowVertical label="Email Address">
+      <FormRowVertical label="Username">
         <Input
           type="text"
           id="email"
