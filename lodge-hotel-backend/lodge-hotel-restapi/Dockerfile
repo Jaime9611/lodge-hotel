@@ -1,6 +1,7 @@
-FROM openjdk:17-jdk-slim
+FROM amazoncorretto:17-alpine
 WORKDIR /app
-COPY target/lodge-hotel-restapi-0.0.1-SNAPSHOT.jar lodge-hotel-restapi.jar
+COPY src ./src
+COPY target .
 EXPOSE 8090
-ENTRYPOINT ["java", "-jar", "lodge-hotel-restapi.jar"]
+ENTRYPOINT ["java", "-jar", "lodge-hotel-restapi-0.0.1-SNAPSHOT.jar"]
 

@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: backend
-    url: jdbc:mysql://${DB_SERVER:localhost}:3306/${DB_NAME:users}?createDatabaseIfNotExists=true&serverTimeZone=UTC
+    url: jdbc:mysql://${DB_SERVER:localhost}:3306/${DB_NAME:users}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
   jpa:

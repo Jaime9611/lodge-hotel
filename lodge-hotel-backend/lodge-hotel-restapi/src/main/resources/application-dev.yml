@@ -32,11 +32,11 @@ eureka:
       hostname: lodge-api
 
 settings:
-  file-path: src/main/resources/settings.json
+  file-path: ${SETTINGS_PATH:src/main/resources/settings.json}
 
 static:
   images:
-    path: src/main/resources/static/images
+    path: ${STATIC_PATH:src/main/resources/static/images}
 
 keyStore:
   path: keystore.jks

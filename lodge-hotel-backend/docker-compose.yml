@@ -8,7 +8,7 @@ services:
     env_file:
       - env/eureka.env
     restart: always
-        
+
   gateway-service:
     build: gateway-service
     container_name: gateway-service
@@ -18,7 +18,7 @@ services:
     env_file:
       - env/gateway.env
     restart: always
-    depends_on: 
+    depends_on:
       eureka-service:
         condition: service_started
 
@@ -27,20 +27,22 @@ services:
     container_name: security-service
     mem_limit: 512m
     # ports:
-      # - 8090:8080
+    # - 8090:8080
     env_file:
       - env/security.env
     restart: always
-    depends_on: 
+    depends_on:
       eureka-service:
         condition: service_started
-        
+      lodge-sql:
+        condition: service_healthy
+
   lodge-api:
     build: lodge-hotel-restapi
     container_name: lodge-api
-    mem_limit: 512m
+    mem_limit: 2g
     # ports:
-      # - 8090:8080
+    # - 8090:8080
     env_file:
       - env/lodge.env
     restart: always
@@ -63,6 +65,8 @@ services:
       timeout: 10s
       retries: 10
     volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro
       - dbdata:/var/lib/mysql
+
 volumes:
   dbdata:
