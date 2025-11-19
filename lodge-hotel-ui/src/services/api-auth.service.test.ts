@@ -6,12 +6,10 @@ import type { UserLoginModel } from "@models";
 import { MOCK_USER } from "@mocks/login-handlers";
 import { MOCK_PASSWORD } from "@mocks/login-handlers";
 
-// Define the mock decoded token
 const mockDecodedToken = {
   role: "STAFF",
 };
 
-// Mock the 'jwt-decode' module
 vi.mock("jwt-decode", () => ({
   jwtDecode: () => mockDecodedToken,
 }));

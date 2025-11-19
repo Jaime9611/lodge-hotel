@@ -1,8 +1,8 @@
+import { USER_PATH } from "@utils/constants";
 import ApiClient from "./api-client.service";
 import type { UserModel, UserModelFormResult } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const USER_PATH = "/employee";
 const IMAGE_PATH = "/api/v1/storage/cabin-images";
 
 class UserApi extends ApiClient {
