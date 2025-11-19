@@ -1,10 +1,8 @@
-import { PAGE_SIZE } from "@utils/constants";
+import { CABIN_PATH, IMAGE_PATH, PAGE_SIZE } from "@utils/constants";
 import ApiClient from "./api-client.service";
 import type { CabinModel, CabinModelFormResult, CabinModelPage } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const CABIN_PATH = "/api/v1/cabin";
-const IMAGE_PATH = "/api/v1/storage/cabin-images";
 
 export type SortOptions = {
   field: string;

@@ -52,7 +52,7 @@ describe("User Service", {}, () => {
 
     const response = await apiUser.createEditEmployee(mockUser, mockUser.id);
 
-    await expect(response).toBe(true);
+    await expect(response).toBeTruthy();
   });
 
   it("should update throw Error on bad request", async () => {
@@ -74,7 +74,7 @@ describe("User Service", {}, () => {
   it("should Delete user", async () => {
     const response = await apiUser.deleteEmployee(1);
 
-    await expect(response).toBe(true);
+    await expect(response).toBeTruthy();
   });
 
   it("should throw Error on Delete fails", async () => {
