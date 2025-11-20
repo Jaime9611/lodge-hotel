@@ -4,6 +4,16 @@ import Header from "./header.component";
 import { MemoryRouter } from "react-router-dom";
 
 describe("Header Component", {}, () => {
+  beforeAll(() => {
+    vi.mock("../../../features/authentication/use-user.hook", () => ({
+      useUser: () => ({ user: {}, isLoading: false }),
+    }));
+  });
+
+  afterAll(() => {
+    vi.clearAllMocks();
+  });
+
   it("renders passed title", () => {
     render(
       <MemoryRouter>

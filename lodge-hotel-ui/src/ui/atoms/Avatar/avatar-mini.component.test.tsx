@@ -4,7 +4,7 @@ import AvatarMini from "./avatar-mini.component";
 
 describe("Avatar Mini Component", {}, () => {
   it("renders passed src and alt values", () => {
-    const url = "http://test/image.png";
+    const url = "default-user.jpg";
     const altText = "Test Image";
 
     render(<AvatarMini src={url} alt={altText} />);

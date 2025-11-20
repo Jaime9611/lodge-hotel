@@ -4,19 +4,24 @@ import AppLayout from "./app-layout.component";
 import { MemoryRouter } from "react-router-dom";
 
 describe("AppLayout Component", {}, () => {
-  vi.mock("../../features/settings", () => ({
-    useSettings: () => ({
-      isLoading: false,
-      error: null,
-      settings: {
-        minBookingLength: 2,
-        maxBookingLength: 3,
-        logoImage: "test.jpg",
-      },
-    }),
-  }));
+  beforeAll(() => {
+    vi.mock("../../features/settings", () => ({
+      useSettings: () => ({
+        isLoading: false,
+        error: null,
+        settings: {
+          minBookingLength: 2,
+          maxBookingLength: 3,
+          logoImage: "test.jpg",
+        },
+      }),
+    }));
+    vi.mock("../../features/authentication/use-user.hook", () => ({
+      useUser: () => ({ user: {}, isLoading: false }),
+    }));
+  });
 
-  beforeEach(() => {
+  afterAll(() => {
     vi.clearAllMocks();
   });
 

@@ -4,7 +4,7 @@ import Avatar from "./avatar.component";
 
 describe("Avatar Component", {}, () => {
   it("renders passed src and alt values", () => {
-    const url = "http://test/image.png";
+    const url = "default-cabin.jpg";
     const altText = "Test Image";
 
     render(<Avatar src={url} alt={altText} />);
