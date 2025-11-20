@@ -1,5 +1,5 @@
-import { Button, Heading, Modal } from "@ui/atoms";
-import type { FC } from "react";
+import { Button, Heading, Image, Modal } from "@ui/atoms";
+import { useState, type FC } from "react";
 import { HiOutlineTrash, HiPencil } from "react-icons/hi2";
 import CreateUserForm from "./create-user-form.component";
 import { ConfirmDelete } from "@ui/molecules";
@@ -17,9 +17,10 @@ const UserCard: FC<UserCardProps> = ({ onDelete, user, isDeleting }) => {
       <div className="bg-white border border-solid border-gray-200 rounded-md grid grid-cols-1 md:grid-cols-[0.5fr_1fr]">
         <div className="flex py-6 items-center justify-center relative">
           <div className="bg-gray-200 absolute z-0 w-30 h-full left-0"></div>
-          <img
-            src={user.image ?? "default-user.jpg"}
-            alt="user-image"
+          <Image
+            src={user.image}
+            alt={user.fullName}
+            type="user"
             className="w-40 h-40 z-1 rounded-full object-cover"
           />
         </div>

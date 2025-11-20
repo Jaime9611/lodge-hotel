@@ -1,5 +1,6 @@
 import { useAuth } from "@contexts";
 import { useSettings } from "@features/settings";
+import { Image } from "@ui/atoms";
 import { ROLE, ROUTES } from "@utils/constants";
 import type { FC, ReactNode } from "react";
 import {
@@ -31,7 +32,11 @@ const Sidebar = () => {
       className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11"
     >
       <div className="flex justify-center">
-        <img className="h-36 w-auto text-center" src={settings.logoImage} />
+        <Image
+          className="h-36 w-auto text-center"
+          src={settings.logoImage}
+          alt="App logo"
+        />
       </div>
       <ul className="flex flex-col gap-3">
         <li>

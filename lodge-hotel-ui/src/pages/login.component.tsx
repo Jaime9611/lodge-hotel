@@ -1,20 +1,19 @@
 import { LoginForm } from "@features/authentication";
 import { LoginLayout } from "@ui/layouts";
-import { Heading } from "@ui/atoms";
+import { Heading, Image } from "@ui/atoms";
 import { useSettings } from "@features/settings";
-import { useRef } from "react";
 
 const Login = () => {
   const { settings } = useSettings();
-  const imgRef = useRef<HTMLImageElement>(null);
 
   return (
     <LoginLayout>
       <div className="flex justify-center">
-        <img
-          ref={imgRef}
+        <Image
           className="h-36 w-auto text-center"
           src={settings.logoImage}
+          alt="Logo image"
+          type="user"
         />
       </div>
       <Heading as="h4">Log in to your account</Heading>

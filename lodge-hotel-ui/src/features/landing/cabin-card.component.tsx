@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { HiUsers } from "react-icons/hi2";
 
 import type { CabinModel } from "@models";
+import { Image } from "@ui/atoms";
 
 interface CabinCardProps {
   cabin: CabinModel;
@@ -14,9 +15,10 @@ const CabinCard: FC<CabinCardProps> = ({ cabin }) => {
   return (
     <div className="flex border-gray-500 border bg-gray-50 rounded-md">
       <div className="flex-1 relative">
-        <img
+        <Image
           src={image}
           alt={`Cabin ${name}`}
+          type="cabin"
           className="object-cover border-r border-gray-800 h-[250px] w-full"
         />
       </div>

@@ -3,7 +3,7 @@ import { HiEye, HiPencil, HiTrash } from "react-icons/hi2";
 import { Table } from "@ui/molecules";
 import { Modal } from "@ui/atoms/Modal";
 import { ConfirmDelete } from "@ui/molecules";
-import { IconStackMenu } from "@ui/atoms";
+import { IconStackMenu, Image } from "@ui/atoms";
 import type { CabinModel } from "@models";
 import CreateCabinForm from "./create-cabin-form.component";
 import { useDeleteCabin } from "./use-delete-cabin.hook";
@@ -30,9 +30,11 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
 
   return (
     <Table.Row>
-      <img
+      <Image
         className="block w-24 rounded-sm aspect-3/2 object-cover object-center scale-1.5 -translate-x-1.5"
         src={image}
+        alt={name}
+        type="cabin"
       />
       <div>{name}</div>
       <div>{maxCapacity}</div>

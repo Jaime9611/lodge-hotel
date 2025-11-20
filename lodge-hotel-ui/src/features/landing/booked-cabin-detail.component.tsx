@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 import { HiEyeSlash, HiMapPin, HiUsers } from "react-icons/hi2";
 
-import { Button, Empty, Heading, Row, Spinner } from "@ui/atoms";
+import { Button, Empty, Heading, Image, Row, Spinner } from "@ui/atoms";
 
 import { useMoveBack } from "@hooks";
 import { ButtonText } from "@ui/atoms/ButtonText";
@@ -32,10 +32,11 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
       <div className="mt-10 mb-5">
         <div className="grid grid-cols-[3fr_4fr] gap-20 border border-gray-300 mb-24 rounded-lg">
           <div className="relative">
-            <img
+            <Image
               src={image}
               className="object-cover rounded-tl-lg rounded-bl-lg h-[500px] w-full"
               alt={`${name}`}
+              type="cabin"
             />
           </div>
 

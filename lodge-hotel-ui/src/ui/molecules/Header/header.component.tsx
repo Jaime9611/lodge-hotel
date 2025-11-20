@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { HiOutlineUser } from "react-icons/hi2";
 
 import HeaderMenu from "./header-menu.component";
 import Logout from "@features/authentication/logout.component";
 import { ButtonIcon } from "@ui/atoms";
 import { ROUTES } from "@utils/constants";
+import AvatarMini from "@ui/atoms/Avatar/avatar-mini.component";
+
+import { useUser } from "@features/authentication";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
 
   return (
     <header
@@ -17,7 +20,10 @@ const Header = () => {
       <HeaderMenu>
         <li>
           <ButtonIcon onClick={() => navigate(ROUTES.account_path)}>
-            <HiOutlineUser />
+            <AvatarMini
+              src={user?.image || ""}
+              alt={user?.fullName || "user profile"}
+            />
           </ButtonIcon>
         </li>
         <li>

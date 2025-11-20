@@ -1,8 +1,8 @@
-import { Suspense, type FC } from "react";
+import type { FC } from "react";
 
 import { HiEyeSlash, HiMapPin, HiUsers } from "react-icons/hi2";
 import { useCabin } from "./use-cabin.hook";
-import { Button, Empty, Heading, Modal, Row, Spinner } from "@ui/atoms";
+import { Button, Empty, Heading, Image, Modal, Row, Spinner } from "@ui/atoms";
 import { Reservation } from "@features/bookings";
 import { useDeleteCabin } from "./use-delete-cabin.hook";
 import { useMoveBack } from "@hooks";
@@ -24,6 +24,8 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
 
   const { name, maxCapacity, image, description, id } = cabin;
 
+  console.log(image);
+
   return (
     <>
       <Row type="horizontal">
@@ -37,8 +39,8 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
           <div className="relative">
             <img
               src={image}
+              alt={name}
               className="object-cover rounded-tl-lg rounded-bl-lg h-[500px] w-full"
-              alt={`${name}`}
             />
           </div>
 

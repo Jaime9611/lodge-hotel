@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { Image } from "../Image";
 
 interface AvatarProps {
   src: string;
@@ -7,9 +8,9 @@ interface AvatarProps {
 
 const Avatar: FC<AvatarProps> = ({ src, alt }) => {
   return (
-    <img
+    <Image
       className="block w-16 aspect-ration-[1] object-cover object-center rounded-full outline-1 outline-gray-100"
-      src={src || "default-user.jpg"}
+      src={src}
       alt={alt}
     />
   );

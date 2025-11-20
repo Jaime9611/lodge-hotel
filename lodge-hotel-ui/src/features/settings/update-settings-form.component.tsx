@@ -7,6 +7,7 @@ import {
   FileInput,
   Form,
   FormRowVertical,
+  Image,
   Input,
   Spinner,
 } from "@ui/atoms";
@@ -98,9 +99,11 @@ const UpdateSettingsForm = () => {
           </div>
           <div className="bg-gray-50 border-2 border-solid border-gray-100 w-auto px-8 py-6 rounded-md">
             <div className="flex justify-center">
-              <img
+              <Image
                 className="h-36 w-auto text-center"
                 src={settings.logoImage}
+                alt="Logo image"
+                type="cabin"
               />
             </div>
 

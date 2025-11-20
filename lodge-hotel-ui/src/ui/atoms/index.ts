@@ -24,3 +24,4 @@ export * from "./LoginMessage";
 export * from "./SortBy";
 export * from "./Select";
 export * from "./DateSelector";
+export * from "./Image";
