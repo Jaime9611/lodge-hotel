@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from "@utils/constants";
+import { BOOKING_PATH, PAGE_SIZE } from "@utils/constants";
 import ApiClient from "./api-client.service";
 import type {
   BookingModel,
@@ -8,7 +8,6 @@ import type {
 } from "@models";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const BOOKING_PATH = "/api/v1/booking";
 
 export type FilterOptions = {
   field: string;

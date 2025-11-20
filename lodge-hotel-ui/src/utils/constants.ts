@@ -40,7 +40,8 @@ export const ROLE = {
 
 // SERVICE PATHS
 export const LOGIN_PATH = "/auth/login";
-export const SETTINGS_PATH = "/api/v1/settings";
 export const USER_PATH = "/employee";
+export const SETTINGS_PATH = "/api/v1/settings";
 export const CABIN_PATH = "/api/v1/cabin";
+export const BOOKING_PATH = "/api/v1/booking";
 export const IMAGE_PATH = "/api/v1/storage/cabin-images";
