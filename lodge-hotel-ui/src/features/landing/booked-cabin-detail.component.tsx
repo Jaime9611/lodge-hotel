@@ -32,11 +32,10 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
       <div className="mt-10 mb-5">
         <div className="grid grid-cols-[3fr_4fr] gap-20 border border-gray-300 mb-24 rounded-lg">
           <div className="relative">
-            <Image
+            <img
               src={image}
               className="object-cover rounded-tl-lg rounded-bl-lg h-[500px] w-full"
               alt={`${name}`}
-              type="cabin"
             />
           </div>
 

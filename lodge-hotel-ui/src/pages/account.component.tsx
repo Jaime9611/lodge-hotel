@@ -12,9 +12,7 @@ const Account = () => {
       <Row type="vertical">
         <Heading as="h1">Update your account</Heading>
 
-        <div className="max-w-2xl mt-10">
-          <CreateUserForm userToEdit={user} />
-        </div>
+        <CreateUserForm userToEdit={user} />
       </Row>
     </>
   );

@@ -12,7 +12,6 @@ export const useCabin = () => {
   } = useQuery({
     queryKey: ["cabin", cabinId],
     queryFn: () => apiCabin.getCabin(Number(cabinId)),
-    retry: false,
   });
 
   return { isLoading, error, cabin };

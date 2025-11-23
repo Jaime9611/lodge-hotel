@@ -28,7 +28,6 @@ const Image: FC<ImageProps> = ({ src, alt, className, type }) => {
       src={error ? defaultImage : loading ? defaultImage : src}
       onError={handleError}
       onLoad={handleLoad}
-      // alt="user-image"
       alt={error ? "Error" : alt}
       className={className}
     />

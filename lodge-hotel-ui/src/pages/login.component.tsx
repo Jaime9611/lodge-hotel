@@ -13,7 +13,7 @@ const Login = () => {
           className="h-36 w-auto text-center"
           src={settings.logoImage}
           alt="Logo image"
-          type="user"
+          type="cabin"
         />
       </div>
       <Heading as="h4">Log in to your account</Heading>
