@@ -1,69 +1,63 @@
-# React + TypeScript + Vite
+# Lodge Hotel Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the Frontend implementation for the Lodge Hotel app.
 
-Currently, two official plugins are available:
+This project uses Javascript and React library to create the UI that makes use of the backend services.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of content
 
-## Expanding the ESLint configuration
+1. [Tech Overview.](#tech-overview)
+2. [Project Structure.](#project-structure)
+3. [How to run.](#how-to-run)
+   1. [Create .env file](#create-env)
+   2. [Run the project](#run-the-project)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Overview
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This was created using the following technologies:
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Node version v22.17.0
+- React version 19.1.0
+- yarn version 1.22.21
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+In order to run this project ensure you installed and setup your environment with these technologies.
+
+## Project Structure:
+
+Inside the src the project follows this structure
+
+- **contexts**: All React Context use in the application and hooks related.
+- **features**: Main components and hooks they use, separeted by the features of this app (cabins, bookings, etc).
+- **hooks**: Global hooks use in different parts of the application.
+- **mocks**: Mock services for testing API calls.
+- **models**: All Typescript types that are use in the project.
+- **pages**: Components used to separe the app by Pages.
+- **services**: All functions to call the backend endpoints.
+- **ui**: All common and global UI components use by features and pages.
+- **utils**: Common methods to convert or format data and project constants.
+
+## How to run:
+
+### Create `.env`
+
+This project needs a `.env` file with a variable to add the Backend url:
+
+```.env
+VITE_API_BASE_URL="http://localhost:8080"
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run the project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Using the `yarn` node tool you can run the application in the following way:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Install dependencies:
+
+```bash
+yarn install
+```
+
+Run the app:
+
+```bash
+yarn dev
 ```

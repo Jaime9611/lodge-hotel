@@ -20,9 +20,9 @@ public class SettingsJsonRepository {
   public void createJsonFile(File file) throws IOException {
     if (!file.exists()) {
       Settings defaultData = Settings.builder()
-          .minBookingLength(1)
+          .minBookingLength(2)
           .maxBookingLength(4)
-          .logoImage("")
+          .logoImage("http://localhost:8080/api/v1/storage/public/cabin/0.8260923462613396-logo-lodge.webp")
           .build();
 
       saveJsonFile(file, defaultData);
