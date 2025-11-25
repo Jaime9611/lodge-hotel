@@ -10,6 +10,7 @@ public class Endpoints {
   // CABINS
   public static final String CABIN = BASE_URL + "/cabin";
   public static final String CABIN_ID = "/{cabinId}";
+  public static final String CABIN_DETAIL = "/detail/{cabinId}";
   public static final String CABINS_BY_CAPACITY = "/capacity";
 
   // GUEST

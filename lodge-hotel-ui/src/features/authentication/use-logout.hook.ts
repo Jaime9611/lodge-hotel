@@ -7,7 +7,7 @@ export const useLogout = () => {
 
   const logout = () => {
     setIsLoading((_) => true);
-    localStorage.removeItem("access-token");
+    localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     navigate("/login", { replace: true });
     setIsLoading((_) => false);

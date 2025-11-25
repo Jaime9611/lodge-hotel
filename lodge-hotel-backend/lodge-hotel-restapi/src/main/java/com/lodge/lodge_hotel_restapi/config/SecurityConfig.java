@@ -26,7 +26,7 @@ public class SecurityConfig {
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/storage/public/cabin/**",
-            "/api/v1/cabin/capacity/**", "/api/v1/settings", "/api/v1/booking/reservations/**").permitAll().anyRequest().authenticated())
+            "/api/v1/cabin/capacity/**", "/api/v1/settings", "/api/v1/booking/reservations/**", "/api/v1/cabin/detail/**").permitAll().anyRequest().authenticated())
         .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();

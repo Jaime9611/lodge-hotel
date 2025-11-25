@@ -59,6 +59,13 @@ public class CabinController {
     return ResponseEntity.ok(cabinService.get(cabinId));
   }
 
+  @GetMapping(Endpoints.CABIN_DETAIL)
+  public ResponseEntity<Cabin> getCabinDetail(@PathVariable Long cabinId) {
+    log.debug("GET - Get Cabin Detail by Id: {} in Controller", cabinId);
+
+    return ResponseEntity.ok(cabinService.get(cabinId));
+  }
+
   @PostMapping
   @PreAuthorize(UserConstants.MANAGER_ACCESS)
   public ResponseEntity<Void> createCabin(@RequestBody Cabin cabin) {

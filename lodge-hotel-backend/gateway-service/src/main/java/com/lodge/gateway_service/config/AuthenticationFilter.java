@@ -127,12 +127,13 @@ public class AuthenticationFilter extends
   private boolean isExcluded(String path) {
     Predicate<String> isImagePath = url -> path.matches("/api/v1/storage/public/cabin/.*");
     Predicate<String> isCabinInfo = url -> path.matches("/api/v1/cabin/capacity");
+    Predicate<String> isCabinId = url -> path.matches("/api/v1/cabin/detail/.*");
     Predicate<String> isSettingsPath = url -> path.matches("/api/v1/settings");
     Predicate<String> isReservations = url -> path.matches("/api/v1/booking/reservations/.*");
 
     return excludedUrls.stream().anyMatch(isSettingsPath) || excludedUrls.stream()
         .anyMatch(isImagePath) || excludedUrls.stream().anyMatch(isCabinInfo)
-        || excludedUrls.stream().anyMatch(isReservations);
+        || excludedUrls.stream().anyMatch(isReservations) || excludedUrls.stream().anyMatch(isCabinId);
   }
 
   private Mono<Void> handleAuthError(ServerWebExchange exchange, String message,

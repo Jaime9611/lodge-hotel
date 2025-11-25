@@ -58,6 +58,19 @@ class CabinsApi extends ApiClient {
     }
   }
 
+  async getCabinDetail(cabinId: number): Promise<CabinModel> {
+    try {
+      const response = await this.get<CabinModel>(
+        `${CABIN_PATH}/detail/${cabinId}`
+      );
+
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw Error("Error Getting Cabin");
+    }
+  }
+
   async createEditCabin(
     newCabin: CabinModel | CabinModelFormResult,
     id?: number

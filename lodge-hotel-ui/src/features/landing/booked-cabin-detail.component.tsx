@@ -2,17 +2,17 @@ import type { FC } from "react";
 
 import { HiEyeSlash, HiMapPin, HiUsers } from "react-icons/hi2";
 
-import { Button, Empty, Heading, Image, Row, Spinner } from "@ui/atoms";
+import { Button, Empty, Heading, Row, Spinner } from "@ui/atoms";
 
 import { useMoveBack } from "@hooks";
 import { ButtonText } from "@ui/atoms/ButtonText";
-import { useCabin } from "@features/cabins";
 import BookedReservations from "./booked-reservations.component";
+import { useCabinDetail } from "./use-cabin-detail.hook";
 
 interface CabinUserDetailProps {}
 
-const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
-  const { cabin, isLoading } = useCabin();
+const BookedCabinDetail: FC<CabinUserDetailProps> = ({}) => {
+  const { cabin, isLoading } = useCabinDetail();
 
   const moveBack = useMoveBack();
 
@@ -89,4 +89,4 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
   );
 };
 
-export default CabinUserDetail;
+export default BookedCabinDetail;

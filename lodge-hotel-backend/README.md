@@ -80,6 +80,12 @@ For iniital image you can follow the guide for the [lodge-hotel-restapi](lodge-h
 
 Once you have everything in the previous step, in order to make the Docker compose to work its needs a build, for this execute the `build-all.bat` which will create a build for each of the services.
 
+After running the script is recommended to do a Docker build to ensure that Docker update the image with the latest build.
+
+```bash
+docker-compose build --no-cache
+```
+
 Once you have everything in the previous step you can use your Docker engine to run the `docker-compose.yml` file.
 
 ### Useful docker commands
@@ -87,11 +93,11 @@ Once you have everything in the previous step you can use your Docker engine to 
 Run service in `docker-compose.yml`
 
 ```bash
-docker compose up -d
+docker-compose up -d
 ```
 
 Stop and delete containers for services in `docker-compose.yml`
 
 ```bash
-docker compose down
+docker-compose down
 ```
