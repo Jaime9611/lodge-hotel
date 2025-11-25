@@ -9,7 +9,7 @@ interface AvatarMiniProps {
 const AvatarMini: FC<AvatarMiniProps> = ({ src, alt }) => {
   return (
     <Image
-      className="block w-8 aspect-ration-[1] object-cover object-center rounded-full outline-1 outline-gray-100"
+      className="block w-9 h-9 aspect-ration-[1] object-cover object-center rounded-full outline-1 outline-gray-100"
       src={src}
       alt={alt}
       type="user"

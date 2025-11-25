@@ -12,7 +12,7 @@ const Account = () => {
       <Row type="vertical">
         <Heading as="h1">Update your account</Heading>
 
-        <CreateUserForm userToEdit={user} />
+        <CreateUserForm userToEdit={user} type="account" />
       </Row>
     </>
   );

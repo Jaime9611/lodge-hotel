@@ -10,6 +10,7 @@ import { useDeleteCabin } from "./use-delete-cabin.hook";
 import { formatCurrency } from "@utils/helpers";
 import { ROUTES } from "@utils/constants";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@contexts";
 
 type CabinRowProps = {
   cabin: CabinModel;
@@ -26,6 +27,7 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
   } = cabin;
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { role } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -50,12 +52,22 @@ const CabinRow: FC<CabinRowProps> = ({ cabin }) => {
                 displayText="See details"
               />
 
-              <Modal.Open opens="edit">
-                <IconStackMenu.Button displayText="Edit" icon={<HiPencil />} />
-              </Modal.Open>
-              <Modal.Open opens="delete">
-                <IconStackMenu.Button displayText="Delete" icon={<HiTrash />} />
-              </Modal.Open>
+              {role === "ROLE_MANAGER" && (
+                <>
+                  <Modal.Open opens="edit">
+                    <IconStackMenu.Button
+                      displayText="Edit"
+                      icon={<HiPencil />}
+                    />
+                  </Modal.Open>
+                  <Modal.Open opens="delete">
+                    <IconStackMenu.Button
+                      displayText="Delete"
+                      icon={<HiTrash />}
+                    />
+                  </Modal.Open>
+                </>
+              )}
             </IconStackMenu.List>
           </IconStackMenu>
 

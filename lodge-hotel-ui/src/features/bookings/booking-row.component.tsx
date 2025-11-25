@@ -24,6 +24,7 @@ import { format, isToday } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
 import { useCheckout } from "@features/check-in-out";
+import { useAuth } from "@contexts";
 
 type BookingRowProps = {
   booking: BookingModel;
@@ -33,6 +34,7 @@ const BookingRow: FC<BookingRowProps> = ({ booking }) => {
   const navigate = useNavigate();
   const { isDeleting, deleteBooking } = useDeleteBooking();
   const { checkout, isCheckingOut } = useCheckout();
+  const { role } = useAuth();
 
   const {
     id: bookingId,
@@ -89,9 +91,12 @@ const BookingRow: FC<BookingRowProps> = ({ booking }) => {
                 disabled={isCheckingOut}
               />
             )}
-            <Modal.Open opens="delete">
-              <IconStackMenu.Button icon={<HiTrash />} displayText="Delete" />
-            </Modal.Open>
+
+            {role === "ROLE_MANAGER" && (
+              <Modal.Open opens="delete">
+                <IconStackMenu.Button icon={<HiTrash />} displayText="Delete" />
+              </Modal.Open>
+            )}
           </IconStackMenu.List>
         </IconStackMenu>
         <Modal.Window name="delete">

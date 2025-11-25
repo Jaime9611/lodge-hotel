@@ -100,7 +100,7 @@ const UpdateSettingsForm = () => {
           <div className="bg-gray-50 border-2 border-solid border-gray-100 w-auto px-8 py-6 rounded-md">
             <div className="flex justify-center">
               <Image
-                className="h-36 w-auto text-center"
+                className="h-36 w-36 object-cover text-center"
                 src={settings.logoImage}
                 alt="Logo image"
                 type="cabin"

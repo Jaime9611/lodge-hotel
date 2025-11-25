@@ -18,11 +18,13 @@ import { useEditEmployee } from "./use-edit-employee.hook";
 interface CreateUserFormProps {
   userToEdit?: UserModelFormResult;
   onCloseModal?: () => void;
+  type?: "account" | "staff";
 }
 
 const CreateUserForm: FC<CreateUserFormProps> = ({
   userToEdit = {} as UserModelFormResult,
   onCloseModal,
+  type = "staff",
 }) => {
   const { id: editId, ...editValues } = userToEdit;
   const isEditSession = Boolean(editId);
@@ -94,7 +96,11 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
   return (
     <div className="max-w-8xl">
       <Form onSubmit={handleSubmit(onSubmit, onError)} type="regular">
-        <div className="grid grid-cols-[1fr_0.5fr] gap-20">
+        <div
+          className={
+            type === "staff" ? "" : `grid grid-cols-[1fr_0.5fr] gap-20`
+          }
+        >
           <div className="grid grid-cols-2 gap-10">
             <FormRowVertical
               label="Full Name"
@@ -180,17 +186,7 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
               />
             </FormRowVertical>
           </div>
-          <div className="bg-gray-50 border-2 border-solid border-gray-100 w-auto px-8 pt-6 pb-1 rounded-md">
-            <div className="flex justify-center flex-col mb-12">
-              <p className="self-center mb-2 font-semibold">Current Image</p>
-              <Image
-                className="h-40 w-40 object-cover self-center rounded-full"
-                src={userToEdit.image as string}
-                alt="User image"
-                type="user"
-              />
-            </div>
-
+          {type === "staff" ? (
             <FormRowVertical
               label="Add a new image"
               error={errors?.image?.message}
@@ -205,7 +201,36 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
                 }}
               />
             </FormRowVertical>
-          </div>
+          ) : (
+            <div className="bg-gray-50 border-2 border-solid border-gray-100 w-auto px-8 pt-6 pb-1 rounded-md">
+              <div className="flex justify-center flex-col mb-12">
+                <p className="self-center mb-2 font-semibold">Current Image</p>
+                <Image
+                  className="h-40 w-40 object-cover self-center rounded-full"
+                  src={userToEdit.image as string}
+                  alt="User image"
+                  type="user"
+                />
+              </div>
+
+              <FormRowVertical
+                label="Add a new image"
+                error={errors?.image?.message}
+              >
+                <FileInput
+                  id="image"
+                  accept="image/*"
+                  register={{
+                    ...register("image", {
+                      required: isEditSession
+                        ? false
+                        : "This field is required",
+                    }),
+                  }}
+                />
+              </FormRowVertical>
+            </div>
+          )}
         </div>
 
         <Stack columns="24rem 1fr 1.2fr">

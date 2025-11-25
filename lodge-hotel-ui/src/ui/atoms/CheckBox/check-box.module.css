@@ -1,14 +1,15 @@
 .checkbox {
   display: flex;
-  gap: var(--spacing) * 6;
+  gap: calc(var(--spacing) * 3);
 }
 
 .checkbox input[type="checkbox"] {
-  height: var(--spacing) * 9;
-  width: var(--spacing) * 9;
+  height: calc(var(--spacing) * 6);
+  width: calc(var(--spacing) * 6);
   outline-offset: 2px;
   transform-origin: 0;
   accent-color: var(--color-primary-600);
+  color: red;
 }
 
 .checkbox input[type="checkbox"]:disabled {
@@ -19,5 +20,5 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: var(--spacing) * 3;
+  gap: calc(var(--spacing) * 3);
 }

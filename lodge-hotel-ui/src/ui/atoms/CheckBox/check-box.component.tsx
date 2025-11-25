@@ -22,6 +22,8 @@ const CheckBox: FC<CheckBoxProps> = ({
     <div className={styles.checkbox}>
       <input
         type="checkbox"
+        // className="w-[100px] border border-blue-100"
+        // style={{ width: 25, height: 25 }}
         id={id}
         checked={checked}
         onChange={onChange}
