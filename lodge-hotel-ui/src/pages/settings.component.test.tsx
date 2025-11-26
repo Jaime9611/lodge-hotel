@@ -10,6 +10,8 @@ vi.mock("../features/settings/use-update-settings.hook", () => ({
   useUpdateSetting: () => ({ isUpdating: false, updateSettings: vi.fn() }),
 }));
 describe("Settings Component", {}, () => {
+  afterAll(() => vi.clearAllMocks());
+
   it("renders the Settings page", () => {
     render(
       <MemoryRouter>
