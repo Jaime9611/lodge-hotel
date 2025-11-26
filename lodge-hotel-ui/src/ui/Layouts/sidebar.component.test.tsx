@@ -5,7 +5,6 @@ import { MemoryRouter } from "react-router-dom";
 import { ROLE, ROUTES } from "@utils/constants";
 import { AuthContext, type AuthContextState } from "@contexts";
 import type { ReactNode } from "react";
-import { useSettings } from "@features/settings";
 
 // Helper to render component with a specific auth context
 const renderWithAuth = (component: ReactNode, authValue: AuthContextState) => {
@@ -13,8 +12,6 @@ const renderWithAuth = (component: ReactNode, authValue: AuthContextState) => {
     <AuthContext.Provider value={authValue}>{component}</AuthContext.Provider>
   );
 };
-
-// import "../../features/settings/useSettings";
 
 describe("Sidebar Component ", {}, () => {
   describe("Sidebar for Manager view", {}, () => {

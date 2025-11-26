@@ -20,12 +20,7 @@ const SortBy: FC<SortByProps> = ({ options }) => {
   };
 
   return (
-    <Select
-      type="white"
-      value={currentSortBy}
-      options={options}
-      onChange={handleChange}
-    />
+    <Select value={currentSortBy} options={options} onChange={handleChange} />
   );
 };
 

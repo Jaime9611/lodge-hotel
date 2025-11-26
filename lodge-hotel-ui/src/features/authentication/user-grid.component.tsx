@@ -21,14 +21,12 @@ const UserGrid: FC<UserGridProps> = ({}) => {
   return (
     <div className="max-w-8xl grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-10 items-center">
       {users.map((user) => (
-        <>
-          <UserCard
-            key={`user-card-item-${user.id}`}
-            user={user}
-            onDelete={() => deleteEmployee(user.id)}
-            isDeleting={isDeleting}
-          />
-        </>
+        <UserCard
+          key={`user-card-item-${user.id}`}
+          user={user}
+          onDelete={() => deleteEmployee(user.id)}
+          isDeleting={isDeleting}
+        />
       ))}
     </div>
   );

@@ -10,7 +10,7 @@ const AddUser: FC<AddUserProps> = () => {
     <Modal>
       <Modal.Open opens="user-form">
         <div className="self-end">
-          <Button size="medium"> Add new employee</Button>
+          <Button size="medium">Add new employee</Button>
         </div>
       </Modal.Open>
       <Modal.Window name="user-form">

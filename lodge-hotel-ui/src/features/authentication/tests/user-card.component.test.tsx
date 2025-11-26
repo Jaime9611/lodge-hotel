@@ -12,7 +12,7 @@ const mockUser: UserModel = {
   phone: "123456",
   username: "testuser1",
 };
-import "../use-create-employee.hook";
+
 describe("UserCard Component", {}, () => {
   beforeAll(() => {
     vi.mock("../use-create-employee.hook", () => ({

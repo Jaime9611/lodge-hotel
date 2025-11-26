@@ -33,7 +33,6 @@ export class ROUTES {
 export const PAGE_SIZE = 5;
 
 export const ROLE = {
-  USER: "ROLE_USER",
   STAFF: "ROLE_STAFF",
   MANAGER: "ROLE_MANAGER",
 };
