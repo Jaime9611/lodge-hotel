@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import PageNotFound from "./page-not-found.component";
-import type { useMoveBack } from "@hooks";
 
 const mockHook = vi.hoisted(() => {
   return {
