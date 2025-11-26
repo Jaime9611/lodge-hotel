@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import SortBy from "./sort-by.component";
 
 const mockParams = vi.hoisted(() => {
@@ -59,5 +59,36 @@ describe("Sortby Component empty param", {}, () => {
 
     expect(screen.getByText(/sort by id/)).toBeInTheDocument();
     expect(screen.getByText(/sort by name/)).toBeInTheDocument();
+  });
+});
+
+describe("Sortby Component Handle function", {}, () => {
+  const mockSetParam = vi.fn();
+  beforeAll(() => {
+    mockParams.useSearchParams.mockReturnValue([
+      { get: () => "", set: mockSetParam },
+      mockSetParam,
+    ]);
+  });
+
+  afterAll(() => {
+    vi.clearAllMocks();
+    vi.resetAllMocks();
+  });
+
+  it("calls set function when clicked", () => {
+    const testOptions = [
+      { value: "id", label: "sort by id" },
+      { value: "name", label: "sort by name" },
+    ];
+
+    render(<SortBy options={testOptions} />);
+
+    const select = screen.getByTestId("select-component");
+
+    // Change the value directly
+    fireEvent.change(select, { target: { value: "id" } });
+
+    expect(mockSetParam).toBeCalledWith("sortBy", "id");
   });
 });

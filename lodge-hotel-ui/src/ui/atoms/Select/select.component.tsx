@@ -27,6 +27,7 @@ const Select: FC<SelectProps> = ({
       onChange={onChange}
       defaultValue={defaultValue}
       disabled={disabled}
+      data-testid="select-component"
       {...register}
     >
       {options.map((option) => (

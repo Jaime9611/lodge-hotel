@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { useBookedReservations } from "./use-booked-reservations.hook";
 import ReservationForm from "./create-reservation-form.component";
 import { useAuth } from "@contexts";
-import { DateSelector, LoginMessage, Spinner } from "@ui/atoms";
+import { DateSelector, Spinner } from "@ui/atoms";
 import type { CabinModel } from "@models";
 import { useSettings } from "@features/settings";
 
@@ -26,7 +26,7 @@ const Reservation: FC<ReservationProps> = ({ cabin }) => {
         bookedDates={bookedDates}
         cabin={cabin}
       />
-      {user ? <ReservationForm cabin={cabin} user={user} /> : <LoginMessage />}
+      {user && <ReservationForm cabin={cabin} user={user} />}
     </div>
   );
 };
