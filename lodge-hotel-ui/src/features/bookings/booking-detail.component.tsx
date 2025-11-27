@@ -13,7 +13,6 @@ import { ButtonText } from "@ui/atoms/ButtonText";
 const BookingDetail = () => {
   const { booking, isLoading } = useBooking();
   const { isDeleting, deleteBooking } = useDeleteBooking();
-  // TODO: ADD CHECKOUT FUNCTIONALITY
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const BookingDetail = () => {
       <Row type="horizontal">
         <div className="flex items-center gap-9">
           <Heading as="h1">Booking #{id}</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Tag type={statusToTagName[status]}>{status?.replace("-", " ")}</Tag>
         </div>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>

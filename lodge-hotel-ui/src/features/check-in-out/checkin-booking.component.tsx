@@ -46,7 +46,7 @@ const CheckinBooking = () => {
           id="confirm"
           disabled={confirmPaid || isCheckingIn}
         >
-          confirm that {guest.fullName} has paid the total amount of{" "}
+          confirm that {guest?.fullName} has paid the total amount of{" "}
           {formatCurrency(totalPrice)}
         </CheckBox>
       </div>

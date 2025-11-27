@@ -17,7 +17,6 @@ describe("Bookings Page", {}, () => {
       </MemoryRouter>
     );
 
-    screen.debug();
     expect(screen.getByText("Bookings")).toBeInTheDocument();
     expect(screen.getByText("Sort by id (ASC)")).toBeInTheDocument();
     expect(screen.getByText("Sort by date (ASC)")).toBeInTheDocument();

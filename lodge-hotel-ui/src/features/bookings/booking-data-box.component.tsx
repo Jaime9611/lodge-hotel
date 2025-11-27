@@ -14,6 +14,7 @@ import { format, isToday } from "date-fns";
 import { formatCurrency, formatDistanceFromNow } from "@utils/helpers";
 import { DataItem } from "@ui/atoms";
 import Flag from "@ui/atoms/Flag/flag.component";
+import { BookedCabinDetail } from "@features/landing";
 
 // ---------------- BOX COMPONENT ----------------
 
@@ -82,6 +83,8 @@ interface BookingDataBoxProps {
 // ---------------- MAIN COMPONENTS ----------------
 
 const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
+  if (booking === undefined || booking.guest === undefined) return null;
+
   const {
     createdAt,
     startDate,

@@ -3,7 +3,6 @@ import type { FC } from "react";
 import { Spinner } from "@ui/atoms";
 import { useCabins } from "@features/cabins";
 import Stats from "./stats.component";
-import { useBookings } from "@features/bookings";
 import DurationChart from "./duration-chart.component";
 import SalesChart from "./sales-chart.component";
 import { TodayActivity } from "@features/check-in-out";
