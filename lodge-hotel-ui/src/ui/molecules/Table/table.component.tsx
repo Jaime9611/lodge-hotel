@@ -104,7 +104,10 @@ const Table = <T,>({
 > => {
   return (
     <TableContext.Provider value={{ columns }}>
-      <div className="border border-solid border-gray-200 text-md bg-white rounded-md overflow-hidden">
+      <div
+        data-testid="data-table"
+        className="border border-solid border-gray-200 text-md bg-white rounded-md overflow-hidden"
+      >
         {children}
       </div>
     </TableContext.Provider>

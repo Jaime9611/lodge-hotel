@@ -51,6 +51,7 @@ const DateSelector: FC<DateSelectorProps> = ({
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
+        data-testid="day-calendar-picker"
         className="pt-10 place-self-center"
         mode="range"
         onSelect={setRange}

@@ -26,7 +26,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/setupTests.ts",
     coverage: {
-      exclude: ["*.mjs", ...coverageConfigDefaults.exclude],
+      exclude: ["*.mjs", "./src/models", ...coverageConfigDefaults.exclude],
     },
   },
 });
