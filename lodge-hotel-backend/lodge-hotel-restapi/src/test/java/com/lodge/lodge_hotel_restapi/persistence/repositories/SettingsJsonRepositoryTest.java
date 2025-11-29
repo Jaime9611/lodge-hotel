@@ -65,9 +65,9 @@ class SettingsJsonRepositoryTest {
     Settings savedSettings = objectMapper.readValue(file, Settings.class);
 
     assertTrue(Files.exists(filepath));
-    assertThat(savedSettings.getMinBookingLength()).isEqualTo(1);
+    assertThat(savedSettings.getMinBookingLength()).isEqualTo(2);
     assertThat(savedSettings.getMaxBookingLength()).isEqualTo(4);
-    assertEquals("", savedSettings.getLogoImage());
+    assertEquals("http://localhost:8080/api/v1/storage/public/cabin/0.8260923462613396-logo-lodge.webp", savedSettings.getLogoImage());
   }
 
   @Test

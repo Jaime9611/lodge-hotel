@@ -10,34 +10,6 @@ export interface CountryModel {
   image: string;
 }
 
-const countries: CountryModel[] = [
-  { value: "US", label: "United States", image: "https://flagcdn.com/us.svg" },
-  { value: "CA", label: "Canada", image: "https://flagcdn.com/ca.svg" },
-  { value: "CO", label: "Colombia", image: "https://flagcdn.com/co.svg" },
-  { value: "VE", label: "Venezuela", image: "https://flagcdn.com/ve.svg" },
-];
-
-const customSingleValue = ({ data }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-    <Flag src={data.image} alt={data.label} />
-    {data.label}
-  </div>
-);
-
-const customOption = (props) => {
-  const { data, innerRef, innerProps } = props;
-  return (
-    <div
-      ref={innerRef}
-      {...innerProps}
-      style={{ display: "flex", alignItems: "center", padding: 10 }}
-    >
-      <Flag src={data.image} alt={data.label} />
-      {data.label}
-    </div>
-  );
-};
-
 interface CountrySelectorProps {
   onUpdate: (country: CountryModel) => void;
 }
