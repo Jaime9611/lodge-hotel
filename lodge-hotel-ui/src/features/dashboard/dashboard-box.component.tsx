@@ -11,6 +11,7 @@ const DashboardBox: FC<DashboardBoxProps> = ({
 }) => {
   return (
     <div
+      data-testid="dashboard-box"
       className={`bg-white border border-solid border-gray-100 rounded-md p-12 flex flex-col gap-8 ${additionalStyles}`}
     >
       {children}

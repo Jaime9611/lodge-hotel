@@ -217,7 +217,10 @@ public class BookingServiceImpl implements BookingService {
               "Cabin with provide ID: " + cabin.getId() + " not found.",
               httpServletRequest.getRequestURI()));
 
-      total = total.add(foundCabin.getRegularPrice());
+      BigDecimal totalCabin =
+          foundCabin.getDiscount().compareTo(BigDecimal.ZERO) > 0 ? foundCabin.getRegularPrice()
+              .subtract(foundCabin.getDiscount()) : foundCabin.getRegularPrice();
+      total = total.add(totalCabin);
     }
 
     return total.multiply(BigDecimal.valueOf(daysBetween));

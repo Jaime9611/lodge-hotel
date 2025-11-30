@@ -36,8 +36,6 @@ const Stats: FC<StatsProps> = ({
   const occupation =
     confirmedStays?.reduce((acc, cur) => acc + cur.numNights, 0) /
     (numDays * cabinCount);
-  // const occupation = 0.9;
-  // TODO: ADD OCCUPANCY RATE
 
   return (
     <>

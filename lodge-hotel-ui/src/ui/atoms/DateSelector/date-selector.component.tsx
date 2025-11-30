@@ -65,7 +65,7 @@ const DateSelector: FC<DateSelectorProps> = ({
         numberOfMonths={2}
         disabled={(curDate) =>
           isPast(curDate) ||
-          bookedDates.some((date) => isSameDay(date, curDate))
+          bookedDates?.some((date) => isSameDay(date, curDate))
         }
       />
 

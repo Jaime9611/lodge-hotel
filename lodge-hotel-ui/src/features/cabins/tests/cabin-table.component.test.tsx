@@ -18,19 +18,13 @@ describe("CabinTable Component", {}, () => {
         isLoading: false,
       }),
     }));
-    // vi.mock("../../check-in-out/use-checkout.hook", () => ({
-    //   useCheckout: () => ({
-    //     checkout: vi.fn(),
-    //     isLoading: false,
-    //   }),
-    // }));
   });
 
   afterAll(() => {
     vi.clearAllMocks();
   });
 
-  it("renders the booking table", () => {
+  it("renders the cabin table", () => {
     render(
       <MemoryRouter>
         <CabinTable />
