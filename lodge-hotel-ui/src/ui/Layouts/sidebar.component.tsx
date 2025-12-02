@@ -29,13 +29,14 @@ const Sidebar = () => {
   return (
     <aside
       data-testid="sidebar-dashboard-view"
-      className="bg-white py-12 px-9 border-r border-solid border-gray-100 row-span-full flex flex-col gap-11"
+      className="bg-white py-12 px-9  row-span-full flex flex-col gap-11"
     >
       <div className="flex justify-center">
         <Image
           className="h-36 w-auto text-center"
           src={settings.logoImage}
           alt="App logo"
+          type="cabin"
         />
       </div>
       <ul className="flex flex-col gap-3">

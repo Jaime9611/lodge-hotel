@@ -54,8 +54,6 @@ const initData = [
 ];
 
 function prepareData(startData, stays) {
-  // TODO: UPDATE LOGIC FOR THIS CALCULATION BACKEND MAYBE?
-
   function incArrayValue(arr, field) {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj

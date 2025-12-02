@@ -24,8 +24,6 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
 
   const { name, maxCapacity, image, description, id } = cabin;
 
-  console.log(image);
-
   return (
     <>
       <Row type="horizontal">

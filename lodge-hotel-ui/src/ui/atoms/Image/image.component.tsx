@@ -14,6 +14,13 @@ const Image: FC<ImageProps> = ({ src, alt, className, type }) => {
   const defaultImage =
     type === "user" ? "default-user.jpg" : "default-cabin.jpg";
 
+  const srcUrl =
+    src === ""
+      ? type === "user"
+        ? "default-user.jpg"
+        : "default-cabin.jpg"
+      : src;
+
   const handleLoad = () => {
     setLoading(false);
   };
@@ -25,7 +32,7 @@ const Image: FC<ImageProps> = ({ src, alt, className, type }) => {
 
   return (
     <img
-      src={error ? defaultImage : loading ? defaultImage : src}
+      src={error ? defaultImage : loading ? defaultImage : srcUrl}
       onError={handleError}
       onLoad={handleLoad}
       alt={error ? "Error" : alt}

@@ -28,6 +28,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "noImplicitAny": false,
 
     /* Vitest */
     "types": ["vitest/globals", "@testing-library/jest-dom"],

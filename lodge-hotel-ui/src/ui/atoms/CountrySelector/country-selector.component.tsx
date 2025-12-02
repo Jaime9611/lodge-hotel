@@ -27,7 +27,6 @@ const CountrySelector: FC<CountrySelectorProps> = ({ onUpdate }) => {
             image: `https://flagcdn.com/${code.toLowerCase()}.svg`,
             value: code,
           };
-          console.log(countryData);
           onUpdate(countryData);
         })
         .catch((error) => {

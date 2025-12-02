@@ -58,7 +58,7 @@ public class ImageServiceImpl implements ImageService {
     if (Files.exists(imagePath)) {
       return Files.readAllBytes(imagePath);
     } else {
-      throw  new IOException(); // TODO: Handle missing images
+      throw  new IOException();
     }
   }
 
@@ -70,7 +70,7 @@ public class ImageServiceImpl implements ImageService {
       Files.delete(imagePath);
       return true;
     } else {
-      return false; // TODO: Handle missing images
+      return false;
     }
   }
 }

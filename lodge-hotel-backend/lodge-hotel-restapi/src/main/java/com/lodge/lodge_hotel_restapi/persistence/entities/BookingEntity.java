@@ -73,7 +73,8 @@ public class BookingEntity {
 
   @Transient
   public BigDecimal getTotalPrice() {
-    return this.cabins.stream().map(CabinEntity::getRegularPrice)
+    return this.cabins.stream()
+        .map((cabin) -> cabin.getRegularPrice().subtract(cabin.getDiscount()))
         .reduce(BigDecimal.valueOf(0), BigDecimal::add)
         .multiply(BigDecimal.valueOf(this.getNumNights()));
   }

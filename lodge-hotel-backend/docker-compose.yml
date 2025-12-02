@@ -2,7 +2,6 @@ services:
   eureka-service:
     build: eureka-server
     container_name: eureka-service
-    mem_limit: 512m
     ports:
       - 8761:8761
     env_file:
@@ -12,7 +11,6 @@ services:
   gateway-service:
     build: gateway-service
     container_name: gateway-service
-    mem_limit: 512m
     ports:
       - 8080:8080
     env_file:
@@ -25,9 +23,6 @@ services:
   security-service:
     build: security-service
     container_name: security-service
-    mem_limit: 512m
-    # ports:
-    # - 8090:8080
     env_file:
       - env/security.env
     restart: always
@@ -40,9 +35,6 @@ services:
   lodge-api:
     build: lodge-hotel-restapi
     container_name: lodge-api
-    mem_limit: 2g
-    # ports:
-    # - 8090:8080
     env_file:
       - env/lodge.env
     restart: always

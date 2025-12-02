@@ -89,12 +89,10 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
     createdAt,
     startDate,
     endDate,
-    numNights,
     numGuests,
     totalPrice,
     isPaid,
     guest: { fullName: guestName, email, country, countryFlag, nationalId },
-    cabins,
     id,
   } = booking;
 
@@ -134,7 +132,12 @@ const BookingDataBox: FC<BookingDataBoxProps> = ({ booking }) => {
               <span>&bull;</span>
               <p>Max capacity: {cabin.maxCapacity}</p>
               <span>&bull;</span>
-              <p>Price ${cabin.regularPrice}</p>
+
+              {cabin.discount > 0 ? (
+                <span>${cabin.regularPrice - cabin.discount}</span>
+              ) : (
+                <p>Price ${cabin.regularPrice}</p>
+              )}
             </DataItem>
           ))}
         </div>

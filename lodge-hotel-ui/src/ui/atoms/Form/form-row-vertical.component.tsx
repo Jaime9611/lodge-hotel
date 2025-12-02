@@ -27,7 +27,6 @@ const FormRowVertical: FC<FormRowVerticalProps> = ({
         </label>
       )}
       {children}
-      {/* TODO: ADD COMPONENT FOR THIS */}
       {error && <p className="text-red-500 pl-3 text-sm">{error}</p>}
     </div>
   );
