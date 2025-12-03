@@ -47,10 +47,15 @@ public class SecurityConfig {
   private final CustomUserDetailService customUserDetailService;
   private final JwtTokenFilter jwtTokenFilter;
 
+  private final String[] freeResourceUrls = {"/auth/**",
+      "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**",
+      "/api-docs/**", "/aggregate/**",
+  };
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+        .authorizeHttpRequests(auth -> auth.requestMatchers(freeResourceUrls).permitAll()
             .anyRequest().authenticated())
         .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
         .formLogin(AbstractHttpConfigurer::disable);

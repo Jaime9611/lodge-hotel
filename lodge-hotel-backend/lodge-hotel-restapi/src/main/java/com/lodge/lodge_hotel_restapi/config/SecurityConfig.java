@@ -20,13 +20,22 @@ public class SecurityConfig {
 
   private final JwtTokenFilter jwtTokenFilter;
 
+  private final String[] freeResourceUrls = {"/api/v1/storage/public/cabin/**",
+      "/api/v1/cabin/capacity/**",
+      "/api/v1/settings",
+      "/api/v1/booking/reservations/**",
+      "/api/v1/cabin/detail/**",
+      "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**",
+      "/api-docs/**", "/aggregate/**",
+  };
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/storage/public/cabin/**",
-            "/api/v1/cabin/capacity/**", "/api/v1/settings", "/api/v1/booking/reservations/**", "/api/v1/cabin/detail/**").permitAll().anyRequest().authenticated())
+        .authorizeHttpRequests(
+            auth -> auth.requestMatchers(freeResourceUrls).permitAll().anyRequest().authenticated())
         .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();

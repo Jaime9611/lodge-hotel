@@ -89,6 +89,7 @@ class BookingServiceImplTest {
   void testBookingQuotation() {
     // Arrange
     Booking testBooking = BookingFactory.createSingleBooking();
+    testBooking.getCabins().get(0).setDiscount(BigDecimal.ZERO);
 
     int daysBetween = 3;
     LocalDateTime testingEndDate = LocalDateTime.now();

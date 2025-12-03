@@ -14,6 +14,18 @@ spring:
             - Path=/api/v1/**
           filters:
             - AuthenticationFilter
+        - id: lodge-hotel-restapi-swagger
+          uri: lb://lodge-api
+          predicates:
+            - Path=/aggregate/lodge-service/v3/api-docs
+          filters:
+            - SetPath=/api-docs
+        - id: security-service-swagger
+          uri: lb://security-service
+          predicates:
+            - Path=/aggregate/security-service/v3/api-docs
+          filters:
+            - SetPath=/api-docs
       globalcors:
         cors-configurations:
           '[/**]':
@@ -30,6 +42,17 @@ spring:
               - responseType
               - Authorization
             allowCredentials: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Lodge Service
+        url: /aggregate/lodge-service/v3/api-docs
+      - name: Security Service
+        url: /aggregate/security-service/v3/api-docs
+  api-docs:
+    path: /api-docs
 
 gateway:
   excludedUrl: /auth/login, /api/v1/storage/public/cabin/.*, /api/v1/cabin/capacity, /api/v1/booking/reservations

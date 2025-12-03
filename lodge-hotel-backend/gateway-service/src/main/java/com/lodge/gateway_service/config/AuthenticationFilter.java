@@ -130,10 +130,17 @@ public class AuthenticationFilter extends
     Predicate<String> isCabinId = url -> path.matches("/api/v1/cabin/detail/.*");
     Predicate<String> isSettingsPath = url -> path.matches("/api/v1/settings");
     Predicate<String> isReservations = url -> path.matches("/api/v1/booking/reservations/.*");
+    Predicate<String> isSwaggerRoot = url -> path.matches("/swagger-ui/.*");
+    Predicate<String> isSwaggerHtml = url -> path.matches("/swagger-ui.html");
+    Predicate<String> isApiDocs = url -> path.matches("/v3/api-docs/.*");
+    Predicate<String> isSwaggerRsc = url -> path.matches("/swagger-resources/.*");
+    Predicate<String> isAllApiDocs = url -> path.matches("/api-docs/.*");
+    Predicate<String> isAggregate = url -> path.matches("/aggregate/.*");
 
-    return excludedUrls.stream().anyMatch(isSettingsPath) || excludedUrls.stream()
-        .anyMatch(isImagePath) || excludedUrls.stream().anyMatch(isCabinInfo)
-        || excludedUrls.stream().anyMatch(isReservations) || excludedUrls.stream().anyMatch(isCabinId);
+    return isSettingsPath.test(path) || isImagePath.test(path) || isCabinInfo.test(path)
+        || isReservations.test(path) || isCabinId.test(path) || isSwaggerHtml.test(path)
+        || isAggregate.test(path) || isSwaggerRoot.test(path) || isApiDocs.test(path)
+        || isSwaggerRsc.test(path) || isAllApiDocs.test(path);
   }
 
   private Mono<Void> handleAuthError(ServerWebExchange exchange, String message,

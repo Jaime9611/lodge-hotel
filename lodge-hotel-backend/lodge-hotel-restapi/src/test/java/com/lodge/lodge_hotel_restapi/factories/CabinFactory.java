@@ -18,6 +18,8 @@ public class CabinFactory {
         .id(customId)
         .name(String.valueOf(NAME + customId))
         .regularPrice(BigDecimal.valueOf(PRICE))
+        .discount(BigDecimal.ZERO)
+        .image("")
         .build();
   }
 
@@ -30,6 +32,8 @@ public class CabinFactory {
         .id(customId)
         .name(String.valueOf(NAME + customId))
         .regularPrice(BigDecimal.valueOf(PRICE))
+        .discount(BigDecimal.ZERO)
+        .image("")
         .build();
   }
 
