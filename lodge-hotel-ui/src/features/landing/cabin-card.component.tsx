@@ -19,14 +19,14 @@ const CabinCard: FC<CabinCardProps> = ({ cabin }) => {
           src={image}
           alt={`Cabin ${name}`}
           type="cabin"
-          className="object-cover border-r border-gray-800 h-[250px] w-full"
+          className="object-cover border-r border-gray-800 h-full w-full"
         />
       </div>
 
       <div className="flex flex-col flex-2">
         <div className="pt-5 pb-4 px-7 bg-gray-50">
           <h3 className="text-accent-500 font-semibold text-2xl mb-3">
-            Cabin {name}
+            {name}
           </h3>
 
           <div className="flex gap-3 items-center mb-12">

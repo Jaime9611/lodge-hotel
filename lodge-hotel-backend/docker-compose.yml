@@ -43,6 +43,8 @@ services:
         condition: service_started
       lodge-sql:
         condition: service_healthy
+    volumes:
+      - static_files:/app/classes
 
   lodge-sql:
     image: mysql
@@ -62,3 +64,4 @@ services:
 
 volumes:
   dbdata:
+  static_files:

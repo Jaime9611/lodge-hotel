@@ -131,8 +131,8 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
             ...register("discount", {
               required: "This field is required",
               validate: (value) =>
-                +value <= +getValues().regularPrice ||
-                "Discount should be less than regular price",
+                (value >= 0 && +value <= +getValues().regularPrice) ||
+                "Discount should be greather or equal to 0, and less than the regular price",
             }),
           }}
         />

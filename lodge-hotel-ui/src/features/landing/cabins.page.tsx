@@ -6,13 +6,14 @@ const Cabins = () => {
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">Our Cabins</h1>
-      <p className="text-primary-200 text-lg mb-10">
-        Cozy yet luxurious cabins, located right in the heart of the Italian
-        Dolomites. Imagine waking up to beautiful mountain views, spending your
-        days exploring the dark forests around, or just relaxing in your private
-        hot tub under the stars. Enjoy nature&apos;s beauty in your own little
-        home away from home. The perfect spot for a peaceful, calm vacation.
-        Welcome to paradise.
+      <p className="text-primary-200 text-lg mb-10 text-justify">
+        Enchanting highland retreats, perched in Colombia's majestic Andean
+        mountains. Envision mornings greeted by mist-covered peaks and
+        hummingbirds at your window, days spent wandering through colorful
+        flower fields and charming pueblos, or evenings by the fireplace with
+        panoramic mountain vistas. Discover the magic of Colombia's eternal
+        spring in your cozy sanctuary. The ultimate escape for a peaceful,
+        rejuvenating vacation. Welcome to paradise.
       </p>
 
       <div className="flex justify-end mb-8">

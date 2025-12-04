@@ -27,14 +27,14 @@ VALUES
 -- ============================================
 INSERT INTO `cabin`(`id`, `name`, `description`, `discount`, `max_capacity`, `regular_price`, `created_at`, `image`)
 VALUES
-    (1, 'cabin-001', 'Cozy mountain cabin with stunning valley views', 0, 2, 150, '2025-01-15 10:30:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.04700970822698769-c001.webp'),
-    (2, 'cabin-002', 'Romantic lakeside retreat perfect for couples', 0, 2, 180, '2025-01-20 11:00:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.8090327447363388-c002.webp'),
-    (3, 'cabin-003', 'Family-friendly cabin with modern amenities', 0, 4, 250, '2025-02-05 09:15:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.8277076561659449-c003.webp'),
-    (4, 'cabin-004', 'Spacious woodland cabin with fireplace', 0, 4, 280, '2025-02-10 14:45:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.8923284972985251-c004.webp'),
-    (5, 'cabin-005', 'Large luxury cabin with panoramic windows', 0, 6, 400, '2025-03-01 08:30:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.5872226515187394-c005.webp'),
-    (6, 'cabin-006', 'Deluxe cabin with hot tub and BBQ area', 0, 7, 450, '2025-03-15 16:20:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.5898842277992791-c006.webp'),
-    (7, 'cabin-007', 'Charming rustic cabin near hiking trails', 0, 3, 200, '2025-04-01 12:00:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.07002962139122304-c007.webp'),
-    (8, 'cabin-008', 'Modern cabin with smart home features', 0, 5, 350, '2025-04-20 13:30:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.7344577586827514-c008.webp');
+    (1, 'Mountain View Retreat', 'Intimate cabin featuring panoramic mountain views, perfect for romantic getaways. Includes a private balcony and cozy fireplace.', 0, 2, 150, '2025-01-15 10:30:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.04700970822698769-c001.webp'),
+    (2, 'Lakeside Haven', 'Charming waterfront cabin with direct lake access. Features a private dock and sunset-facing deck ideal for couples.', 0, 2, 180, '2025-01-20 11:00:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.8090327447363388-c002.webp'),
+    (3, 'Forest Family Lodge', 'Spacious family cabin nestled among towering pines. Features two bedrooms, full kitchen, and outdoor play area for children.', 0, 4, 250, '2025-02-05 09:15:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.8277076561659449-c003.webp'),
+    (4, 'Woodland Escape', 'Large cabin with rustic charm and modern amenities. Includes stone fireplace, game room, and wraparound porch.', 0, 4, 280, '2025-02-10 14:45:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.8923284972985251-c004.webp'),
+    (5, 'Grand Vista Suite', 'Luxury cabin with floor-to-ceiling windows showcasing breathtaking valley views. Features gourmet kitchen and master suite with spa bath.', 0, 6, 400, '2025-03-01 08:30:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.5872226515187394-c005.webp'),
+    (6, 'Alpine Paradise', 'Premium deluxe cabin with private hot tub, professional BBQ station, and entertainment room. Perfect for group gatherings.', 0, 6, 450, '2025-03-15 16:20:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.5898842277992791-c006.webp'),
+    (7, 'Trailside Cottage', 'Cozy rustic cabin located steps from popular hiking trails. Features outdoor fire pit and hammock area for relaxation.', 0, 3, 200, '2025-04-01 12:00:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.07002962139122304-c007.webp'),
+    (8, 'Smart Modern Cabin', 'Contemporary cabin with cutting-edge smart home technology, high-speed internet, and sleek minimalist design throughout.', 0, 5, 350, '2025-04-20 13:30:00.000000', 'http://localhost:8080/api/v1/storage/public/cabin/0.7344577586827514-c008.webp');
 
 -- ============================================
 -- BOOKINGS DATA (18 bookings, one per guest)
@@ -44,30 +44,30 @@ VALUES
 INSERT INTO `booking`(`id`, `guest_id`, `is_paid`, `num_guests`, `created_at`, `start_date`, `end_date`, `status`)
 VALUES
     -- Past bookings (14 bookings: 4 older + 6 within 30 days + 4 within 7 days)
-    (1, 1, TRUE, 2, '2025-09-15 14:00:00.000000', '2025-09-27 14:00:00.000000', '2025-09-30 14:00:00.000000', 'CHECKED_OUT'),
-    (2, 2, TRUE, 1, '2025-08-27 14:00:00.000000', '2025-09-05 14:00:00.000000', '2025-09-08 14:00:00.000000', 'CHECKED_OUT'),
-    (3, 3, TRUE, 4, '2025-09-16 14:00:00.000000', '2025-09-22 14:00:00.000000', '2025-09-24 14:00:00.000000', 'CHECKED_OUT'),
-    (4, 4, TRUE, 2, '2025-08-26 14:00:00.000000', '2025-09-01 14:00:00.000000', '2025-09-06 14:00:00.000000', 'CHECKED_OUT'),
+    (1, 1, TRUE, 2, '2025-09-22 14:00:00.000000', '2025-09-27 14:00:00.000000', '2025-09-30 14:00:00.000000', 'CHECKED_OUT'),
+    (2, 2, TRUE, 1, '2025-09-02 14:00:00.000000', '2025-09-10 14:00:00.000000', '2025-09-15 14:00:00.000000', 'CHECKED_OUT'),
+    (3, 3, TRUE, 4, '2025-09-07 14:00:00.000000', '2025-09-20 14:00:00.000000', '2025-09-24 14:00:00.000000', 'CHECKED_OUT'),
+    (4, 4, TRUE, 2, '2025-09-08 14:00:00.000000', '2025-09-14 14:00:00.000000', '2025-09-19 14:00:00.000000', 'CHECKED_OUT'),
 
     -- Recent past bookings (within 30 days before today: Sept 13 - Oct 12)
-    (13, 13, TRUE, 3, '2025-10-31 14:00:00.000000', '2025-11-08 14:00:00.000000', '2025-11-11 14:00:00.000000', 'CHECKED_OUT'),
-    (14, 14, TRUE, 2, '2025-10-29 14:00:00.000000', '2025-11-05 14:00:00.000000', '2025-11-07 14:00:00.000000', 'CHECKED_OUT'),
-    (15, 15, TRUE, 4, '2025-10-20 14:00:00.000000', '2025-11-03 14:00:00.000000', '2025-11-07 14:00:00.000000', 'CHECKED_OUT'),
-    (16, 16, TRUE, 2, '2025-10-26 14:00:00.000000', '2025-11-01 14:00:00.000000', '2025-11-04 14:00:00.000000', 'CHECKED_OUT'),
-    (17, 17, TRUE, 5, '2025-10-25 14:00:00.000000', '2025-11-02 14:00:00.000000', '2025-11-07 14:00:00.000000', 'CHECKED_OUT'),
-    (18, 18, TRUE, 3, '2025-10-26 14:00:00.000000', '2025-11-08 14:00:00.000000', '2025-11-11 14:00:00.000000', 'CHECKED_OUT'),
+    (13, 13, TRUE, 3, '2025-10-25 14:00:00.000000', '2025-11-04 14:00:00.000000', '2025-11-08 14:00:00.000000', 'CHECKED_OUT'),
+    (14, 14, TRUE, 2, '2025-11-02 14:00:00.000000', '2025-11-15 14:00:00.000000', '2025-11-20 14:00:00.000000', 'CHECKED_OUT'),
+    (15, 15, TRUE, 4, '2025-10-28 14:00:00.000000', '2025-11-11 14:00:00.000000', '2025-11-16 14:00:00.000000', 'CHECKED_OUT'),
+    (16, 16, FALSE, 2, '2025-11-27 14:00:00.000000', '2025-12-04 14:00:00.000000', '2025-12-07 14:00:00.000000', 'UNCONFIRMED'),
+    (17, 17, FALSE, 5, '2025-11-25 14:00:00.000000', '2025-12-04 14:00:00.000000', '2025-12-06 14:00:00.000000', 'UNCONFIRMED'),
+    (18, 18, FALSE, 3, '2025-11-27 14:00:00.000000', '2025-12-04 14:00:00.000000', '2025-12-08 14:00:00.000000', 'UNCONFIRMED'),
 
     -- Bookings within 7 days before today (Oct 6 - Oct 12)
-    (5, 5, FALSE, 3, '2025-11-09 14:00:00.000000', '2025-11-21 14:00:00.000000', '2025-11-26 14:00:00.000000', 'CHECKED_OUT'),
-    (6, 6, FALSE, 5, '2025-11-20 14:00:00.000000', '2025-11-28 14:00:00.000000', '2025-12-02 14:00:00.000000', 'UNCONFIRMED'),
-    (7, 7, FALSE, 2, '2025-11-15 14:00:00.000000', '2025-11-28 14:00:00.000000', '2025-12-01 14:00:00.000000', 'UNCONFIRMED'),
-    (8, 8, FALSE, 4, '2025-11-16 14:00:00.000000', '2025-11-28 14:00:00.000000', '2025-11-30 14:00:00.000000', 'UNCONFIRMED'),
+    (5, 5, FALSE, 3, '2025-11-22 14:00:00.000000', '2025-11-30 14:00:00.000000', '2025-12-04 14:00:00.000000', 'CHECKED_OUT'),
+    (6, 6, FALSE, 5, '2025-11-23 14:00:00.000000', '2025-12-04 14:00:00.000000', '2025-12-06 14:00:00.000000', 'UNCONFIRMED'),
+    (7, 7, FALSE, 2, '2025-11-29 14:00:00.000000', '2025-12-04 14:00:00.000000', '2025-12-07 14:00:00.000000', 'UNCONFIRMED'),
+    (8, 8, FALSE, 4, '2025-11-23 14:00:00.000000', '2025-12-04 14:00:00.000000', '2025-12-06 14:00:00.000000', 'UNCONFIRMED'),
 
     -- Future bookings (4 bookings starting from today or later)
-    (9, 9, FALSE, 3, '2025-11-27 14:00:00.000000', '2025-12-10 14:00:00.000000', '2025-12-12 14:00:00.000000', 'UNCONFIRMED'),
-    (10, 10, FALSE, 2, '2025-12-07 14:00:00.000000', '2025-12-21 14:00:00.000000', '2025-12-23 14:00:00.000000', 'UNCONFIRMED'),
-    (11, 11, FALSE, 7, '2025-12-14 14:00:00.000000', '2025-12-26 14:00:00.000000', '2025-12-29 14:00:00.000000', 'UNCONFIRMED'),
-    (12, 12, FALSE, 4, '2025-12-27 14:00:00.000000', '2026-01-11 14:00:00.000000', '2026-01-13 14:00:00.000000', 'UNCONFIRMED');
+    (9, 9, FALSE, 3, '2025-12-11 14:00:00.000000', '2025-12-22 14:00:00.000000', '2025-12-24 14:00:00.000000', 'UNCONFIRMED'),
+    (10, 10, FALSE, 2, '2025-12-22 14:00:00.000000', '2026-01-02 14:00:00.000000', '2026-01-06 14:00:00.000000', 'UNCONFIRMED'),
+    (11, 11, FALSE, 6, '2025-12-22 14:00:00.000000', '2025-12-27 14:00:00.000000', '2025-12-29 14:00:00.000000', 'UNCONFIRMED'),
+    (12, 12, FALSE, 4, '2025-12-24 14:00:00.000000', '2026-01-07 14:00:00.000000', '2026-01-10 14:00:00.000000', 'UNCONFIRMED');
 
 -- ============================================
 -- BOOKING-CABINS RELATIONSHIPS
@@ -85,7 +85,7 @@ VALUES
     (8, 4),   -- 4 guests -> cabin-004 (capacity 4)
     (9, 7),   -- 3 guests -> cabin-007 (capacity 3)
     (10, 1),  -- 2 guests -> cabin-001 (capacity 2)
-    (11, 6),  -- 6 guests -> cabin-006 (capacity 7)
+    (11, 6),  -- 6 guests -> cabin-006 (capacity 6)
     (12, 3),  -- 4 guests -> cabin-003 (capacity 4)
     (13, 7),  -- 3 guests -> cabin-007 (capacity 3)
     (14, 2),  -- 2 guests -> cabin-002 (capacity 2)

@@ -9,12 +9,14 @@ import { useMoveBack } from "@hooks";
 import { useNavigate } from "react-router-dom";
 import { ButtonText } from "@ui/atoms/ButtonText";
 import { ConfirmDelete } from "@ui/molecules";
+import { useAuth } from "@contexts";
 
 interface CabinUserDetailProps {}
 
 const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
   const { cabin, isLoading } = useCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { role } = useAuth();
 
   const navigate = useNavigate();
   const moveBack = useMoveBack();
@@ -83,9 +85,11 @@ const CabinUserDetail: FC<CabinUserDetailProps> = ({}) => {
 
       <div className="flex gap-5 justify-end">
         <Modal>
-          <Modal.Open opens="delete">
-            <Button variation="danger">Delete</Button>
-          </Modal.Open>
+          {role === "ROLE_MANAGER" && (
+            <Modal.Open opens="delete">
+              <Button variation="danger">Delete</Button>
+            </Modal.Open>
+          )}
           <Modal.Window name="delete">
             <ConfirmDelete
               disabled={isDeleting}
