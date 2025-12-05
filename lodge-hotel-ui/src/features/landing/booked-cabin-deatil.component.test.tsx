@@ -14,6 +14,9 @@ const mockHook = vi.hoisted(() => {
 vi.mock("./use-cabin-detail.hook", () => ({
   useCabinDetail: mockHook.useCabinDetail,
 }));
+vi.mock("../settings/use-settings.hook", () => ({
+  useSettings: () => ({ settings: {}, isLoading: false }),
+}));
 vi.mock("../../features/bookings/use-booked-reservations.hook", () => ({
   useBookedReservations: () => ({
     bookedDates: [

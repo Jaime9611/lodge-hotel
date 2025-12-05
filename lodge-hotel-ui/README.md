@@ -61,3 +61,7 @@ Run the app:
 ```bash
 yarn dev
 ```
+
+## References
+
+- {React Course} https://www.udemy.com/share/108PTo/

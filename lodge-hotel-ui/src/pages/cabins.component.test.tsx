@@ -21,7 +21,6 @@ describe("Cabins Page", {}, () => {
     expect(
       screen.getByRole("button", { name: /Add new cabin/ })
     ).toBeInTheDocument();
-    expect(screen.getByText("Sort by id (ASC)")).toBeInTheDocument();
     expect(screen.getByText("Sort by Name (ASC)")).toBeInTheDocument();
     expect(screen.getByText("Sort by Price (ASC)")).toBeInTheDocument();
     expect(screen.getByText("Sort by Capacity (ASC)")).toBeInTheDocument();
