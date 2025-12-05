@@ -20,8 +20,5 @@ public class Booking {
   private Guest guest;
   private List<Cabin> cabins;
   private BigDecimal totalPrice;
-  //  private BigDecimal cabinPrice;
-//  private BigDecimal extrasPrice;
-//  private boolean hasBreakfast;
   private boolean isPaid;
 }

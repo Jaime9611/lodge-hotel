@@ -36,10 +36,4 @@ public class GuestEntity {
   private String country;
   private String countryFlag;
   private String nationalId;
-
-//  @JsonIgnore
-//  @OneToMany(fetch = FetchType.LAZY)
-//  @MapsId("id")
-//  @JoinColumn(name = "id")
-//  private Set<BookingEntity> bookings;
 }

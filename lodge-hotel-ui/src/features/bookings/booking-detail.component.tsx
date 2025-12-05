@@ -43,20 +43,6 @@ const BookingDetail = () => {
             Check out
           </Button>
         )}
-        <Modal>
-          <Modal.Open opens="delete">
-            <Button variation="danger">Delete</Button>
-          </Modal.Open>
-          <Modal.Window name="delete">
-            <ConfirmDelete
-              disabled={isDeleting}
-              resourceName="booking"
-              onConfirm={() => {
-                deleteBooking(id, { onSettled: () => navigate(-1) });
-              }}
-            />
-          </Modal.Window>
-        </Modal>
 
         <Button variation="secondary" onClick={moveBack}>
           Back

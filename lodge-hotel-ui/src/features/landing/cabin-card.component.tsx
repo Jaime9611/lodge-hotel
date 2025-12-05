@@ -19,7 +19,7 @@ const CabinCard: FC<CabinCardProps> = ({ cabin }) => {
           src={image}
           alt={`Cabin ${name}`}
           type="cabin"
-          className="object-cover border-r border-gray-800 h-full w-full"
+          className="object-cover border-r border-gray-800 h-[250px] w-full"
         />
       </div>
 

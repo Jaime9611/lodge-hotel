@@ -31,7 +31,6 @@ describe("Booking Page", {}, () => {
 
     expect(screen.getByText("Booking #")).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /back/i }).length).toBe(2);
-    expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
   });
 
   it("renders checkin button when status unconfirmed", () => {
@@ -48,7 +47,6 @@ describe("Booking Page", {}, () => {
 
     expect(screen.getByText("Booking #")).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /back/i }).length).toBe(2);
-    expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /check in/i })
     ).toBeInTheDocument();
@@ -67,7 +65,6 @@ describe("Booking Page", {}, () => {
 
     expect(screen.getByText("Booking #")).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /back/i }).length).toBe(2);
-    expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /check out/i })
     ).toBeInTheDocument();
