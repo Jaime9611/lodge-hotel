@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,7 +62,7 @@ public class EmployeeController {
 
   @PostMapping("/register")
   @PreAuthorize("hasAnyRole('ROLE_MANAGER')")
-  public ResponseEntity<?> createEmployee(@RequestBody UserEntity user) {
+  public ResponseEntity<?> createEmployee(@RequestBody @Validated UserEntity user) {
     return ResponseEntity.ok(userService.registerEmployee(user));
   }
 

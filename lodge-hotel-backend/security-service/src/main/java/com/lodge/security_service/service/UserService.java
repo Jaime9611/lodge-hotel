@@ -3,6 +3,8 @@ package com.lodge.security_service.service;
 import com.lodge.security_service.model.UserEntity;
 import com.lodge.security_service.repository.UserRepository;
 import com.lodge.security_service.utils.Constants;
+import com.lodge.security_service.utils.validations.exceptions.ItemAlreadyExistsException;
+import com.lodge.security_service.utils.validations.exceptions.ItemNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.ws.rs.NotFoundException;
@@ -27,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
@@ -45,25 +48,27 @@ public class UserService {
   private static final int EXPIRATION_TIME_SEC = 3600;
 
   public void deleteEmployee(Long id) {
-    UserEntity foundUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
+    UserEntity foundUser = userRepository.findById(id).orElseThrow(
+        () -> new ItemNotFoundException("Employee does not exists."));
 
     userRepository.deleteById(id);
   }
 
   public void updateEmployee(Long id, UserEntity user) {
-    UserEntity foundUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
+    UserEntity foundUser = userRepository.findById(id)
+        .orElseThrow(() -> new ItemNotFoundException("Employee does not exists."));
 
     foundUser.setUsername(user.getUsername());
     foundUser.setFullName(user.getFullName());
     foundUser.setPhone(user.getPhone());
     foundUser.setEmail(user.getEmail());
 
-    if(user.getImage() != null && !user.getImage().isBlank()) {
+    if (user.getImage() != null && !user.getImage().isBlank()) {
       foundUser.setImage(user.getImage());
 
     }
 
-    if(user.getPassword() != null && !user.getPassword().isBlank()) {
+    if (user.getPassword() != null && !user.getPassword().isBlank()) {
       foundUser.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
@@ -87,7 +92,7 @@ public class UserService {
       Optional<UserEntity> user = userRepository.findById(userId);
 
       if (!user.isPresent()) {
-        throw new NotFoundException();
+        throw new ItemNotFoundException();
       }
 
       UserEntity userEntity = user.get();
@@ -105,13 +110,14 @@ public class UserService {
   public List<UserEntity> getEmployees() {
     return userRepository.findAllByRole("ROLE_STAFF").stream().map(
         user -> UserEntity.builder().id(user.getId()).email(user.getEmail()).phone(user.getPhone())
-            .image(user.getImage()).password(null).fullName(user.getFullName()).username(user.getUsername()).build()).toList();
+            .image(user.getImage()).password(null).fullName(user.getFullName())
+            .username(user.getUsername()).build()).toList();
   }
 
   public String registerEmployee(UserEntity user) {
     Optional<UserEntity> userEntity = userRepository.findByUsername(user.getUsername());
     if (userEntity.isPresent()) {
-      return "Username already taken";
+      throw new ItemAlreadyExistsException("Username already taken.");
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
