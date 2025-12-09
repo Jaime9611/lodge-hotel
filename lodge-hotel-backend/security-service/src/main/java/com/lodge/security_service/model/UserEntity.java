@@ -23,6 +23,7 @@ public class UserEntity {
   private Long id;
 
   @NotBlank(message = "Username is required.")
+  @Size(min = 4, message = "Username must be at least 4 characters.")
   @Column(nullable = false)
   private String username;
 
