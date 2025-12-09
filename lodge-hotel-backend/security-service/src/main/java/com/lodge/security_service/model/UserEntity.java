@@ -23,13 +23,13 @@ public class UserEntity {
   private Long id;
 
   @NotBlank(message = "Username is required.")
-  @Size(min = 4, message = "Username must be at least 4 characters.")
+  @Size(min = 5, message = "Username must be at least 5 characters.")
   @Column(nullable = false)
   private String username;
 
   @NotNull
   @NotBlank(message = "Password is required.")
-  @Size(min = 5, message = "Password must be at least 5 characters.")
+  @Size(min = 6, message = "Password must be at least 6 characters.")
   @Column(nullable = false)
   private String password;
 

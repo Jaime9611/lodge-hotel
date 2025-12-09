@@ -113,6 +113,10 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
                 register={{
                   ...register("fullName", {
                     required: "This field is required",
+                    minLength: {
+                      value: 5,
+                      message: "Must be at least 5 characters.",
+                    },
                   }),
                 }}
               />
@@ -123,7 +127,13 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
                 id="email"
                 disabled={isWorking}
                 register={{
-                  ...register("email", { required: "This field is required" }),
+                  ...register("email", {
+                    required: "This field is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                      message: "Email must be valid.",
+                    },
+                  }),
                 }}
               />
             </FormRowVertical>
@@ -136,7 +146,13 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
                 id="phone"
                 disabled={isWorking}
                 register={{
-                  ...register("phone", { required: "This field is required" }),
+                  ...register("phone", {
+                    required: "This field is required",
+                    pattern: {
+                      value: /^\+?[0-9]{10,17}$/,
+                      message: "Phone must be between 10-17 digits",
+                    },
+                  }),
                 }}
               />
             </FormRowVertical>
@@ -151,6 +167,10 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
                 register={{
                   ...register("username", {
                     required: "This field is required",
+                    minLength: {
+                      value: 5,
+                      message: "Must be at least 5 characters.",
+                    },
                   }),
                 }}
               />
