@@ -88,6 +88,10 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
             register={{
               ...register("guest.fullName", {
                 required: "This field is required",
+                minLength: {
+                  value: 5,
+                  message: "Must be at least 5 characters.",
+                },
               }),
             }}
           />
@@ -103,6 +107,10 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
             register={{
               ...register("guest.email", {
                 required: "This field is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                  message: "Email must be valid.",
+                },
               }),
             }}
           />

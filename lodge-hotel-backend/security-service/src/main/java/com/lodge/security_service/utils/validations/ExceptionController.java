@@ -1,6 +1,5 @@
 package com.lodge.security_service.utils.validations;
 
-
 import com.lodge.security_service.utils.validations.exceptions.ItemAlreadyExistsException;
 import com.lodge.security_service.utils.validations.exceptions.ItemNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -8,9 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

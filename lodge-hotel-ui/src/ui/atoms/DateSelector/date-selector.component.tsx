@@ -50,6 +50,10 @@ const DateSelector: FC<DateSelectorProps> = ({
 
   return (
     <div className="flex flex-col justify-between">
+      <div className="text-center pt-2 text-xl text-primary-700 ">
+        You can book <span className="font-bold">{minBookingLength}</span> up to{" "}
+        <span className="font-bold">{maxBookingLength}</span> nights!
+      </div>
       <DayPicker
         data-testid="day-calendar-picker"
         className="pt-10 place-self-center"

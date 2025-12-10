@@ -2,6 +2,8 @@ package com.lodge.lodge_hotel_restapi.web.dtos;
 
 import com.lodge.lodge_hotel_restapi.domain.BookingStatus;
 import com.lodge.lodge_hotel_restapi.domain.Guest;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +18,11 @@ public class BookingSimpleDto {
   private LocalDateTime createdAt;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
+
+  @NotNull
+  @Min(1)
   private int numGuests;
+
   private int numbNights;
   private BookingStatus status;
   private Guest guest;

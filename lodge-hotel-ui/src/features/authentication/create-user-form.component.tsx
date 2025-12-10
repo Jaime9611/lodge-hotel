@@ -183,6 +183,10 @@ const CreateUserForm: FC<CreateUserFormProps> = ({
                 register={{
                   ...register("password", {
                     required: isEditSession ? false : "This field is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
                   }),
                 }}
               />

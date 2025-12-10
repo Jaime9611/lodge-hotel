@@ -27,9 +27,6 @@ public class UserEntity {
   @Column(nullable = false)
   private String username;
 
-  @NotNull
-  @NotBlank(message = "Password is required.")
-  @Size(min = 6, message = "Password must be at least 6 characters.")
   @Column(nullable = false)
   private String password;
 
@@ -46,7 +43,6 @@ public class UserEntity {
   )
   private String phone;
 
-  @NotBlank(message = "ImageUrl is required.")
   private String image;
 
   private String role;

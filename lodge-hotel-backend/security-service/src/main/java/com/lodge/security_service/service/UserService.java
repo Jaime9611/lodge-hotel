@@ -58,6 +58,13 @@ public class UserService {
     UserEntity foundUser = userRepository.findById(id)
         .orElseThrow(() -> new ItemNotFoundException("Employee does not exists."));
 
+
+    if (!user.getUsername().equals(foundUser.getUsername())) {
+      Optional<UserEntity> userEntity = userRepository.findByUsername(user.getUsername());
+      if (userEntity.isPresent()) {
+        throw new ItemAlreadyExistsException("Username already taken.");
+      }
+    }
     foundUser.setUsername(user.getUsername());
     foundUser.setFullName(user.getFullName());
     foundUser.setPhone(user.getPhone());

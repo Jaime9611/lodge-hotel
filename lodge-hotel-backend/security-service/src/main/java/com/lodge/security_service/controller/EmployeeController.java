@@ -104,7 +104,7 @@ public class EmployeeController {
 
   @PutMapping("/{id}")
   @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_STAFF')")
-  public ResponseEntity<?> updateEmployee(@PathVariable Long id, @RequestBody UserEntity user) {
+  public ResponseEntity<?> updateEmployee(@PathVariable Long id, @RequestBody @Validated UserEntity user) {
 
     userService.updateEmployee(id, user);
 

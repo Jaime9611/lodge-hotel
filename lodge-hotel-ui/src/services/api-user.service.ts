@@ -92,8 +92,9 @@ class UserApi extends ApiClient {
           console.error("Error uploading file:", error);
         });
     } catch (error) {
-      console.error(error);
-      throw Error("Employee could not be created.");
+      const message = (error as unknown as { details: { error: string } })
+        .details;
+      throw Error(message.error);
     }
 
     return true;

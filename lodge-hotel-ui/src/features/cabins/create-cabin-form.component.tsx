@@ -86,7 +86,13 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
           id="name"
           disabled={isWorking}
           register={{
-            ...register("name", { required: "This field is required" }),
+            ...register("name", {
+              required: "This field is required",
+              minLength: {
+                value: 5,
+                message: "Name must be at least 5 characters.",
+              },
+            }),
           }}
         />
       </FormRowVertical>
@@ -131,19 +137,29 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
             ...register("discount", {
               required: "This field is required",
               validate: (value) =>
-                (value >= 0 && +value <= +getValues().regularPrice) ||
+                (value >= 0 && +value < +getValues().regularPrice) ||
                 "Discount should be greather or equal to 0, and less than the regular price",
             }),
           }}
         />
       </FormRowVertical>
-      <FormRowVertical label="Description" error={errors?.name?.message}>
+      <FormRowVertical label="Description" error={errors?.description?.message}>
         <TextArea
           id="description"
           disabled={isWorking}
           defaultValue=""
           register={{
-            ...register("description", { required: "This field is required" }),
+            ...register("description", {
+              required: "This field is required",
+              minLength: {
+                value: 10,
+                message: "Description should be at least 10 characters long",
+              },
+              maxLength: {
+                value: 160,
+                message: "Description must be at most 160 characters long",
+              },
+            }),
           }}
         />
       </FormRowVertical>

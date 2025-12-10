@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,7 +69,7 @@ public class CabinController {
 
   @PostMapping
   @PreAuthorize(UserConstants.MANAGER_ACCESS)
-  public ResponseEntity<Void> createCabin(@RequestBody Cabin cabin) {
+  public ResponseEntity<Void> createCabin(@RequestBody @Validated Cabin cabin) {
     log.debug("POST - Create Cabin in Controller");
 
     Long savedCabinId = cabinService.save(cabin);
@@ -82,7 +83,7 @@ public class CabinController {
   @PutMapping(Endpoints.CABIN_ID)
   @PreAuthorize(UserConstants.EMPLOYEE_ACCESS)
   public ResponseEntity<?> updateCabinById(@PathVariable Long cabinId,
-      @RequestBody Cabin cabin) {
+      @RequestBody @Validated Cabin cabin) {
     log.debug("PUT - Update Cabin by Id: {} in Controller", cabinId);
 
     cabinService.update(cabinId, cabin);
