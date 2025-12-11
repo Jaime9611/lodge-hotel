@@ -30,7 +30,9 @@ const CreateCabinForm: FC<CreateCabinFormProps> = ({
   const { register, handleSubmit, reset, getValues, formState } = useForm<
     CabinModelForm | CabinModelFormResult
   >({
-    defaultValues: isEditSession ? editValues : ({} as CabinModelFormResult),
+    defaultValues: isEditSession
+      ? editValues
+      : ({ discount: 0 } as CabinModelFormResult),
   });
 
   const { isCreating, createCabin } = useCreateCabin();

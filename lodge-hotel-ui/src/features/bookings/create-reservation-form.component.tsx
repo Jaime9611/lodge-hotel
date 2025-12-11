@@ -119,7 +119,14 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
           label="Guest Country"
           error={errors?.guest?.country?.message}
         >
-          <CountrySelector onUpdate={handleCountryChange} />
+          <CountrySelector
+            onUpdate={handleCountryChange}
+            register={{
+              ...register("guest.country", {
+                required: "This field is required",
+              }),
+            }}
+          />
         </FormRowVertical>
         <FormRowVertical
           label="Guest NationalID"
@@ -140,7 +147,7 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
 
       <FormRowVertical
         label="How many Guests?"
-        error={errors?.guest?.nationalId?.message}
+        error={errors?.numGuests?.message}
       >
         <Select
           id="numGuests"
@@ -158,7 +165,9 @@ const ReservationForm: FC<ReservationFormProps> = ({ cabin }) => {
 
       <div className="flex justify-end items-center gap-6">
         {!(startDate && endDate) ? (
-          <p className="text-primary-300 text-base">Start by selecting dates</p>
+          <p className="text-primary-500 text-base font-bold">
+            Select dates for your Reservation!
+          </p>
         ) : (
           <Button
             type="submit"

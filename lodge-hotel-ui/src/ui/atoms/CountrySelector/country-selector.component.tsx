@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 // import ReactSelect from "react-select/async";
 import ReactFlagsSelect from "react-flags-select";
-import Flag from "../Flag/flag.component";
 import axios from "axios";
 
 export interface CountryModel {
@@ -12,9 +11,10 @@ export interface CountryModel {
 
 interface CountrySelectorProps {
   onUpdate: (country: CountryModel) => void;
+  register?: {};
 }
 
-const CountrySelector: FC<CountrySelectorProps> = ({ onUpdate }) => {
+const CountrySelector: FC<CountrySelectorProps> = ({ onUpdate, register }) => {
   const [selectedCode, setSelectedCode] = useState("");
 
   useEffect(() => {
@@ -45,6 +45,7 @@ const CountrySelector: FC<CountrySelectorProps> = ({ onUpdate }) => {
       onSelect={(code) => setSelectedCode(code)}
       searchable
       searchPlaceholder="Search for a Country..."
+      {...register}
     />
   );
 };

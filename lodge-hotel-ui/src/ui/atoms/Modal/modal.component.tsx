@@ -34,11 +34,8 @@ const Window: FC<WindowProps> = ({ children, name }) => {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick<HTMLDivElement>(close);
 
-  // This if needs to be after the useEffect hook
   if (name !== openName) return null;
 
-  // Creating this portal ensures that the modal
-  //  will not be affected to specific CSS properties defined in the Parent
   return createPortal(
     <ModalOverlay>
       <div
